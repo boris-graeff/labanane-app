@@ -9,10 +9,12 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     {
+      name: 'home',
       path: '',
       component: home
     },
     {
+      name: 'playlist',
       path: '/playlist/:id',
       component: playlist
     }

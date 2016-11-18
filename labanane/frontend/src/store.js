@@ -5,9 +5,21 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    playlists: ["1","2","3"],
+    playlists: [],
     playlist: {
-      name: 'Playlist name'
+      name: ''
+    }
+  },
+
+  mutations: {
+    SET_PLAYLISTS: (state, playlists) => {
+      state.playlists = playlists
+    },
+
+    SET_PLAYLIST: (state, id, data) => {
+      state.playlist.name = id;
+      state.playlist.tracks = data.playlist;
+      state.is_auth = data.auth;
     }
   }
 })
