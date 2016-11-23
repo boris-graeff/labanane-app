@@ -1,11 +1,19 @@
 <template>
-  <div>
-    <h1>Playlist</h1>
-    <h2>{{ playlist.name }}</h2>
-    <ul>
-      <li v-for='track in playlist.tracks'>{{track.name}}</li>
-    </ul>
-  </div>
+  <section class='playlist-page'>
+    <header>
+      <router-link :to="{ name: 'home'}">
+        LB
+      </router-link>
+      <h1>{{playlist.name}}</h1>
+    </header>
+
+    <div class='tracks'>
+      {{ playlist.tracks.length }} tracks
+      <ul>
+        <li v-for='track in playlist.tracks'>{{track.name}}</li>
+      </ul>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -33,6 +41,6 @@
   }
 </script>
 
-<style lang='sass' scoped>
+<style lang='sass'>
 
 </style>

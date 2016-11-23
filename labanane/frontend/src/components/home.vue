@@ -1,12 +1,16 @@
 <template>
-  <div>
+  <section class='home-page'>
     <h1>LaBanane</h1>
-    <ul>
+    <p>
+      Welcome to LaBanane, the application for sharing and listening to your favorite music !<br>
+      Join us on Facebook to be informed of last news, share your playlist or report a problem.
+    </p>
+    <ul class='playlists'>
       <li v-for='p in playlists'>
         <router-link :to="{ name: 'playlist', params: { id: p}}">{{p}}</router-link>
       </li>
     </ul>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -28,6 +32,20 @@
   }
 </script>
 
-<style lang='sass' scoped>
+<style lang='sass'>
+  @import '../constants';
 
+  .home-page {
+    max-width: 600px;
+    margin: auto;
+    padding: $space-big $space-small;
+
+    h1 {
+      font-size: 4rem;
+    }
+
+    .playlists {
+      margin-top: $space-medium;
+    }
+  }
 </style>

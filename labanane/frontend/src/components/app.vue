@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='app'>
     <router-view></router-view>
   </div>
 </template>
@@ -12,7 +12,7 @@
 
 <style lang='sass'>
   @import '../reset.css';
-  @import '../constants.scss';
-  @import '../base.scss';
-  
+  @import '../base';
+
+
 </style>
