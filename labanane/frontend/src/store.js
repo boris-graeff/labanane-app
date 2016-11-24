@@ -1,13 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import constants from './constants'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    constants: constants,
     playlists: [],
     playlist: {
-      name: ''
+      name: '',
+      tracks: []
     }
   },
 

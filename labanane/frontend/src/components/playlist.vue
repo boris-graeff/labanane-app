@@ -13,17 +13,24 @@
         <li v-for='track in playlist.tracks'>{{track.name}}</li>
       </ul>
     </div>
+
+    <youtube-player :ready.sync='ytb_player_ready'></youtube-player>
   </section>
 </template>
 
 <script>
   import actions from '../actions'
+  import youtube_player from './playlist/youtube-player.vue'
 
   export default {
     name: 'playlist',
-    data: () => {
+    components: {
+      'youtube-player': youtube_player
+    },
+    data: function () {
       return {
-        id: ''
+        id: '',
+        ytb_player_ready: false
       }
     },
     mounted: function () {
