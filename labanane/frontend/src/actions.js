@@ -21,5 +21,9 @@ export default {
       .catch(response => {
         console.error('Playlist request failed')
       });
+  },
+
+  set_track: ({dispatch}, track) => {
+    dispatch('SET_TRACK', track)
   }
 }

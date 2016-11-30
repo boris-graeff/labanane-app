@@ -8,14 +8,13 @@
 
   export default {
     name: 'youtube-player',
-    props: ['ready'],
     data: function () {
       return {
         player: ''
       }
     },
     created: function () {
-      this.load_player();
+      this.load_player()
     },
     methods: {
       load_player: function () {
@@ -35,12 +34,12 @@
               'onReady':  that.on_player_ready,
               'onStateChange': that.on_state_change
             }
-          });
+          })
         }
       },
 
       on_player_ready: function (event) {
-        this.ready = true;
+        //this.ready = true;
         //event.target.playVideo();
       },
 

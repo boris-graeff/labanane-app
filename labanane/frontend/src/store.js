@@ -11,7 +11,8 @@ const store = new Vuex.Store({
     playlist: {
       name: '',
       tracks: []
-    }
+    },
+    track: {}
   },
 
   mutations: {
@@ -23,6 +24,11 @@ const store = new Vuex.Store({
       state.playlist.name = id;
       state.playlist.tracks = data.playlist;
       state.is_auth = data.auth;
+    },
+
+    SET_TRACK: (state, track) => {
+      console.log(track)
+      state.track = track
     }
   }
 })
