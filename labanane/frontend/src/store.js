@@ -12,7 +12,11 @@ const store = new Vuex.Store({
       name: '',
       tracks: []
     },
-    track: {}
+    track: {},
+    player: {
+      shuffle: false,
+      playing: false
+    }
   },
 
   mutations: {
@@ -27,7 +31,6 @@ const store = new Vuex.Store({
     },
 
     SET_TRACK: (state, track) => {
-      console.log(track)
       state.track = track
     }
   }

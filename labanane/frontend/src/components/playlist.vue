@@ -1,22 +1,20 @@
 <template>
   <section class='playlist-page'>
-    <header>
-      <router-link :to="{ name: 'home'}">
-        LB
-      </router-link>
-      <h1>{{playlist.name}}</h1>
-      <div>{{track.name}}</div>
-    </header>
-
-    <div class='tracks'>
-      {{ playlist.tracks.length }} tracks
-      <ul>
-        <li v-for='t in playlist.tracks' @click='set_track(t)'>
-          {{t.name}}
-        </li>
-      </ul>
+    <div class='content'>
+      <div>
+        <header>
+          <router-link :to="{ name: 'home'}">
+            LB
+          </router-link>
+          <h1>{{playlist.name}}</h1>
+          <div>{{track.name}}</div>
+        </header>
+        <controls></controls>
+      </div>
+      <div>
+        <tracks></tracks>
+      </div>
     </div>
-
     <youtube-player></youtube-player>
     <soundcloud-player></soundcloud-player>
   </section>
@@ -26,10 +24,14 @@
   import actions from '../actions'
   import youtube_player from './playlist/youtube-player.vue'
   import soundcloud_player from './playlist/soundcloud-player.vue'
+  import tracks from './playlist/tracks.vue'
+  import controls from './playlist/controls.vue'
 
   export default {
     name: 'playlist',
     components: {
+      'controls': controls,
+      'tracks': tracks,
       'youtube-player': youtube_player,
       'soundcloud-player': soundcloud_player
     },
@@ -38,7 +40,7 @@
         id: ''
       }
     },
-    mounted: function () {
+    mounted () {
       this.id = this.$route.params.id;
       this.get_playlist(this.id);
     },
@@ -48,13 +50,31 @@
         track: state => state.track
       },
       actions: {
-        get_playlist: actions.get_playlist,
-        set_track: actions.set_track
+        get_playlist: actions.get_playlist
       }
     }
   }
 </script>
 
 <style lang='sass'>
+  @import '../constants';
 
+  .playlist-page {
+
+    .content {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+
+      > div {
+        width: 50%;
+        height: 100%;
+        position: relative;
+      }
+    }
+
+    h1 {
+      font-size: 4rem;
+    }
+  }
 </style>

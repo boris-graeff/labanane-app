@@ -12,16 +12,16 @@
         player: ''
       }
     },
-    created: function () {
+    created () {
       this.init_player();
     },
     methods: {
-      init_player: function () {
+      init_player () {
         SC.initialize({
           client_id: this.constants.SOUNDCLOUD_KEY
         });
       },
-      stream: function (track_id) {
+      stream (track_id) {
         var that = this
 
         SC.stream('/tracks/'+track_id).then(function(player){

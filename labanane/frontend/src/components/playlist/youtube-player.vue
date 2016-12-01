@@ -13,11 +13,11 @@
         player: ''
       }
     },
-    created: function () {
+    created () {
       this.load_player()
     },
     methods: {
-      load_player: function () {
+      load_player () {
         var that = this,
             tag = document.createElement('script'),
             first_script_tag = document.getElementsByTagName('script')[0];
@@ -27,8 +27,8 @@
 
         window.onYouTubeIframeAPIReady = function () {
           that.player = new YT.Player('youtube-player', {
-            height: '360',
-            width: '640',
+            height: '100%',
+            width: '100%',
             videoId: '5EazGCA1ydk',
             events: {
               'onReady':  that.on_player_ready,
@@ -38,15 +38,15 @@
         }
       },
 
-      on_player_ready: function (event) {
+      on_player_ready (event) {
         //this.ready = true;
         //event.target.playVideo();
       },
 
-      on_state_change: function (event) {
+      on_state_change (event) {
       },
 
-      stop_video: function () {
+      stop_video () {
         this.player.stopVideo();
       }
     }
@@ -54,5 +54,12 @@
 </script>
 
 <style lang='sass'>
+  #youtube-player {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    opacity: 0.1;
+  }
 
 </style>
