@@ -15,25 +15,22 @@
         <tracks></tracks>
       </div>
     </div>
-    <youtube-player></youtube-player>
-    <soundcloud-player></soundcloud-player>
+    <player></player>
   </section>
 </template>
 
 <script>
   import actions from '../actions'
-  import youtube_player from './playlist/youtube-player.vue'
-  import soundcloud_player from './playlist/soundcloud-player.vue'
   import tracks from './playlist/tracks.vue'
   import controls from './playlist/controls.vue'
+  import player from './playlist/player.vue'
 
   export default {
     name: 'playlist',
     components: {
       'controls': controls,
       'tracks': tracks,
-      'youtube-player': youtube_player,
-      'soundcloud-player': soundcloud_player
+      'player': player
     },
     data: function () {
       return {
