@@ -1,38 +1,50 @@
 <template>
   <section class='playlist-page'>
-    <header>
-      <router-link :to="{ name: 'home'}">
-        LB
-      </router-link>
-      <h1>{{playlist.name}}</h1>
-    </header>
-
-    <div class='tracks'>
-      {{ playlist.tracks.length }} tracks
-      <ul>
-        <li v-for='track in playlist.tracks'>{{track.name}}</li>
-      </ul>
+    <div class='content'>
+      <div>
+        <header>
+          <router-link :to="{ name: 'home'}">
+            LB
+          </router-link>
+          <h1>{{playlist.name}}</h1>
+          <div>{{track.name}}</div>
+        </header>
+        <controls></controls>
+      </div>
+      <div>
+        <tracks></tracks>
+      </div>
     </div>
+    <player></player>
   </section>
 </template>
 
 <script>
   import actions from '../actions'
+  import tracks from './playlist/tracks.vue'
+  import controls from './playlist/controls.vue'
+  import player from './playlist/player.vue'
 
   export default {
     name: 'playlist',
-    data: () => {
+    components: {
+      'controls': controls,
+      'tracks': tracks,
+      'player': player
+    },
+    data: function () {
       return {
         id: ''
       }
     },
-    mounted: function () {
+    mounted () {
       this.id = this.$route.params.id;
       this.get_playlist(this.id);
     },
     vuex: {
       getters: {
-        playlist: state => state.playlist
+        playlist: state => state.playlist,
+        track: state => state.track
       },
       actions: {
         get_playlist: actions.get_playlist
@@ -42,5 +54,24 @@
 </script>
 
 <style lang='sass'>
+  @import '../constants';
 
+  .playlist-page {
+
+    .content {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+
+      > div {
+        width: 50%;
+        height: 100%;
+        position: relative;
+      }
+    }
+
+    h1 {
+      font-size: 4rem;
+    }
+  }
 </style>

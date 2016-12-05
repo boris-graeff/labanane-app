@@ -1,13 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import constants from './constants'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    constants: constants,
     playlists: [],
     playlist: {
-      name: ''
+      name: '',
+      tracks: []
+    },
+    track: {},
+    player: {
+      shuffle: false,
+      playing: false
     }
   },
 
@@ -20,6 +28,10 @@ const store = new Vuex.Store({
       state.playlist.name = id;
       state.playlist.tracks = data.playlist;
       state.is_auth = data.auth;
+    },
+
+    SET_TRACK: (state, track) => {
+      state.track = track
     }
   }
 })

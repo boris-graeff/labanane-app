@@ -18,7 +18,7 @@
 
   export default {
     name: 'home',
-    mounted: function() {
+    mounted () {
       this.get_playlists();
     },
     vuex: {
