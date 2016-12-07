@@ -32,7 +32,7 @@
 </script>
 
 <style lang='sass'>
-  @import '../../constants';
+    @import 'src/styles/constants.scss';
 
   .playlists {
     margin-top: $space-medium;

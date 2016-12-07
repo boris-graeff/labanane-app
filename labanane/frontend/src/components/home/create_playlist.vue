@@ -26,6 +26,5 @@
 </script>
 
 <style lang='sass'>
-  @import '../../constants';
-
+    @import 'src/styles/constants.scss';
 </style>
