@@ -25,5 +25,18 @@ export default {
 
   set_track: ({dispatch}, track) => {
     dispatch('SET_TRACK', track)
+  },
+
+  next_track: ({dispatch}) => {
+    dispatch('SET_NEXT_TRACK')
+  },
+
+  prev_track: ({dispatch}) => {
+    dispatch('SET_PREVIOUS_TRACK')
+  },
+
+  set_youtube_ready: ({dispatch}) => {
+    dispatch('SET_YOUTUBE_READY', 'youtube')
   }
+
 }

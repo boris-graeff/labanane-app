@@ -8,6 +8,10 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
+  resolve: {
+    extensions: ['', '.js', '.vue'],
+    modulesDirectories: ["node_modules", "src"]
+  },
   module: {
     rules: [
       {

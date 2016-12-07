@@ -15,10 +15,8 @@
       'youtube-player': youtube_player,
       'soundcloud-player': soundcloud_player
     },
-    watch: {
-      track () {
-        console.log(this.track.id)
-      }
+    self: {
+      player: null
     },
     vuex: {
       getters: {

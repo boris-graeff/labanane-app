@@ -5,6 +5,10 @@ html {
   font-size: 62.5%;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Roboto Condensed';
   background: $yellow;
@@ -20,4 +24,13 @@ a {
   &:hover {
     text-decoration: underline;
   }
+}
+
+label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+input[type=radio], input[type=checkbox]{
+  display: none;
 }

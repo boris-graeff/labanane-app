@@ -1,6 +1,6 @@
 <template>
   <section class='playlist-page'>
-    <div class='content'>
+    <div class='content' v-if='providers.youtube.ready'>
       <div>
         <header>
           <router-link :to="{ name: 'home'}">
@@ -44,7 +44,8 @@
     vuex: {
       getters: {
         playlist: state => state.playlist,
-        track: state => state.track
+        track: state => state.track,
+        providers: state => state.providers
       },
       actions: {
         get_playlist: actions.get_playlist

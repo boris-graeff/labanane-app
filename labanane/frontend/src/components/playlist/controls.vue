@@ -2,13 +2,13 @@
  <div class='controls'>
     <ul>
       <li>
-        <button type='button'>Previous</button>
+        <button type='button' @click='prev'>Previous</button>
       </li>
       <li>
         <button type='button'>Play / Pause</button>
       </li>
       <li>
-        <button type='button'>Next</button>
+        <button type='button' @click='next'>Next</button>
       </li>
       <li>
         <button type='button'>Random</button>
@@ -18,11 +18,17 @@
 </template>
 
 <script>
+  import actions from '../../actions'
+
   export default {
     name: 'controls',
     vuex: {
       getters: {
 
+      },
+      actions: {
+        next: actions.next_track,
+        prev: actions.prev_track
       }
     }
   }

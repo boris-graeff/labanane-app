@@ -5,28 +5,36 @@
       Welcome to LaBanane, the application for sharing and listening to your favorite music !<br>
       Join us on Facebook to be informed of last news, share your playlist or report a problem.
     </p>
-    <ul class='playlists'>
-      <li v-for='p in playlists'>
-        <router-link :to="{ name: 'playlist', params: { id: p}}">{{p}}</router-link>
-      </li>
-    </ul>
+    <nav>
+      <ul>
+        <li>
+          <input type='radio' id='nav-explore' value=0 v-model.number='nav'/>
+          <label for='nav-explore'>Explore</label>
+        </li>
+        <li>
+          <input type='radio' id='nav-create' value=1 v-model.number='nav' />
+          <label for='nav-create'>Create</label>
+        </li>
+      </ul>
+    </nav>
+    <explore-playlists v-show='nav === 0'></explore-playlists>
+    <create-playlist v-show='nav === 1'></create-playlist>
   </section>
 </template>
 
 <script>
-  import actions from '../actions'
+  import explore_playlists from './home/explore_playlists.vue'
+  import create_playlist from './home/create_playlist.vue'
 
   export default {
     name: 'home',
-    mounted () {
-      this.get_playlists();
+    components: {
+      'explore-playlists': explore_playlists,
+      'create-playlist': create_playlist
     },
-    vuex: {
-      getters: {
-        playlists: state => state.playlists
-      },
-      actions: {
-        get_playlists: actions.get_playlists
+    data: function () {
+      return {
+        nav: 0
       }
     }
   }
@@ -44,8 +52,32 @@
       font-size: 4rem;
     }
 
-    .playlists {
-      margin-top: $space-medium;
+    nav {
+      border-bottom: 1px solid $black;
+      font-style: italic;
+      font-size: 3rem;
+      font-weight: bold;
+      margin-top: $space-big;
+
+      ul {
+        display: flex;
+      }
+
+      li {
+        width: 100%;
+      }
+
+      label {
+        width: 100%;
+        padding: $space-small $space-medium;
+        background: rgba($black, 0.1);
+        text-align: center;
+      }
+
+      input:checked + label {
+        background: $black;
+        color: $yellow;
+      }
     }
   }
 </style>
