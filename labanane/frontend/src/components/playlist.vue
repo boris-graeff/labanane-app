@@ -55,8 +55,6 @@
 </script>
 
 <style lang='sass'>
-  @import '../constants';
-
   .playlist-page {
 
     .content {
