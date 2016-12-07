@@ -11,7 +11,7 @@ module.exports = {
 	module: {
 		rules: [
 			{test: /\.vue$/, loader: 'vue-loader', options: {}},
-			{test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/},
+			{test: /\.js$/, include: [path.resolve(__dirname, './src')], loader: 'babel-loader'},
 			{test: /\.(png|jpg|gif|svg)$/, loader: 'file-loader', options: {name: '[name].[ext]?[hash]'}}
 		]
 	},
