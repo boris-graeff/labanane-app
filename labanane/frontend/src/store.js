@@ -35,13 +35,13 @@ const store = new Vuex.Store({
 		SET_TRACK: (state, track) => {
 			state.track = track;
 		},
-		SET_PREVIOUS_TRACK: (state) => {
+		SET_PREVIOUS_TRACK: state => {
 			state.track = state.playlists[0];
 		},
-		SET_NEXT_TRACK: (state) => {
-			state.track = state.playlists[playlists.length-1];
+		SET_NEXT_TRACK: state => {
+			state.track = state.playlists[playlists.length - 1];
 		},
-		SET_YOUTUBE_READY: (state, provider) => {
+		SET_YOUTUBE_READY: state => {
 			state.providers.youtube.ready = true;
 		}
 	}
