@@ -1,8 +1,10 @@
-import api from './api/api';
+import HTTP from './api/http';
+
+const playlist = new HTTP('playlist');
 
 export default {
-	get_playlists: ({dispatch}) => {
-		return api.get_playlists()
+	getAllPlaylists: ({dispatch}) => {
+		return playlist.all()
 			.then(response => {
 				dispatch('SET_PLAYLISTS', response.data);
 			})
@@ -10,8 +12,8 @@ export default {
 				console.error('Playlists request failed');
 			});
 	},
-	get_playlist: ({dispatch}, id) => {
-		return api.get_playlist(id)
+	getPlaylist: ({dispatch}, id) => {
+		return playlist.get(id)
 			.then(response => {
 				dispatch('SET_PLAYLIST', id, response.data);
 			})

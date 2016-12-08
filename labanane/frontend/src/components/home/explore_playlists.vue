@@ -18,14 +18,14 @@
 	export default {
 		name: 'explore-playlists',
 		mounted () {
-			this.get_playlists();
+			this.getAllPlaylists();
 		},
 		vuex: {
 			getters: {
 				playlists: state => state.playlists
 			},
 			actions: {
-				get_playlists: actions.get_playlists
+				getAllPlaylists: actions.getAllPlaylists
 			}
 		}
 	}
