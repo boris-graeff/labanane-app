@@ -1,10 +1,12 @@
-import resources from './resources';
+import HTTP from './http';
+
+const playlist = new HTTP('playlist');
 
 export default {
 	get_playlists: () => {
-		return resources.playlists.get();
+		return playlist.all();
 	},
 	get_playlist: id => {
-		return resources.playlist.get({id});
+		return playlist.get({id});
 	}
 };
