@@ -6,7 +6,7 @@
 
 <script>
   import actions from '../../../actions'
-  
+
   export default {
     name: 'youtube-player',
     player: null,
@@ -15,7 +15,7 @@
     },
     watch: {
       track () {
-        if(this.track.provider === 'youtube'){
+        if (this.track.provider === 'youtube') {
           this.play()
         }
         else {
@@ -39,7 +39,7 @@
             width: '100%',
             videoId: '5EazGCA1ydk',
             events: {
-              'onReady':  that.onPlayerReady,
+              'onReady': that.onPlayerReady,
               'onStateChange': that.onStateChange
             }
           })

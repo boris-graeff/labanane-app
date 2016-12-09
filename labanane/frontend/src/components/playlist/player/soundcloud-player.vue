@@ -15,7 +15,7 @@
     },
     watch: {
       track () {
-        if(this.track.provider === 'soundcloud'){
+        if (this.track.provider === 'soundcloud') {
           this.play()
         }
         else {
@@ -32,13 +32,13 @@
       play () {
         var that = this
 
-        SC.stream('/tracks/'+this.track.id).then(function(player){
+        SC.stream('/tracks/' + this.track.id).then(function (player) {
           that.player = player
           player.play()
         });
       },
       stop () {
-        if(!this.player)
+        if (!this.player)
           return;
         this.player.stop()
       }

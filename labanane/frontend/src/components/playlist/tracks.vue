@@ -35,11 +35,11 @@
     overflow-y: auto;
 
     li {
-    padding: 3px 6px;
-    cursor: pointer;
-    transition: background 300ms ease-in-out, color 300ms ease-in-out;
+      padding: 3px 6px;
+      cursor: pointer;
+      transition: background 300ms ease-in-out, color 300ms ease-in-out;
 
-      &:nth-child(even){
+      &:nth-child(even) {
         background: rgba($black, 0.1);
       }
 
@@ -63,5 +63,6 @@
       font-size: 3rem;
       position: fixed;
     }
+
   }
 </style>

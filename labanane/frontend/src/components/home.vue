@@ -12,7 +12,7 @@
           <label for='nav-explore'>Explore</label>
         </li>
         <li>
-          <input type='radio' id='nav-create' value=1 v-model.number='nav' />
+          <input type='radio' id='nav-create' value=1 v-model.number='nav'/>
           <label for='nav-create'>Create</label>
         </li>
       </ul>
@@ -41,12 +41,12 @@
 </script>
 
 <style lang='sass'>
-    @import 'src/styles/constants.scss';
+  @import 'src/styles/constants.scss';
 
   .home-page {
-    max-width: 600px;
-    margin: auto;
-    padding: $space-big $space-small;
+      max-width: 600px;
+      margin: auto;
+      padding: $space-big $space-small;
 
     h1 {
       font-size: 4rem;
@@ -59,25 +59,26 @@
       font-weight: bold;
       margin-top: $space-big;
 
-      ul {
-        display: flex;
-      }
+    ul {
+      display: flex;
+    }
 
-      li {
-        width: 100%;
-      }
+    li {
+      width: 100%;
+    }
 
-      label {
-        width: 100%;
-        padding: $space-small $space-medium;
-        background: rgba($black, 0.1);
-        text-align: center;
-      }
+    label {
+      width: 100%;
+      padding: $space-small $space-medium;
+      background: rgba($black, 0.1);
+      text-align: center;
+    }
 
-      input:checked + label {
-        background: $black;
-        color: $yellow;
-      }
+    input:checked + label {
+      background: $black;
+      color: $yellow;
+    }
+
     }
   }
 </style>

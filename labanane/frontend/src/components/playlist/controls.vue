@@ -1,5 +1,5 @@
 <template>
- <div class='controls'>
+  <div class='controls'>
     <ul>
       <li>
         <button type='button' @click='prev'>Previous</button>
@@ -14,7 +14,7 @@
         <button type='button'>Random</button>
       </li>
     </ul>
- </div>
+  </div>
 </template>
 
 <script>
@@ -23,9 +23,7 @@
   export default {
     name: 'controls',
     vuex: {
-      getters: {
-
-      },
+      getters: {},
       actions: {
         next: actions.nextTrack,
         prev: actions.prevTrack
@@ -36,9 +34,11 @@
 
 <style lang='sass'>
   .controls {
+
     ul {
       display: flex;
       justify-content: space-around;
     }
+
   }
 </style>

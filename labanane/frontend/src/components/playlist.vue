@@ -67,10 +67,12 @@
         height: 100%;
         position: relative;
       }
+
     }
 
     h1 {
       font-size: 4rem;
     }
+
   }
 </style>
