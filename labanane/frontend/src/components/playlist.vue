@@ -39,7 +39,7 @@
     },
     mounted () {
       this.id = this.$route.params.id;
-      this.get_playlist(this.id);
+      this.getPlaylist(this.id);
     },
     vuex: {
       getters: {
@@ -48,15 +48,13 @@
         providers: state => state.providers
       },
       actions: {
-        get_playlist: actions.get_playlist
+        getPlaylist: actions.getPlaylist
       }
     }
   }
 </script>
 
 <style lang='sass'>
-  @import '../constants';
-
   .playlist-page {
 
     .content {

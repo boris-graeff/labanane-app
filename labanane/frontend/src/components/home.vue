@@ -41,7 +41,7 @@
 </script>
 
 <style lang='sass'>
-  @import '../constants';
+    @import 'src/styles/constants.scss';
 
   .home-page {
     max-width: 600px;

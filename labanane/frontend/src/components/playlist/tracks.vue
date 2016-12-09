@@ -26,8 +26,8 @@
   }
 </script>
 
-<style lang='sass'>
-  @import '../../constants';
+<style lang="sass">
+  @import 'src/styles/constants.scss';
 
   .tracks {
     position: relative;
