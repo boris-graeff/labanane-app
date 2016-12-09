@@ -10,7 +10,7 @@ export default {
       })
       .catch(() => {
         console.error('Playlists request failed');
-      });
+      })
   },
   getPlaylist: ({dispatch}, id) => {
     return playlist.get({id})
@@ -19,7 +19,16 @@ export default {
       })
       .catch(() => {
         console.error('Playlist request failed');
-      });
+      })
+  },
+  createPlaylist: ({dispatch}, name, password) => {
+    return playlist.create({name, password})
+      .then(response => {
+
+      })
+      .catch(() => {
+        console.error('Playlist creation request failed');
+      })
   },
   setTrack: ({dispatch}, track) => {
     dispatch('SET_TRACK', track);

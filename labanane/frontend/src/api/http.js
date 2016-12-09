@@ -15,7 +15,8 @@ export default class HTTP {
   }
 
   create(resource, params = {}) {
-    return axios.post('/services/' + this.resource + '/', resource, this.getRequestConfig(params));
+    // fixme: remove /create/ segment to be RESTful
+    return axios.post('/services/' + this.resource + '/create', resource, this.getRequestConfig(params));
   }
 
   all(params = {}) {
