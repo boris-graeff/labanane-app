@@ -11,7 +11,7 @@
     name: 'soundcloud-player',
     player: null,
     created () {
-      this.init_player();
+      this.initPlayer();
     },
     watch: {
       track () {
@@ -24,7 +24,7 @@
       }
     },
     methods: {
-      init_player () {
+      initPlayer () {
         SC.initialize({
           client_id: this.constants.SOUNDCLOUD_KEY
         });

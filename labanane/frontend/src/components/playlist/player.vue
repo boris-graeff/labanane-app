@@ -6,14 +6,14 @@
 </template>
 
 <script>
-  import youtube_player from './player/youtube-player.vue'
-  import soundcloud_player from './player/soundcloud-player.vue'
+  import youtubePlayer from './player/youtube-player.vue'
+  import soundcloudPlayer from './player/soundcloud-player.vue'
 
   export default {
     name: 'player',
     components: {
-      'youtube-player': youtube_player,
-      'soundcloud-player': soundcloud_player
+      'youtube-player': youtubePlayer,
+      'soundcloud-player': soundcloudPlayer
     },
     self: {
       player: null

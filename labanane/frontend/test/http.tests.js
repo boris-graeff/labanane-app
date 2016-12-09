@@ -1,8 +1,8 @@
 import test from 'ava';
 import nock from 'nock';
 
-import helpers from './_helpers';
 import HTTP from '../src/api/http';
+import helpers from './_helpers';
 
 const playlist = new HTTP('playlist');
 

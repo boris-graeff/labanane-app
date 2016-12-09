@@ -1,0 +1,27 @@
+
+input {
+  border: none;
+  background: rgba($black, 0.05);
+  display: inline-block;
+  font-size: 15px;
+  height: 40px;
+  padding: 0 6px;
+}
+
+.text-box {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  line-height: 1;
+
+  input {
+    width: 100%;
+    border-bottom: 1px solid $black;
+  }
+
+  label {
+    font-size: 14px;
+    margin-bottom: 3px;
+    margin-top: $space-small;
+  }
+}

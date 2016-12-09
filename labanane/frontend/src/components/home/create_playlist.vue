@@ -5,12 +5,12 @@
         </div>
         <form>
             <div class='text-box'>
-                <input type='text' id='playlist-name'>
                 <label for='playlist-name'>Name</label>
+                <input type='text' id='playlist-name'>
             </div>
             <div class='text-box'>
-                <input type='password' id='playlist-password'>
                 <label for='playlist-password'>Password</label>
+                <input type='password' id='playlist-password'>
             </div>
             <button type='submit'>Create</button>
         </form>

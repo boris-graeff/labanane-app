@@ -23,14 +23,14 @@
 </template>
 
 <script>
-  import explore_playlists from './home/explore_playlists.vue'
-  import create_playlist from './home/create_playlist.vue'
+  import explorePlaylists from './home/explore_playlists.vue'
+  import createPlaylist from './home/create_playlist.vue'
 
   export default {
     name: 'home',
     components: {
-      'explore-playlists': explore_playlists,
-      'create-playlist': create_playlist
+      'explore-playlists': explorePlaylists,
+      'create-playlist': createPlaylist
     },
     data: function () {
       return {

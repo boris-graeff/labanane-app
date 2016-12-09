@@ -30,16 +30,18 @@ const store = new Vuex.Store({
 		SET_PLAYLIST: (state, id, data) => {
 			state.playlist.name = id;
 			state.playlist.tracks = data.playlist;
-			state.is_auth = data.auth;
+			state.isAuth = data.auth;
 		},
 		SET_TRACK: (state, track) => {
 			state.track = track;
 		},
 		SET_PREVIOUS_TRACK: state => {
+			// fixme: set right previous track
 			state.track = state.playlists[0];
 		},
 		SET_NEXT_TRACK: state => {
-			state.track = state.playlists[playlists.length - 1];
+			// fixme: set right next track
+			state.track = state.playlists[state.playlists.length - 1];
 		},
 		SET_YOUTUBE_READY: state => {
 			state.providers.youtube.ready = true;

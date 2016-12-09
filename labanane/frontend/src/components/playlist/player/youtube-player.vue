@@ -11,7 +11,7 @@
     name: 'youtube-player',
     player: null,
     created () {
-      this.load_player()
+      this.loadPlayer()
     },
     watch: {
       track () {
@@ -24,34 +24,34 @@
       }
     },
     methods: {
-      load_player () {
+      loadPlayer () {
         var that = this,
             tag = document.createElement('script'),
-            first_script_tag = document.getElementsByTagName('script')[0];
+            firstScriptTag = document.getElementsByTagName('script')[0];
 
         tag.src = "https://www.youtube.com/iframe_api";
-        first_script_tag.parentNode.insertBefore(tag, first_script_tag);
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         window.onYouTubeIframeAPIReady = function () {
 
           that.player = new YT.Player('youtube-player', {
-            height: '100vh',
-            width: '100vw',
+            height: '100%',
+            width: '100%',
             videoId: '5EazGCA1ydk',
             events: {
-              'onReady':  that.on_player_ready,
-              'onStateChange': that.on_state_change
+              'onReady':  that.onPlayerReady,
+              'onStateChange': that.onStateChange
             }
           })
 
         }
       },
 
-      on_player_ready (event) {
-        this.set_youtube_ready()
+      onPlayerReady (event) {
+        this.setYoutubeReady()
       },
 
-      on_state_change (event) {
+      onStateChange (event) {
       },
 
       play() {
@@ -68,7 +68,7 @@
         track: state => state.track
       },
       actions: {
-        set_youtube_ready: actions.set_youtube_ready
+        setYoutubeReady: actions.setYoutubeReady
       }
     }
   }

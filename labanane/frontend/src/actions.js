@@ -13,7 +13,7 @@ export default {
 			});
 	},
 	getPlaylist: ({dispatch}, id) => {
-		return playlist.get(id)
+		return playlist.get({id})
 			.then(response => {
 				dispatch('SET_PLAYLIST', id, response.data);
 			})
@@ -21,16 +21,16 @@ export default {
 				console.error('Playlist request failed');
 			});
 	},
-	set_track: ({dispatch}, track) => {
+	setTrack: ({dispatch}, track) => {
 		dispatch('SET_TRACK', track);
 	},
-	next_track: ({dispatch}) => {
+	nextTrack: ({dispatch}) => {
 		dispatch('SET_NEXT_TRACK');
 	},
-	prev_track: ({dispatch}) => {
+	prevTrack: ({dispatch}) => {
 		dispatch('SET_PREVIOUS_TRACK');
 	},
-	set_youtube_ready: ({dispatch}) => {
+	setYoutubeReady: ({dispatch}) => {
 		dispatch('SET_YOUTUBE_READY', 'youtube');
 	}
 };

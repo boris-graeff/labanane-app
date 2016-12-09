@@ -27,8 +27,8 @@
 
       },
       actions: {
-        next: actions.next_track,
-        prev: actions.prev_track
+        next: actions.nextTrack,
+        prev: actions.prevTrack
       }
     }
   }

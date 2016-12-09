@@ -2,7 +2,7 @@
   <div class='tracks'>
     <div v-show='playlist.tracks.length '>{{ playlist.tracks.length }}</div>
     <ul>
-      <li v-for='t in playlist.tracks' @click='set_track(t)' v-bind:class='{"selected": t.id == track.id}'>
+      <li v-for='t in playlist.tracks' @click='setTrack(t)' v-bind:class='{"selected": t.id == track.id}'>
         {{t.name}}
       </li>
     </ul>
@@ -20,7 +20,7 @@
         track: state => state.track
       },
       actions: {
-        set_track: actions.set_track
+        setTrack: actions.setTrack
       }
     }
   }
