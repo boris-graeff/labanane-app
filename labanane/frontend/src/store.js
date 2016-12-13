@@ -4,6 +4,12 @@ import constants from './constants';
 
 Vue.use(Vuex);
 
+function get_current_index (state) {
+  return state.playlist.tracks.findIndex((t) => {
+    return t.id === state.track.id
+  })
+}
+
 const store = new Vuex.Store({
   state: {
     constants,
@@ -36,12 +42,10 @@ const store = new Vuex.Store({
       state.track = track;
     },
     SET_PREVIOUS_TRACK: state => {
-      // fixme: set right previous track
-      state.track = state.playlists[0];
+      state.track = state.playlist.tracks[ get_current_index(state) - 1];
     },
     SET_NEXT_TRACK: state => {
-      // fixme: set right next track
-      state.track = state.playlists[state.playlists.length - 1];
+      state.track = state.playlist.tracks[ get_current_index(state) + 1];
     },
     SET_YOUTUBE_READY: state => {
       state.providers.youtube.ready = true;
