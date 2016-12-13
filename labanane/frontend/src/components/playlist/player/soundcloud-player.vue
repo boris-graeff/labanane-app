@@ -31,8 +31,12 @@
       },
       play () {
         var that = this
-
         SC.stream('/tracks/' + this.track.id).then(function (player) {
+          // Fixes chrome issue  https://github.com/soundcloud/soundcloud-javascript/issues/39
+          if (player.options.protocols[0] === 'rtmp') {
+            player.options.protocols.splice(0, 1);
+          }
+
           that.player = player
           player.play()
         });
@@ -40,7 +44,7 @@
       stop () {
         if (!this.player)
           return;
-        this.player.stop()
+        this.player.pause()
       }
     },
     vuex: {
