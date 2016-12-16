@@ -1,5 +1,7 @@
 <template>
-  <div id='soundcloud-player' v-bind:style="{backgroundImage: 'url(' + track.artwork + ')'}">
+  <div id='soundcloud-player'
+       v-bind:style="{backgroundImage: 'url(' + track.artwork + ')'}"
+       v-bind:class='{"is_active": is_active}' >
 
   </div>
 </template>
@@ -9,7 +11,7 @@
 
   export default {
     name: 'soundcloud-player',
-    player: null,
+    sound: null,
     created () {
       this.initPlayer();
     },
@@ -21,6 +23,19 @@
         else {
           this.stop()
         }
+      },
+      player: {
+        handler () {
+          if (!this.player.playing) {
+            this.stop()
+          }
+        },
+        deep: true
+      }
+    },
+    computed: {
+      is_active () {
+        return this.track.provider === 'soundcloud'
       }
     },
     methods: {
@@ -30,27 +45,33 @@
         });
       },
       play () {
+        this.stop()
+
         var that = this
-        SC.stream('/tracks/' + this.track.id).then(function (player) {
+        SC.stream('/tracks/' + this.track.id).then(function (sound) {
           // Fixes chrome issue  https://github.com/soundcloud/soundcloud-javascript/issues/39
-          if (player.options.protocols[0] === 'rtmp') {
-            player.options.protocols.splice(0, 1);
+          if (sound.options.protocols[0] === 'rtmp') {
+            sound.options.protocols.splice(0, 1);
           }
 
-          that.player = player
-          player.play()
+          that.sound = sound
+          sound.play()
         });
       },
       stop () {
-        if (!this.player)
+        if (!this.sound)
           return;
-        this.player.pause()
+        this.sound.pause()
       }
+    },
+    beforeDestroy(){
+      this.stop()
     },
     vuex: {
       getters: {
         constants: state => state.constants,
-        track: state => state.track
+        track: state => state.track,
+        player: state => state.player
       }
     }
   }
@@ -64,8 +85,13 @@
     right: 0;
     bottom: 0;
     z-index: -1;
-    opacity: 0.2;
     filter: grayscale(100%);
     background-size: cover;
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+
+    &.is_active {
+       opacity: 0.2;
+    }
   }
 </style>

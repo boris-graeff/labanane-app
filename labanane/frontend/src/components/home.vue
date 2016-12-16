@@ -43,10 +43,6 @@
 <style lang='sass'>
   @import 'src/styles/constants.scss';
 
-  body {
-    overflow-y: scroll;
-  }
-
   .home-page {
       max-width: 600px;
       margin: auto;

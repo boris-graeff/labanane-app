@@ -30,8 +30,16 @@ export default {
         console.error('Playlist creation request failed');
       })
   },
+
+
   setTrack: ({dispatch}, track) => {
     dispatch('SET_TRACK', track);
+  },
+  setPlay: ({dispatch}) => {
+    dispatch('SET_PLAY')
+  },
+  setPause: ({dispatch}) => {
+    dispatch('SET_PAUSE')
   },
   nextTrack: ({dispatch}) => {
     dispatch('SET_NEXT_TRACK');

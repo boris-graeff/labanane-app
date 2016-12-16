@@ -1,6 +1,6 @@
 <template>
-  <div id='youtube-player'>
-
+  <div class='youtube-player' v-bind:class='{"is_active": is_active}'>
+    <div  id='youtube-player'></div>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 
   export default {
     name: 'youtube-player',
-    player: null,
+    sound: null,
     created () {
       this.loadPlayer()
     },
@@ -21,6 +21,19 @@
         else {
           this.stop()
         }
+      },
+      player: {
+        handler () {
+          if (!this.player.playing) {
+            this.stop()
+          }
+        },
+        deep: true
+      }
+    },
+    computed: {
+      is_active () {
+        return this.track.provider === 'youtube'
       }
     },
     methods: {
@@ -34,7 +47,7 @@
 
         window.onYouTubeIframeAPIReady = function () {
 
-          that.player = new YT.Player('youtube-player', {
+          that.sound = new YT.Player('youtube-player', {
             height: '100%',
             width: '100%',
             videoId: '5EazGCA1ydk',
@@ -55,17 +68,24 @@
       },
 
       play() {
-        this.player.loadVideoById({'videoId': this.track.id})
+        this.sound.loadVideoById({'videoId': this.track.id})
       },
 
       stop () {
-        this.player.stopVideo();
+        if (!this.sound)
+          return;
+
+        this.sound.stopVideo();
       }
+    },
+    beforeDestroy(){
+      this.stop()
     },
     vuex: {
       getters: {
         constants: state => state.constants,
-        track: state => state.track
+        track: state => state.track,
+        player: state => state.player
       },
       actions: {
         setYoutubeReady: actions.setYoutubeReady
@@ -75,12 +95,19 @@
 </script>
 
 <style lang='sass'>
-  #youtube-player {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    opacity: 0.2;
-    filter: grayscale(100%);
+  .youtube-player {
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      filter: grayscale(100%);
+      opacity: 0;
+      transition: opacity 300ms ease-in-out;
+    }
+
+    &.is_active iframe {
+      opacity: 0.2;
+   }
   }
 </style>

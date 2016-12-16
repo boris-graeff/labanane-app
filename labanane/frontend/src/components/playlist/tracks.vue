@@ -3,7 +3,7 @@
     <div v-show='playlist.tracks.length '>{{ playlist.tracks.length }}</div>
     <ul>
       <li v-for='t in playlist.tracks' @click='setTrack(t)' v-bind:class='{"selected": t.id == track.id}'>
-        {{t.name}}
+        {{t.name}} - {{t.provider}}
       </li>
     </ul>
   </div>

@@ -40,6 +40,15 @@ const store = new Vuex.Store({
     },
     SET_TRACK: (state, track) => {
       state.track = track;
+      state.player.playing = true
+    },
+    SET_PLAY: (state) => {
+      if(state.track){
+        state.player.playing = true
+      }
+    },
+    SET_PAUSE: (state) => {
+      state.player.playing = false
     },
     SET_PREVIOUS_TRACK: state => {
       state.track = state.playlist.tracks[ get_current_index(state) - 1];

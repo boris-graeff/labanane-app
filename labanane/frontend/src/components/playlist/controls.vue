@@ -1,11 +1,15 @@
 <template>
   <div class='controls'>
+    {{ player.playing }}
     <ul>
       <li>
         <button type='button' @click='prev'>Previous</button>
       </li>
-      <li>
-        <button type='button'>Play / Pause</button>
+      <li v-show='!player.playing'>
+        <button type='button' @click='play'>Play</button>
+      </li>
+      <li v-show='player.playing'>
+        <button type='button' @click='pause'>Pause</button>
       </li>
       <li>
         <button type='button' @click='next'>Next</button>
@@ -23,10 +27,14 @@
   export default {
     name: 'controls',
     vuex: {
-      getters: {},
+      getters: {
+        player: state => state.player
+      },
       actions: {
         next: actions.nextTrack,
-        prev: actions.prevTrack
+        prev: actions.prevTrack,
+        play: actions.setPlay,
+        pause: actions.setPause,
       }
     }
   }
