@@ -10,6 +10,7 @@
   export default {
     name: 'youtube-player',
     sound: null,
+    timer: null,
     created () {
       this.loadPlayer()
     },
@@ -65,6 +66,22 @@
       },
 
       onStateChange (event) {
+        var that = this
+
+        if(event.data == 1) { // Playing
+          if(! this.timer){
+            this.timer = setInterval(function(){
+              that.setTrackProgression(that.sound.getCurrentTime() / that.sound.getDuration() * 100)
+            }, 1000)
+          }
+        }
+        else {
+          clearInterval(this.timer)
+
+          if(event.data == 0){
+            this.nextTrack()
+          }
+        }
       },
 
       play() {
@@ -88,7 +105,9 @@
         player: state => state.player
       },
       actions: {
-        setYoutubeReady: actions.setYoutubeReady
+        nextTrack: actions.nextTrack,
+        setYoutubeReady: actions.setYoutubeReady,
+        setTrackProgression: actions.setTrackProgression
       }
     }
   }

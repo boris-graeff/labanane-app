@@ -18,10 +18,13 @@ const store = new Vuex.Store({
       name: '',
       tracks: []
     },
-    track: {},
+    track: {
+      name: '-'
+    },
     player: {
       shuffle: false,
-      playing: false
+      playing: false,
+      progression: 0
     },
     providers: {
       youtube: {
@@ -41,6 +44,9 @@ const store = new Vuex.Store({
     SET_TRACK: (state, track) => {
       state.track = track;
       state.player.playing = true
+    },
+    SET_TRACK_PROGRESSION: (state, progression) => {
+      state.player.progression = progression
     },
     SET_PLAY: (state) => {
       if(state.track){

@@ -1,0 +1,99 @@
+// Based on https://github.com/darlanrod/input-range-scss
+
+$track-color: transparent !default;
+$thumb-color: #555bc8 !default;
+$thumb-height: 20px !default;
+$thumb-width: 20px !default;
+$track-width: 100% !default;
+$track-height: 20px !default;
+$track-border: 1px solid $black;
+
+@mixin track() {
+  width: $track-width;
+  height: $track-height;
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+}
+
+@mixin thumb() {
+  height: $thumb-height;
+  width: $thumb-width;
+  border-radius: 0;
+  border: none;
+  background: $black;
+  cursor: pointer;
+}
+
+[type=range] {
+  -webkit-appearance: none;
+  margin: $thumb-height / 2 0;
+  width: $track-width;
+  background: $track-color;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track();
+    background: $track-color;
+    border: none;
+    border-bottom: $track-border;
+    border-radius: 0;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb();
+    -webkit-appearance: none;
+  }
+
+  &:focus::-webkit-slider-runnable-track {
+    background: $track-color;
+  }
+
+  &::-moz-range-track {
+    @include track();
+    background: $track-color;
+    border: none;
+    border-bottom: $track-border;
+    border-radius: 0;
+  }
+
+  &::-moz-range-thumb {
+    @include thumb();
+  }
+
+  &::-ms-track {
+    @include track();
+    background: $track-color;
+    border-color: $track-color;
+    border-width: $thumb-width 0;
+    color: transparent;
+  }
+
+  &::-ms-fill-lower {
+    background: $track-color;
+    border-radius: 0;
+  }
+
+  &::-ms-fill-upper {
+    background: $track-color;
+    border-radius: 0;
+  }
+
+  &::-ms-thumb {
+    @include thumb();
+  }
+
+  &:focus::-ms-fill-lower {
+    background: $track-color;
+  }
+
+  &:focus::-ms-fill-upper {
+    background: $track-color;
+  }
+}
+
+[type='range']::-moz-focus-outer {
+  border: 0;
+}

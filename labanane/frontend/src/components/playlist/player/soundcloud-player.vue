@@ -8,6 +8,7 @@
 
 <script>
   import SC from 'soundcloud'
+  import actions from '../../../actions'
 
   export default {
     name: 'soundcloud-player',
@@ -55,6 +56,15 @@
           }
 
           that.sound = sound
+
+          sound.on('time', function(){
+            that.setTrackProgression(this.currentTime() / sound.streamInfo.duration * 100)
+          })
+
+          sound.on('finish', function(){
+            that.nextTrack()
+          })
+
           sound.play()
         });
       },
@@ -72,6 +82,10 @@
         constants: state => state.constants,
         track: state => state.track,
         player: state => state.player
+      },
+      actions: {
+        nextTrack: actions.nextTrack,
+        setTrackProgression: actions.setTrackProgression
       }
     }
   }

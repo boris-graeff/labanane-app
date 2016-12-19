@@ -65,3 +65,7 @@ input, select, textarea {
 ::-moz-focus-inner {
   border: 0;
 }
+
+:focus {
+  outline:none;
+}

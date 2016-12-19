@@ -1,6 +1,8 @@
 <template>
   <div class='controls'>
-    {{ player.playing }}
+    <div class='progress bar'>
+      <input type='range' v-model='progression' />
+    </div>
     <ul>
       <li>
         <button type='button' @click='prev'>Previous</button>
@@ -26,6 +28,16 @@
 
   export default {
     name: 'controls',
+    computed: {
+      progression: {
+        get() {
+          return this.player.progression
+        },
+        set(value) {
+          // fixme
+        }
+      }
+    },
     vuex: {
       getters: {
         player: state => state.player
@@ -34,14 +46,17 @@
         next: actions.nextTrack,
         prev: actions.prevTrack,
         play: actions.setPlay,
-        pause: actions.setPause,
+        pause: actions.setPause
       }
     }
   }
 </script>
 
 <style lang='sass'>
+  @import 'src/styles/constants.scss';
+
   .controls {
+    padding: $space-medium;
 
     ul {
       display: flex;

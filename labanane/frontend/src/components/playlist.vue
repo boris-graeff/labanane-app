@@ -7,7 +7,7 @@
             LB
           </router-link>
           <h1>{{playlist.name}}</h1>
-          <div>{{track.name}}</div>
+          <div class='track-name'>{{track.name}}</div>
         </header>
         <controls></controls>
       </div>
@@ -55,7 +55,17 @@
 </script>
 
 <style lang='sass'>
+  @import 'src/styles/constants.scss';
+
   .playlist-page {
+
+    header {
+      padding: $space-medium;
+    }
+
+    h1 {
+      font-size: 4rem;
+    }
 
     .content {
       display: flex;
@@ -70,8 +80,11 @@
 
     }
 
-    h1 {
-      font-size: 4rem;
+    .track-name {
+      font-size: 3rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
   }
