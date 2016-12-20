@@ -144,7 +144,7 @@
       top: 0;
       left: 0;
       z-index: -1;
-      filter: grayscale(100%);
+      filter: blur(30px);
       opacity: 0;
       transition: opacity 300ms ease-in-out;
     }

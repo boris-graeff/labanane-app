@@ -34,17 +34,23 @@
     height: 100%;
     overflow-y: auto;
 
+    ul {
+      min-height: 100%;
+      background: url("/images/tracks-background.png");
+    }
+
     li {
-      padding: 3px 6px;
+      height: 25px;
+      padding: 0 6px;
+      line-height: 25px;
       cursor: pointer;
       transition: background 300ms ease-in-out, color 300ms ease-in-out;
-
-      &:nth-child(even) {
-        background: rgba($black, 0.1);
-      }
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
 
       &:hover {
-        background: rgba($black, 0.4);
+        background: rgba($black, 0.2);
       }
 
       &.selected {
@@ -66,6 +72,8 @@
       color: $yellow;
       font-size: 3rem;
       position: fixed;
+      min-width: 50px;
+      text-align: center;
     }
 
   }
