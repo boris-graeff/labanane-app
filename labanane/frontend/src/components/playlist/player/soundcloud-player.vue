@@ -17,26 +17,27 @@
       this.initPlayer();
     },
     watch: {
-      track () {
-        if (this.track.provider === 'soundcloud') {
-          this.play()
-        }
-        else {
-          this.stop()
-        }
-      },
       player: {
-        handler () {
-          if (!this.player.playing) {
+        handler: function(){
+          if(this.track.provider === 'soundcloud'){
+            this.is_active = true
+
+            if(this.player.state === 'loading'){
+              this.load()
+            }
+            else if(this.player.state === 'playing'){
+              this.play()
+            }
+            else if(this.player.state === 'paused'){
+              this.pause()
+            }
+          }
+          else {
+            this.is_active = false
             this.stop()
           }
         },
         deep: true
-      }
-    },
-    computed: {
-      is_active () {
-        return this.track.provider === 'soundcloud'
       }
     },
     methods: {
@@ -45,33 +46,43 @@
           client_id: this.constants.SOUNDCLOUD_KEY
         });
       },
-      play () {
-        this.stop()
-
+      load () {
         var that = this
-        SC.stream('/tracks/' + this.track.id).then(function (sound) {
-          // Fixes chrome issue  https://github.com/soundcloud/soundcloud-javascript/issues/39
-          if (sound.options.protocols[0] === 'rtmp') {
-            sound.options.protocols.splice(0, 1);
-          }
+        SC.stream('/tracks/' + this.track.id)
+            .then(sound => {
+              // Fixes chrome issue  https://github.com/soundcloud/soundcloud-javascript/issues/39
+              if (sound.options.protocols[0] === 'rtmp') {
+                sound.options.protocols.splice(0, 1);
+              }
 
-          that.sound = sound
+              that.sound = sound
 
-          sound.on('time', function(){
-            that.setTrackProgression(this.currentTime() / sound.streamInfo.duration * 100)
-          })
+              sound.on('time', function(){
+                that.setTrackProgression(this.currentTime() / sound.streamInfo.duration * 100)
+              })
 
-          sound.on('finish', function(){
-            that.nextTrack()
-          })
+              sound.on('finish', function(){
+                that.nextTrack()
+              })
 
-          sound.play()
-        });
+              that.setPlay()
+            })
+            .catch(() => {
+              this.setTrackError()
+            })
+      },
+      play () {
+        this.sound.play()
+      },
+      pause () {
+        if (!this.sound)
+          return;
+        this.sound.pause()
       },
       stop () {
         if (!this.sound)
           return;
-        this.sound.pause()
+        this.sound.dispose()
       }
     },
     beforeDestroy(){
@@ -84,8 +95,10 @@
         player: state => state.player
       },
       actions: {
+        setPlay: actions.setPlay,
         nextTrack: actions.nextTrack,
-        setTrackProgression: actions.setTrackProgression
+        setTrackProgression: actions.setTrackProgression,
+        setTrackError: actions.setTrackError
       }
     }
   }

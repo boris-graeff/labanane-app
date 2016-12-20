@@ -51,7 +51,7 @@
     ],
     "babel": "inherit"
   },
-    "babel": {
+  "babel": {
     "comments": false,
     "plugins": [
       "transform-runtime"

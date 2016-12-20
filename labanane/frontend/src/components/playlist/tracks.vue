@@ -2,7 +2,7 @@
   <div class='tracks'>
     <div v-show='playlist.tracks.length '>{{ playlist.tracks.length }}</div>
     <ul>
-      <li v-for='t in playlist.tracks' @click='setTrack(t)' v-bind:class='{"selected": t.id == track.id}'>
+      <li v-for='t in playlist.tracks' @click='setTrack(t)' v-bind:class='{"selected": t.id == track.id, "error": t.error}'>
         {{t.name}} - {{t.provider}}
       </li>
     </ul>
@@ -50,6 +50,10 @@
       &.selected {
         background: $black;
         color: $yellow;
+      }
+
+      &.error {
+        background: $red;
       }
     }
 

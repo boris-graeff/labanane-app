@@ -11,30 +11,35 @@
     name: 'youtube-player',
     sound: null,
     timer: null,
+    data: function(){
+      return {
+        is_active: false
+      }
+    },
     created () {
       this.loadPlayer()
     },
     watch: {
-      track () {
-        if (this.track.provider === 'youtube') {
-          this.play()
-        }
-        else {
-          this.stop()
-        }
-      },
       player: {
-        handler () {
-          if (!this.player.playing) {
+        handler: function(){
+          if(this.track.provider === 'youtube'){
+            this.is_active = true
+            if(this.player.state === 'loading'){
+              this.load()
+            }
+            else if(this.player.state === 'playing'){
+              this.play()
+            }
+            else if(this.player.state === 'paused'){
+              this.pause()
+            }
+          }
+          else {
+            this.is_active = false
             this.stop()
           }
         },
         deep: true
-      }
-    },
-    computed: {
-      is_active () {
-        return this.track.provider === 'youtube'
       }
     },
     methods: {
@@ -51,24 +56,28 @@
           that.sound = new YT.Player('youtube-player', {
             height: '100%',
             width: '100%',
-            videoId: '5EazGCA1ydk',
             events: {
               'onReady': that.onPlayerReady,
-              'onStateChange': that.onStateChange
+              'onStateChange': that.onStateChange,
+              'onError': that.onError
             }
           })
 
         }
       },
 
-      onPlayerReady (event) {
+      onPlayerReady () {
         this.setYoutubeReady()
       },
 
       onStateChange (event) {
+        if(this.track.provider !== 'youtube')
+          return
+
         var that = this
 
-        if(event.data == 1) { // Playing
+        if(event.data === YT.PlayerState.PLAYING) { // Playing
+          this.setPlay()
           if(! this.timer){
             this.timer = setInterval(function(){
               that.setTrackProgression(that.sound.getCurrentTime() / that.sound.getDuration() * 100)
@@ -84,8 +93,21 @@
         }
       },
 
-      play() {
+      onError() {
+        this.setTrackError()
+      },
+
+      load() {
+        this.stop()
         this.sound.loadVideoById({'videoId': this.track.id})
+      },
+
+      play () {
+        this.sound.playVideo()
+      },
+
+      pause () {
+        this.sound.pauseVideo()
       },
 
       stop () {
@@ -105,9 +127,11 @@
         player: state => state.player
       },
       actions: {
+        setPlay: actions.setPlay,
         nextTrack: actions.nextTrack,
         setYoutubeReady: actions.setYoutubeReady,
-        setTrackProgression: actions.setTrackProgression
+        setTrackProgression: actions.setTrackProgression,
+        setTrackError: actions.setTrackError
       }
     }
   }

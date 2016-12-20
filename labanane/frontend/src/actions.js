@@ -52,5 +52,9 @@ export default {
   },
   setTrackProgression: ({dispatch}, progression) => {
     dispatch('SET_TRACK_PROGRESSION', progression)
+  },
+  setTrackError: ({dispatch}) => {
+    dispatch('SET_TRACK_ERROR')
+    dispatch('SET_NEXT_TRACK')
   }
 };

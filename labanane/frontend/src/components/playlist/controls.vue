@@ -1,5 +1,6 @@
 <template>
   <div class='controls'>
+    {{ player.state }}
     <div class='progress bar'>
       <input type='range' v-model='progression' />
     </div>
@@ -7,10 +8,10 @@
       <li>
         <button type='button' @click='prev'>Previous</button>
       </li>
-      <li v-show='!player.playing'>
+      <li v-show='player.state !== "playing"'>
         <button type='button' @click='play'>Play</button>
       </li>
-      <li v-show='player.playing'>
+      <li v-show='player.state === "playing"'>
         <button type='button' @click='pause'>Pause</button>
       </li>
       <li>
@@ -31,7 +32,7 @@
     computed: {
       progression: {
         get() {
-          return this.player.progression
+          return this.track.progression
         },
         set(value) {
           // fixme
@@ -40,7 +41,8 @@
     },
     vuex: {
       getters: {
-        player: state => state.player
+        player: state => state.player,
+        track: state => state.track
       },
       actions: {
         next: actions.nextTrack,
