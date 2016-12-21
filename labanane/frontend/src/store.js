@@ -15,6 +15,7 @@ function setTrack (state, track) {
     state.track[prop] = track[prop]
   }
   state.track.progression = 0
+  state.player.state = 'stopped'
   state.player.state = 'loading'
 }
 
@@ -59,6 +60,7 @@ const store = new Vuex.Store({
       state.track.progression = progression
     },
     SET_TRACK_ERROR: (state) => {
+      state.player.state = 'stopped'
       state.playlist.tracks[ getCurrentIndex(state)].error = true
     },
     SET_PLAY: (state) => {

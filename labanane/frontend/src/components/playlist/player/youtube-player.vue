@@ -1,22 +1,23 @@
 <template>
   <div class='youtube-player' v-bind:class='{"is_active": is_active}'>
-    <div  id='youtube-player'></div>
+    <div id='youtube-player'></div>
   </div>
 </template>
 
 <script>
+  import YtbPlayer from 'youtube-player'
   import actions from '../../../actions'
 
   export default {
     name: 'youtube-player',
-    sound: null,
+    ytbPlayer: null,
     timer: null,
     data: function(){
       return {
         is_active: false
       }
     },
-    created () {
+    mounted () {
       this.loadPlayer()
     },
     watch: {
@@ -44,26 +45,13 @@
     },
     methods: {
       loadPlayer () {
-        var that = this,
-            tag = document.createElement('script'),
-            firstScriptTag = document.getElementsByTagName('script')[0];
-
-        tag.src = "https://www.youtube.com/iframe_api";
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        window.onYouTubeIframeAPIReady = function () {
-
-          that.sound = new YT.Player('youtube-player', {
-            height: '100%',
-            width: '100%',
-            events: {
-              'onReady': that.onPlayerReady,
-              'onStateChange': that.onStateChange,
-              'onError': that.onError
-            }
-          })
-
-        }
+        this.ytbPlayer = YtbPlayer('youtube-player', {
+          height: '100%',
+          width: '100%'
+        })
+        this.ytbPlayer.on('stateChange', this.onStateChange)
+        this.ytbPlayer.on('ready', this.onPlayerReady)
+        this.ytbPlayer.on('error', this.onError)
       },
 
       onPlayerReady () {
@@ -71,8 +59,9 @@
       },
 
       onStateChange (event) {
-        if(this.track.provider !== 'youtube')
-          return
+        if(this.track.provider !== 'youtube'){
+          return clearInterval(this.timer)
+        }
 
         var that = this
 
@@ -80,7 +69,7 @@
           this.setPlay()
           if(! this.timer){
             this.timer = setInterval(function(){
-              that.setTrackProgression(that.sound.getCurrentTime() / that.sound.getDuration() * 100)
+              that.setTrackProgression(that.ytbPlayer.getCurrentTime() / that.ytbPlayer.getDuration() * 100)
             }, 1000)
           }
         }
@@ -99,26 +88,27 @@
 
       load() {
         this.stop()
-        this.sound.loadVideoById({'videoId': this.track.id})
+        this.ytbPlayer.loadVideoById({'videoId': this.track.id})
       },
 
       play () {
-        this.sound.playVideo()
+        this.ytbPlayer.playVideo()
       },
 
       pause () {
-        this.sound.pauseVideo()
+        this.ytbPlayer.pauseVideo()
       },
 
       stop () {
-        if (!this.sound)
+        if (!this.ytbPlayer)
           return;
 
-        this.sound.stopVideo();
+        this.ytbPlayer.stopVideo()
+      },
+
+      beforeDestroyed () {
+        clearInterval(this.timer)
       }
-    },
-    beforeDestroy(){
-      this.stop()
     },
     vuex: {
       getters: {

@@ -86,7 +86,9 @@
       }
     },
     beforeDestroy(){
-      this.stop()
+      if (!this.sound)
+        return;
+      this.sound.dispose()
     },
     vuex: {
       getters: {
