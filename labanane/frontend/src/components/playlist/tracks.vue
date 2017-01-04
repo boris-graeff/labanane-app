@@ -2,8 +2,10 @@
   <div class='tracks'>
     <div v-show='playlist.tracks.length '>{{ playlist.tracks.length }}</div>
     <ul>
-      <li v-for='t in playlist.tracks' @click='setTrack(t)' v-bind:class='{"selected": t.id == track.id, "error": t.error}'>
-        {{t.name}} - {{t.provider}}
+      <li v-for='t in playlist.tracks'
+          @click='setTrack(t)'
+          v-bind:class='{"selected": t.id == track.id, "error": t.error, "youtube": t.provider === "youtube", "soundcloud": t.provider === "soundcloud"}'>
+        {{t.name}}
       </li>
     </ul>
   </div>

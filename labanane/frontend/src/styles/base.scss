@@ -48,3 +48,27 @@ button {
 input[type=radio], input[type=checkbox]{
   display: none;
 }
+
+.tracks {
+
+  li {
+    &:before {
+      content: '';
+      display: inline-block;
+      height: 12px;
+      width: 30px;
+      opacity: 0.7;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    &.youtube:before {
+      background-image: url('/images/icn-youtube.svg')
+    }
+
+    &.soundcloud:before {
+      background-image: url('/images/icn-soundcloud.svg')
+    }
+  }
+}
