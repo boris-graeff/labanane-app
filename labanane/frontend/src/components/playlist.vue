@@ -3,8 +3,8 @@
     <div class='content' v-if='providers.youtube.ready'>
       <div>
         <header>
-          <router-link :to="{ name: 'home'}">
-            LB
+          <router-link :to="{ name: 'home'}" class='link-home'>
+            <img src='/images/labanane-logo.svg' alt="LaBanane logo" />
           </router-link>
           <h1>{{playlist.name}}</h1>
           <div class='track-name'>{{track.name}}</div>
@@ -65,6 +65,8 @@
 
     h1 {
       font-size: 4rem;
+      display: inline-block;
+      vertical-align: middle;
     }
 
     .content {
@@ -87,5 +89,15 @@
       text-overflow: ellipsis;
     }
 
+    .link-home  {
+      display: inline-block;
+      line-height: 0;
+      vertical-align: middle;
+
+      img {
+        height: 48px;
+        width: 48px;
+      }
+    }
   }
 </style>
