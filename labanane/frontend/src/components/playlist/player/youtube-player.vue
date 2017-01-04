@@ -60,21 +60,24 @@
 
       onStateChange (event) {
         if(this.track.provider !== 'youtube'){
-          return clearInterval(this.timer)
+          this.resetTimer()
         }
 
         var that = this
 
         if(event.data === YT.PlayerState.PLAYING) { // Playing
           this.setPlay()
-          if(! this.timer){
-            this.timer = setInterval(function(){
-              that.setTrackProgression(that.ytbPlayer.getCurrentTime() / that.ytbPlayer.getDuration() * 100)
-            }, 1000)
-          }
+
+          this.timer = setInterval(function(){
+
+          Promise.all([that.ytbPlayer.getCurrentTime(), that.ytbPlayer.getDuration()])
+              .then((values) => {
+                that.setTrackProgression(values[0] / values[1] * 100)
+              })
+          }, 1000)
         }
         else {
-          clearInterval(this.timer)
+          this.resetTimer()
 
           if(event.data == 0){
             this.nextTrack()
@@ -106,9 +109,13 @@
         this.ytbPlayer.stopVideo()
       },
 
-      beforeDestroyed () {
+      resetTimer () {
         clearInterval(this.timer)
+        this.timer = null
       }
+    },
+    beforeDestroyed () {
+      this.resetTimer()
     },
     vuex: {
       getters: {
