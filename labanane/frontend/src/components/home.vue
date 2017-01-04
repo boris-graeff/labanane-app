@@ -1,6 +1,8 @@
 <template>
   <section class='home-page'>
-    <h1>LaBanane</h1>
+    <h1>
+      <img src='/images/labanane-logo-2.svg' alt="LaBanane Logo " title="LaBanane" />
+    </h1>
     <p>
       Welcome to LaBanane, the application for sharing and listening to your favorite music !<br>
       Join us on Facebook to be informed of last news, share your playlist or report a problem.
@@ -49,7 +51,8 @@
       padding: $space-big $space-small;
 
     h1 {
-      font-size: 4rem;
+      text-align: center;
+      margin-bottom: $space-big;
     }
 
     nav {
