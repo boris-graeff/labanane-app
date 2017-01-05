@@ -1,17 +1,17 @@
 // Based on https://github.com/darlanrod/input-range-scss
 
 $track-color: transparent !default;
-$thumb-color: #555bc8 !default;
-$thumb-height: 20px !default;
-$thumb-width: 20px !default;
+$thumb-height: 14px !default;
+$thumb-width: 1px !default;
 $track-width: 100% !default;
-$track-height: 20px !default;
+$track-height: 14px !default;
 $track-border: 1px solid $black;
 
 @mixin track() {
   width: $track-width;
   height: $track-height;
   cursor: pointer;
+  min-width: 100%;
   transition: all 300ms ease-in-out;
 }
 
@@ -25,10 +25,14 @@ $track-border: 1px solid $black;
 }
 
 [type=range] {
+  position: relative;
   -webkit-appearance: none;
   margin: $thumb-height / 2 0;
   width: $track-width;
+  padding: 0;
+  height: $track-height;
   background: $track-color;
+  min-width: 100%;
 
   &:focus {
     outline: none;
@@ -91,6 +95,17 @@ $track-border: 1px solid $black;
 
   &:focus::-ms-fill-upper {
     background: $track-color;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: inherit;
+    height: 14px;
+    background: rgba($black, 0.2);
+    left: 0;
+    top: 0px;
+    z-index: -1;
   }
 }
 

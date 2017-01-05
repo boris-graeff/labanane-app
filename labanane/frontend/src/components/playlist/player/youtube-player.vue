@@ -34,6 +34,8 @@
             else if(this.player.state === 'paused'){
               this.pause()
             }
+
+            this.setVolume(this.player.volume)
           }
           else {
             this.is_active = false
@@ -109,12 +111,16 @@
         this.ytbPlayer.stopVideo()
       },
 
+      setVolume (volume) {
+        this.ytbPlayer.setVolume(volume)
+      },
+
       resetTimer () {
         clearInterval(this.timer)
         this.timer = null
       }
     },
-    beforeDestroyed () {
+    beforeDestroy () {
       this.resetTimer()
     },
     vuex: {

@@ -1,7 +1,7 @@
 <template>
   <div class='controls'>
-    <div class='progress bar'>
-      <input type='range' v-model='progression' />
+    <div class='progress-bar'>
+      <input type='range' v-model='progression' v-bind:style='{width: progression.toFixed(1) + "%"}' step='0.1' />
     </div>
     <ul>
       <li>
@@ -20,6 +20,13 @@
         <button type='button' class='btn-shuffle'></button>
       </li>
     </ul>
+    <div class='volume'>
+      <button type='button' class='btn-volume-on' v-if='volume > 0' @click='mute'></button>
+      <button type='button' class='btn-volume-off' v-else @click='unmute'></button>
+      <div class='volume-bar'>
+        <input type='range' v-model='volume' v-bind:style='{width: volume + "%"}' step='2' />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,6 +35,11 @@
 
   export default {
     name: 'controls',
+    data: function(){
+      return {
+        lastVolumeValue: 100
+      }
+    },
     computed: {
       progression: {
         get() {
@@ -36,6 +48,23 @@
         set(value) {
           // fixme
         }
+      },
+      volume: {
+        get() {
+          return this.player.volume
+        },
+        set(value) {
+          this.setVolume(value)
+        }
+      }
+    },
+    methods: {
+      mute() {
+        this.lastVolumeValue = this.player.volume
+        this.setVolume(0)
+      },
+      unmute() {
+        this.setVolume(this.lastVolumeValue)
       }
     },
     vuex: {
@@ -47,7 +76,8 @@
         next: actions.nextTrack,
         prev: actions.prevTrack,
         play: actions.setPlay,
-        pause: actions.setPause
+        pause: actions.setPause,
+        setVolume: actions.setVolume
       }
     }
   }
@@ -57,11 +87,11 @@
   @import 'src/styles/constants.scss';
 
   .controls {
-    padding: $space-medium;
+    padding: 0 $space-medium;
 
     ul {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
 
       li {
         width: 20%;
@@ -71,11 +101,29 @@
     button {
       width: 100%;
       height: 60px;
+      transition: background-color 300ms ease-in-out;
       background-color: transparent;
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center center;
+
+      &:hover {
+        background-color: rgba($black, 0.1);
+      }
     }
+
+    .volume {
+      display: flex;
+      align-items: center;
+
+      button {
+        width: 20%;
+      }
+    }
+  }
+
+  .progress-bar {
+    margin-bottom: $space-small;
   }
 
   .btn-next {
@@ -96,5 +144,46 @@
 
   .btn-shuffle {
     background-image: url('/images/icn-shuffle.svg');
+  }
+
+  .btn-volume-on{
+    background-image: url('/images/icn-volume-on.svg');
+  }
+
+  .btn-volume-off {
+    background-image: url('/images/icn-volume-off.svg');
+  }
+
+  .volume-bar {
+    width: 100%;
+    max-width: 400px;
+
+    [type=range] {
+      background: url('/images/volume-step-op50.svg') repeat-x;
+
+      &::-ms-thumb {
+        width: 0;
+      }
+
+      &::-moz-range-thumb {
+         width: 0;
+      }
+
+      &::-webkit-slider-thumb {
+         width: 0;
+      }
+
+      &::-webkit-slider-runnable-track {
+        border-bottom: 0;
+      }
+
+      &::-moz-range-track {
+        border-bottom: 0;
+      }
+
+      &:after {
+         background: url('/images/volume-step-op100.svg') repeat-x;
+      }
+    }
   }
 </style>

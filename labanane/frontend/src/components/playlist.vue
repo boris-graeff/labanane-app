@@ -60,13 +60,14 @@
   .playlist-page {
 
     header {
-      padding: $space-medium;
+      padding: $space-medium $space-medium $space-small;
     }
 
     h1 {
       font-size: 4rem;
       display: inline-block;
       vertical-align: middle;
+      font-weight: 300;
     }
 
     .content {
@@ -83,10 +84,13 @@
     }
 
     .track-name {
-      font-size: 3rem;
+      font-size: 2.8rem;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      font-weight: 600;
+      font-style: italic;
+      margin-top: $space-small;
     }
 
     .link-home  {

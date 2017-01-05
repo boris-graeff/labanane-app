@@ -36,7 +36,8 @@ const store = new Vuex.Store({
     },
     player: {
       shuffle: false,
-      state: ''
+      state: '',
+      volume: 100
     },
     providers: {
       youtube: {
@@ -77,6 +78,9 @@ const store = new Vuex.Store({
 
       index = index < 0 ? (tracks.length - 1) : index
       setTrack(state, tracks[index])
+    },
+    SET_VOLUME: (state, volume) => {
+      state.player.volume = volume
     },
     SET_NEXT_TRACK: state => {
       let tracks = state.playlist.tracks,

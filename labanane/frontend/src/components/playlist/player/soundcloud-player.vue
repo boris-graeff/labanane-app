@@ -13,6 +13,11 @@
   export default {
     name: 'soundcloud-player',
     sound: null,
+    data: function(){
+      return {
+        is_active: false
+      }
+    },
     created () {
       this.initPlayer();
     },
@@ -31,6 +36,8 @@
             else if(this.player.state === 'paused'){
               this.pause()
             }
+
+            this.setVolume(this.player.volume)
           }
           else {
             this.is_active = false
@@ -56,6 +63,8 @@
               }
 
               that.sound = sound
+
+              sound.setVolume(that.player.volume)
 
               sound.on('time', function(){
                 that.setTrackProgression(this.currentTime() / sound.streamInfo.duration * 100)
@@ -83,6 +92,12 @@
         if (!this.sound)
           return;
         this.sound.dispose()
+      },
+      setVolume (volume) {
+        if (!this.sound)
+          return;
+
+        this.sound.setVolume(volume/100)
       }
     },
     beforeDestroy(){

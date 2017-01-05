@@ -41,6 +41,9 @@ export default {
   setPause: ({dispatch}) => {
     dispatch('SET_PAUSE')
   },
+  setVolume: ({dispatch}, volume) => {
+    dispatch('SET_VOLUME', volume)
+  },
   nextTrack: ({dispatch}) => {
     dispatch('SET_NEXT_TRACK');
   },
