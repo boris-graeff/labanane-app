@@ -1,11 +1,11 @@
 <template>
   <div class='tracks'>
     <div v-show='playlist.tracks.length '>{{ playlist.tracks.length }}</div>
-    <ul>
+    <ul class='list'>
       <li v-for='t in playlist.tracks'
           @click='setTrack(t)'
           v-bind:class='{"selected": t.id == track.id, "error": t.error, "youtube": t.provider === "youtube", "soundcloud": t.provider === "soundcloud"}'>
-        {{t.name}}
+        <div>{{t.name}}</div>
       </li>
     </ul>
   </div>
@@ -36,32 +36,10 @@
     height: 100%;
     overflow-y: auto;
 
-    ul {
+    .list {
       min-height: 100%;
-      background: url("/images/tracks-background.png");
-    }
 
-    li {
-      height: 25px;
-      padding: 0 6px;
-      line-height: 25px;
-      cursor: pointer;
-      transition: background 300ms ease-in-out, color 300ms ease-in-out;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-
-      &:hover {
-        background: rgba($black, 0.2);
-      }
-
-      &.selected {
-        background: $black;
-        color: $yellow;
-      }
-
-      &.error {
-        background: $red;
+      li {
       }
     }
 

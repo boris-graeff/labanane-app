@@ -33,10 +33,10 @@ body {
 a {
   color: $black;
   text-decoration: none;
+}
 
-  &:hover {
-    text-decoration: underline;
-  }
+img {
+  max-width: 100%;
 }
 
 label {
@@ -59,6 +59,36 @@ input[type=radio], input[type=checkbox]{
   display: none;
 }
 
+.list {
+  background: url("/images/tracks-background.png");
+
+  li {
+    height: 25px;
+    padding: 0 6px;
+    line-height: 25px;
+    transition: background 300ms ease-in-out, color 300ms ease-in-out;
+    cursor: pointer;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &:hover {
+      background: rgba($black, 0.2);
+    }
+
+    &.selected {
+      background: $black;
+      color: $yellow;
+    }
+
+    &.error {
+      background: $red;
+    }
+  }
+}
+
 .tracks {
 
   li {
@@ -71,6 +101,11 @@ input[type=radio], input[type=checkbox]{
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center center;
+      margin-right: $space-small;
+    }
+
+    div {
+      margin-left: 35px;
     }
 
     &.youtube:before {

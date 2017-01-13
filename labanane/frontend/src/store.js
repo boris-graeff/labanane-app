@@ -47,7 +47,12 @@ const store = new Vuex.Store({
   },
   mutations: {
     SET_PLAYLISTS: (state, playlists) => {
-      state.playlists = playlists;
+      // fixme
+      state.playlists = playlists.map(p => {
+        return {
+          name: p, length: (Math.random() * 100).toFixed(0)
+        }
+      });
     },
     SET_PLAYLIST: (state, id, data) => {
       state.playlist.name = id;
