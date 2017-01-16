@@ -1,6 +1,7 @@
 import HTTP from './api/http';
+import youtubeVideos from './api/youtube-api';
 
-const playlist = new HTTP('playlist');
+const playlist = new HTTP('playlist')
 
 export default {
   getAllPlaylists: ({dispatch}) => {
@@ -31,6 +32,9 @@ export default {
       })
   },
 
+  getYoutubeList: ({dispatch}, keywords) => {
+    return youtubeVideos.get(keywords)
+  },
 
   setTrack: ({dispatch}, track) => {
     dispatch('SET_TRACK', track);

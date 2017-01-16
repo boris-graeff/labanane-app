@@ -10,6 +10,7 @@
           <div class='track-name'>{{track.name}}</div>
         </header>
         <controls></controls>
+        <search></search>
       </div>
       <div>
         <tracks></tracks>
@@ -24,13 +25,15 @@
   import tracks from './playlist/tracks.vue'
   import controls from './playlist/controls.vue'
   import player from './playlist/player.vue'
+  import search from './playlist/search.vue'
 
   export default {
     name: 'playlist',
     components: {
       'controls': controls,
       'tracks': tracks,
-      'player': player
+      'player': player,
+      'search': search
     },
     data: function () {
       return {
