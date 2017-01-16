@@ -17,6 +17,7 @@
   import actions from '../../actions'
   import SC from 'soundcloud'
   import _ from 'lodash'
+  import levenshtein from 'levenshtein'
 
   export default {
     name: 'search',
@@ -43,10 +44,13 @@
         // fixme : reject pending promise if necessary
 
         Promise.all([this.soundcloudSearch(), this.youtubeSearch()])
-            .then(results => that.results = _.flatten(results))
+            .then(results => {
+              that.results = _.flatten(results).sort((a,b) => a.leven - b.leven)
+            })
       }, 240),
 
       youtubeSearch() {
+        var that = this
         return this.getYoutubeList(this.input)
           .then(results => {
             return  results.data.items.map(track => {
@@ -55,13 +59,15 @@
                 name: track.snippet.title,
                 provider: 'youtube',
                 artwork: track.artwork_url,
-                duration: 0
+                duration: 0,
+                leven: levenshtein(track.snippet.title, that.input)
               }
             })
           })
       },
 
       soundcloudSearch() {
+        var that = this
         return SC.get('/tracks', {q: this.input, limit: this.$store.state.constants.MAX_RESULTS})
             .then(results => {
               return results.map(track => {
@@ -70,7 +76,8 @@
                   name: track.title,
                   provider: 'soundcloud',
                   artwork: track.artwork_url,
-                  duration: track.duration
+                  duration: track.duration,
+                  leven: levenshtein(track.title, that.input)
                 }
               })
             })
@@ -89,5 +96,9 @@
 
   .search {
     padding: $space-medium;
+
+    .tracks {
+      overflow: hidden;
+    }
   }
 </style>

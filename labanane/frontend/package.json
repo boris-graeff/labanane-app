@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "levenshtein": "^1.0.5",
     "lodash": "^4.17.4",
     "soundcloud": "^3.1.2",
     "vue": "^2.0.1",

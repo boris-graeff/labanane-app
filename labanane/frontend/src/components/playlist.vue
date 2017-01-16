@@ -82,6 +82,7 @@
         width: 50%;
         height: 100%;
         position: relative;
+        overflow: hidden
       }
 
     }

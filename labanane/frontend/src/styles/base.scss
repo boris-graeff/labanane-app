@@ -92,6 +92,8 @@ input[type=radio], input[type=checkbox]{
 .tracks {
 
   li {
+    position: relative;
+
     &:before {
       content: '';
       display: inline-block;
@@ -101,11 +103,17 @@ input[type=radio], input[type=checkbox]{
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center center;
-      margin-right: $space-small;
+      position: absolute;
+      top: 50%;
+      left: 6px;
+      transform: translateY(-50%)
     }
 
     div {
       margin-left: 35px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     &.youtube:before {
