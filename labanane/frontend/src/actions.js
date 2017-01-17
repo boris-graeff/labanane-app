@@ -57,8 +57,11 @@ export default {
   setYoutubeReady: ({dispatch}) => {
     dispatch('SET_YOUTUBE_READY', 'youtube');
   },
-  setTrackProgression: ({dispatch}, progression) => {
-    dispatch('SET_TRACK_PROGRESSION', progression)
+  setProgression: ({dispatch}, progression) => {
+    dispatch('SET_PROGRESSION', progression)
+  },
+  setSeekPosition: ({dispatch}, position) => {
+    dispatch('SET_SEEK_POSITION', position)
   },
   setTrackError: ({dispatch}) => {
     dispatch('SET_TRACK_ERROR')

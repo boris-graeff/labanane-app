@@ -43,10 +43,10 @@
     computed: {
       progression: {
         get() {
-          return this.track.progression
+          return this.player.progression
         },
         set(value) {
-          // fixme
+          this.setSeekPosition(value)
         }
       },
       volume: {
@@ -77,7 +77,8 @@
         prev: actions.prevTrack,
         play: actions.setPlay,
         pause: actions.setPause,
-        setVolume: actions.setVolume
+        setVolume: actions.setVolume,
+        setSeekPosition: actions.setSeekPosition
       }
     }
   }

@@ -22,29 +22,39 @@
       this.initPlayer();
     },
     watch: {
-      player: {
-        handler: function(){
-          if(this.track.provider === 'soundcloud'){
-            this.is_active = true
-
-            if(this.player.state === 'loading'){
-              this.load()
-            }
-            else if(this.player.state === 'playing'){
-              this.play()
-            }
-            else if(this.player.state === 'paused'){
-              this.pause()
-            }
-
-            this.setVolume(this.player.volume)
+      state(){
+        if (this.provider === 'soundcloud') {
+          this.is_active = true
+          if(this.state === 'loading'){
+            this.load()
           }
-          else {
-            this.is_active = false
-            this.stop()
+          else if(this.state === 'playing'){
+            this.play()
+            this.setVolume(this.volume)
           }
-        },
-        deep: true
+          else if(this.state === 'paused'){
+            this.pause()
+          }
+        }
+      },
+      seekPosition(){
+        if (this.provider === 'soundcloud') {
+          this.seekTo(this.seekPosition)
+        }
+      },
+      volume(){
+        this.setVolume(this.volume)
+      },
+      seekPosition(){
+        if (this.provider === 'soundcloud') {
+          this.seekTo(this.seekPosition)
+        }
+      },
+      provider(){
+        if(this.provider !== 'soundcloud') {
+          this.is_active = false
+          this.stop()
+        }
       }
     },
     methods: {
@@ -64,10 +74,10 @@
 
               that.sound = sound
 
-              sound.setVolume(that.player.volume)
+              sound.setVolume(that.volume)
 
               sound.on('time', function(){
-                that.setTrackProgression(this.currentTime() / sound.streamInfo.duration * 100)
+                that.setProgression(this.currentTime() / sound.streamInfo.duration * 100)
               })
 
               sound.on('finish', function(){
@@ -98,6 +108,9 @@
           return;
 
         this.sound.setVolume(volume/100)
+      },
+      seekTo (percent) {
+        this.sound.seek(percent * this.sound.streamInfo.duration / 100);
       }
     },
     beforeDestroy(){
@@ -109,12 +122,17 @@
       getters: {
         constants: state => state.constants,
         track: state => state.track,
-        player: state => state.player
+        provider: state => state.track.provider,
+        seekPosition: state => state.player.seekPosition,
+        state: state => state.player.state,
+        volume: state => state.player.volume,
+
+        player: state => state.player,
       },
       actions: {
         setPlay: actions.setPlay,
         nextTrack: actions.nextTrack,
-        setTrackProgression: actions.setTrackProgression,
+        setProgression: actions.setProgression,
         setTrackError: actions.setTrackError
       }
     }

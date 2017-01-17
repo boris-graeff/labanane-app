@@ -21,28 +21,34 @@
       this.loadPlayer()
     },
     watch: {
-      player: {
-        handler: function(){
-          if(this.track.provider === 'youtube'){
-            this.is_active = true
-            if(this.player.state === 'loading'){
-              this.load()
-            }
-            else if(this.player.state === 'playing'){
-              this.play()
-            }
-            else if(this.player.state === 'paused'){
-              this.pause()
-            }
-
-            this.setVolume(this.player.volume)
+      state(){
+        if (this.provider === 'youtube') {
+          this.is_active = true
+          if(this.state === 'loading'){
+            this.load()
           }
-          else {
-            this.is_active = false
-            this.stop()
+          else if(this.state === 'playing'){
+            this.play()
+            this.setVolume(this.volume)
           }
-        },
-        deep: true
+          else if(this.state === 'paused'){
+            this.pause()
+          }
+        }
+      },
+      volume(){
+        this.setVolume(this.volume)
+      },
+      seekPosition(){
+        if (this.provider === 'youtube') {
+          this.seekTo(this.seekPosition)
+        }
+      },
+      provider(){
+        if(this.provider !== 'youtube') {
+          this.is_active = false
+          this.stop()
+        }
       }
     },
     methods: {
@@ -71,11 +77,10 @@
           this.setPlay()
 
           this.timer = setInterval(function(){
-
-          Promise.all([that.ytbPlayer.getCurrentTime(), that.ytbPlayer.getDuration()])
-              .then((values) => {
-                that.setTrackProgression(values[0] / values[1] * 100)
-              })
+            Promise.all([that.ytbPlayer.getCurrentTime(), that.ytbPlayer.getDuration()])
+                .then((values) => {
+                  that.setProgression(values[0] / values[1] * 100)
+                })
           }, 1000)
         }
         else {
@@ -115,6 +120,14 @@
         this.ytbPlayer.setVolume(volume)
       },
 
+      seekTo (percent) {
+        var allowSeekAhead = true
+        this.ytbPlayer.getDuration()
+            .then(duration => {
+              this.ytbPlayer.seekTo(percent * duration / 100, allowSeekAhead)
+            })
+      },
+
       resetTimer () {
         clearInterval(this.timer)
         this.timer = null
@@ -123,17 +136,21 @@
     beforeDestroy () {
       this.resetTimer()
     },
+
     vuex: {
       getters: {
         constants: state => state.constants,
         track: state => state.track,
-        player: state => state.player
+        provider: state => state.track.provider,
+        seekPosition: state => state.player.seekPosition,
+        state: state => state.player.state,
+        volume: state => state.player.volume
       },
       actions: {
         setPlay: actions.setPlay,
         nextTrack: actions.nextTrack,
         setYoutubeReady: actions.setYoutubeReady,
-        setTrackProgression: actions.setTrackProgression,
+        setProgression: actions.setProgression,
         setTrackError: actions.setTrackError
       }
     }

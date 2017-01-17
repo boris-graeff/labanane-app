@@ -14,7 +14,7 @@ function setTrack (state, track) {
   for(let prop of Object.keys(track)) {
     state.track[prop] = track[prop]
   }
-  state.track.progression = 0
+  state.player.progression = 0
   state.player.state = 'stopped'
   state.player.state = 'loading'
 }
@@ -31,13 +31,14 @@ const store = new Vuex.Store({
       id: '',
       name: '-',
       provider: '',
-      artwork: '',
-      progression: 0
+      artwork: ''
     },
     player: {
       shuffle: false,
       state: '',
-      volume: 100
+      volume: 100,
+      progression: 0,
+      seekPosition: 0
     },
     providers: {
       youtube: {
@@ -50,7 +51,8 @@ const store = new Vuex.Store({
       // fixme
       state.playlists = playlists.map(p => {
         return {
-          name: p, length: (Math.random() * 100).toFixed(0)
+          name: p,
+          length: (Math.random() * 100).toFixed(0)
         }
       });
     },
@@ -62,8 +64,11 @@ const store = new Vuex.Store({
     SET_TRACK: (state, track) => {
       setTrack(state, track)
     },
-    SET_TRACK_PROGRESSION: (state, progression) => {
-      state.track.progression = progression
+    SET_PROGRESSION: (state, progression) => {
+      state.player.progression = progression
+    },
+    SET_SEEK_POSITION: (state, position) => {
+      state.player.seekPosition = position
     },
     SET_TRACK_ERROR: (state) => {
       state.player.state = 'stopped'
