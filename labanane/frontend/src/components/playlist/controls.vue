@@ -14,19 +14,12 @@
         <button type='button' class='btn-pause' @click='pause'></button>
       </li>
       <li>
-        <button type='button' class='btn-next' @click='next'></button>
-      </li>
-      <li>
         <button type='button' class='btn-shuffle'></button>
       </li>
+      <li>
+        <button type='button' class='btn-next' @click='next'></button>
+      </li>
     </ul>
-    <div class='volume'>
-      <button type='button' class='btn-volume-on' v-if='volume > 0' @click='mute'></button>
-      <button type='button' class='btn-volume-off' v-else @click='unmute'></button>
-      <div class='volume-bar'>
-        <input type='range' v-model='volume' v-bind:style='{width: volume + "%"}' step='2' />
-      </div>
-    </div>
   </div>
 </template>
 
@@ -35,11 +28,6 @@
 
   export default {
     name: 'controls',
-    data: function(){
-      return {
-        lastVolumeValue: 100
-      }
-    },
     computed: {
       progression: {
         get() {
@@ -48,23 +36,6 @@
         set(value) {
           this.setSeekPosition(value)
         }
-      },
-      volume: {
-        get() {
-          return this.player.volume
-        },
-        set(value) {
-          this.setVolume(value)
-        }
-      }
-    },
-    methods: {
-      mute() {
-        this.lastVolumeValue = this.player.volume
-        this.setVolume(0)
-      },
-      unmute() {
-        this.setVolume(this.lastVolumeValue)
       }
     },
     vuex: {
@@ -77,7 +48,6 @@
         prev: actions.prevTrack,
         play: actions.setPlay,
         pause: actions.setPause,
-        setVolume: actions.setVolume,
         setSeekPosition: actions.setSeekPosition
       }
     }
@@ -112,15 +82,6 @@
         background-color: rgba($black, 0.1);
       }
     }
-
-    .volume {
-      display: flex;
-      align-items: center;
-
-      button {
-        width: 20%;
-      }
-    }
   }
 
   .progress-bar {
@@ -145,46 +106,5 @@
 
   .btn-shuffle {
     background-image: url('/images/icn-shuffle.svg');
-  }
-
-  .btn-volume-on{
-    background-image: url('/images/icn-volume-on.svg');
-  }
-
-  .btn-volume-off {
-    background-image: url('/images/icn-volume-off.svg');
-  }
-
-  .volume-bar {
-    width: 100%;
-    max-width: 400px;
-
-    [type=range] {
-      background: url('/images/volume-step-op50.svg') repeat-x;
-
-      &::-ms-thumb {
-        width: 0;
-      }
-
-      &::-moz-range-thumb {
-         width: 0;
-      }
-
-      &::-webkit-slider-thumb {
-         width: 0;
-      }
-
-      &::-webkit-slider-runnable-track {
-        border-bottom: 0;
-      }
-
-      &::-moz-range-track {
-        border-bottom: 0;
-      }
-
-      &:after {
-         background: url('/images/volume-step-op100.svg') repeat-x;
-      }
-    }
   }
 </style>

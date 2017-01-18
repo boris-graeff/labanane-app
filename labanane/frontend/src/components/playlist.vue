@@ -3,12 +3,24 @@
     <div class='content' v-if='providers.youtube.ready'>
       <div>
         <header>
-          <router-link :to="{ name: 'home'}" class='link-home'>
-            <img src='/images/labanane-logo.svg' alt="LaBanane logo" />
-          </router-link>
-          <h1>{{playlist.name}}</h1>
+          <div>
+            <div>
+              <router-link :to="{ name: 'home'}" class='link-home'>
+                <img src='/images/labanane-logo.svg' alt="LaBanane logo" />
+              </router-link>
+              <h1>{{playlist.name}}</h1>
+            </div>
+            <div class='volume'>
+              <button type='button' class='btn-volume-on' v-if='volume > 0' @click='mute'></button>
+              <button type='button' class='btn-volume-off' v-else @click='unmute'></button>
+              <div class='volume-bar'>
+                <input type='range' v-model='volume' v-bind:style='{width: volume + "%"}' step='2' />
+              </div>
+            </div>
+          </div>
           <div class='track-name'>{{track.name}}</div>
         </header>
+
         <controls></controls>
         <search></search>
       </div>
@@ -37,21 +49,43 @@
     },
     data: function () {
       return {
-        id: ''
+        id: '',
+        lastVolumeValue: 100
+      }
+    },
+    computed: {
+      volume: {
+        get() {
+          return this.player.volume
+        },
+        set(value) {
+          this.setVolume(value)
+        }
       }
     },
     mounted () {
       this.id = this.$route.params.id;
       this.getPlaylist(this.id);
     },
+    methods: {
+      mute() {
+        this.lastVolumeValue = this.player.volume
+        this.setVolume(0)
+      },
+      unmute() {
+        this.setVolume(this.lastVolumeValue)
+      }
+    },
     vuex: {
       getters: {
         playlist: state => state.playlist,
+        player: state => state.player,
         track: state => state.track,
         providers: state => state.providers
       },
       actions: {
-        getPlaylist: actions.getPlaylist
+        getPlaylist: actions.getPlaylist,
+        setVolume: actions.setVolume,
       }
     }
   }
@@ -64,6 +98,19 @@
 
     header {
       padding: $space-medium $space-medium $space-small;
+
+      > div:first-child {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      a {
+        transition: transform 300ms ease-in-out;
+
+        &:hover {
+          transform: rotate(360deg);
+        }
+      }
     }
 
     h1 {
@@ -94,7 +141,7 @@
       text-overflow: ellipsis;
       font-weight: 600;
       font-style: italic;
-      margin-top: $space-small;
+      margin-top: $space-big;
     }
 
     .link-home  {
@@ -106,6 +153,63 @@
         height: 48px;
         width: 48px;
       }
+    }
+  }
+
+  .volume {
+    width: 200px;
+    display: flex;
+    align-items: center;
+
+    button {
+      width: 40px;
+      height: 40px;
+      transition: background-color 300ms ease-in-out;
+      background-color: transparent;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+    }
+  }
+
+  .btn-volume-on{
+    background-image: url('/images/icn-volume-on.svg');
+  }
+
+  .btn-volume-off {
+    background-image: url('/images/icn-volume-off.svg');
+  }
+
+  .volume-bar {
+    width: 100%;
+    max-width: 400px;
+
+    [type=range] {
+      background: url('/images/volume-step-op50.svg') repeat-x;
+
+    &::-ms-thumb {
+       width: 0;
+     }
+
+    &::-moz-range-thumb {
+       width: 0;
+     }
+
+    &::-webkit-slider-thumb {
+       width: 0;
+     }
+
+    &::-webkit-slider-runnable-track {
+       border-bottom: 0;
+     }
+
+    &::-moz-range-track {
+       border-bottom: 0;
+     }
+
+    &:after {
+       background: url('/images/volume-step-op100.svg') repeat-x;
+     }
     }
   }
 </style>

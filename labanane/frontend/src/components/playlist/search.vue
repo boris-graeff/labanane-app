@@ -1,6 +1,6 @@
 <template>
   <div class='search'>
-    <h2></h2>
+    <h2>Add track</h2>
     <div class='text-box'>
       <label for='search-input'>Track name</label>
       <input type='text' v-model='input' id='search-input' />
