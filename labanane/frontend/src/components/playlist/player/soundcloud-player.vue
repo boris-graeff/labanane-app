@@ -110,6 +110,8 @@
         this.sound.setVolume(volume/100)
       },
       seekTo (percent) {
+        if (!this.sound)
+          return;
         this.sound.seek(percent * this.sound.streamInfo.duration / 100);
       }
     },

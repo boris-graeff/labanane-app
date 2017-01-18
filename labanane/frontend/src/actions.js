@@ -1,5 +1,5 @@
-import HTTP from './api/http';
-import youtubeVideos from './api/youtube-api';
+import HTTP from './api/http'
+import youtubeVideos from './api/youtube-api'
 
 const playlist = new HTTP('playlist')
 
@@ -7,19 +7,19 @@ export default {
   getAllPlaylists: ({dispatch}) => {
     return playlist.all()
       .then(response => {
-        dispatch('SET_PLAYLISTS', response.data);
+        dispatch('SET_PLAYLISTS', response.data)
       })
       .catch(() => {
-        console.error('Playlists request failed');
+        console.error('Playlists request failed')
       })
   },
   getPlaylist: ({dispatch}, id) => {
     return playlist.get({id})
       .then(response => {
-        dispatch('SET_PLAYLIST', id, response.data);
+        dispatch('SET_PLAYLIST', id, response.data)
       })
       .catch(() => {
-        console.error('Playlist request failed');
+        console.error('Playlist request failed')
       })
   },
   createPlaylist: ({dispatch}, name, password) => {
@@ -28,7 +28,7 @@ export default {
 
       })
       .catch(() => {
-        console.error('Playlist creation request failed');
+        console.error('Playlist creation request failed')
       })
   },
 
@@ -37,7 +37,7 @@ export default {
   },
 
   setTrack: ({dispatch}, track) => {
-    dispatch('SET_TRACK', track);
+    dispatch('SET_TRACK', track)
   },
   setPlay: ({dispatch}) => {
     dispatch('SET_PLAY')
@@ -49,13 +49,16 @@ export default {
     dispatch('SET_VOLUME', volume)
   },
   nextTrack: ({dispatch}) => {
-    dispatch('SET_NEXT_TRACK');
+    dispatch('SET_NEXT_TRACK')
+  },
+  toggleShuffle: ({dispatch}) => {
+    dispatch('TOGGLE_SHUFFLE')
   },
   prevTrack: ({dispatch}) => {
-    dispatch('SET_PREVIOUS_TRACK');
+    dispatch('SET_PREVIOUS_TRACK')
   },
   setYoutubeReady: ({dispatch}) => {
-    dispatch('SET_YOUTUBE_READY', 'youtube');
+    dispatch('SET_YOUTUBE_READY', 'youtube')
   },
   setProgression: ({dispatch}, progression) => {
     dispatch('SET_PROGRESSION', progression)
@@ -67,4 +70,4 @@ export default {
     dispatch('SET_TRACK_ERROR')
     dispatch('SET_NEXT_TRACK')
   }
-};
+}

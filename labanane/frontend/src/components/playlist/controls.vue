@@ -14,7 +14,7 @@
         <button type='button' class='btn-pause' @click='pause'></button>
       </li>
       <li>
-        <button type='button' class='btn-shuffle'></button>
+        <button type='button' class='btn-shuffle' @click='toggleShuffle' :class='{"enabled": player.shuffle}'></button>
       </li>
       <li>
         <button type='button' class='btn-next' @click='next'></button>
@@ -48,7 +48,8 @@
         prev: actions.prevTrack,
         play: actions.setPlay,
         pause: actions.setPause,
-        setSeekPosition: actions.setSeekPosition
+        setSeekPosition: actions.setSeekPosition,
+        toggleShuffle: actions.toggleShuffle
       }
     }
   }
@@ -106,5 +107,9 @@
 
   .btn-shuffle {
     background-image: url('/images/icn-shuffle.svg');
+
+    &.enabled {
+       background-color: rgba($black, 0.1);
+    }
   }
 </style>

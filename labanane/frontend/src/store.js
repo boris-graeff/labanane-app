@@ -10,6 +10,20 @@ function getCurrentIndex (state) {
   })
 }
 
+function getRandomIndex (state) {
+  return Math.floor(Math.random() * state.playlist.tracks.length)
+}
+
+function getNextIndex (state) {
+  let index = getCurrentIndex(state) + 1
+  return index >= state.playlist.tracks.length ? 0 : index
+}
+
+function getPreviousIndex (state) {
+  let index = getCurrentIndex(state) -1
+  return index < 0 ? (state.playlist.tracks.length - 1) : index
+}
+
 function setTrack (state, track) {
   for(let prop of Object.keys(track)) {
     state.track[prop] = track[prop]
@@ -84,19 +98,18 @@ const store = new Vuex.Store({
     },
     SET_PREVIOUS_TRACK: state => {
       let tracks = state.playlist.tracks,
-        index = getCurrentIndex(state) -1
-
-      index = index < 0 ? (tracks.length - 1) : index
+        index = (state.player.shuffle) ? getRandomIndex(state) : getPreviousIndex(state)
       setTrack(state, tracks[index])
     },
     SET_VOLUME: (state, volume) => {
       state.player.volume = volume
     },
+    TOGGLE_SHUFFLE: (state) => {
+      state.player.shuffle = !state.player.shuffle
+    },
     SET_NEXT_TRACK: state => {
       let tracks = state.playlist.tracks,
-        index = getCurrentIndex(state) + 1
-
-      index = index >= tracks.length ? 0 : index
+      index = (state.player.shuffle) ? getRandomIndex(state) : getNextIndex(state)
       setTrack(state, tracks[index])
     },
     SET_YOUTUBE_READY: state => {
