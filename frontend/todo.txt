@@ -1,0 +1,5 @@
+- add track to playlist by click
+- add track to playlist by drag'n'drop
+- remove track from playlist
+- handle authentication
+- video mode

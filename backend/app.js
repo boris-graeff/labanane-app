@@ -6,8 +6,7 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose')
 
-var index = require('./routes/index'),
-  services = require('./routes/services')
+var services = require('./routes/services')
 
 var app = express()
 
@@ -21,10 +20,13 @@ app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '../frontend/')))
 
 app.use('/services/', services)
-app.use('/', index)
+
+app.get('*', function(req, res) {
+  res.sendFile(path.resolve(__dirname, '..', 'frontend', 'index.html'))
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
