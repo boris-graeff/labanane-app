@@ -3,7 +3,8 @@ var express = require('express'),
   favicon = require('serve-favicon'),
   logger = require('morgan'),
   cookieParser = require('cookie-parser'),
-  bodyParser = require('body-parser')
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose')
 
 var index = require('./routes/index'),
   services = require('./routes/services')
@@ -42,5 +43,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500)
   res.render('error')
 })
+
+// db connection
+mongoose.connect('mongodb://localhost/LaBanane')
 
 module.exports = app
