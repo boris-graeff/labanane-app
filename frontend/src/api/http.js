@@ -11,29 +11,22 @@ export default class HTTP {
       ...params,
       baseURL: api.baseURL,
       headers: {}
-    };
+    }
   }
 
   create(resource, params = {}) {
-    // fixme: remove /create/ segment to be RESTful
-    return axios.post('/services/' + this.resource + '/create', resource, this.getRequestConfig(params));
+    return axios.post('/services/' + this.resource, resource, this.getRequestConfig(params));
   }
 
   all(params = {}) {
-    // fixme: remove /all it's not the resource we work on
-    return axios.get('/services/' + this.resource + '/all', this.getRequestConfig(params));
+    return axios.get('/services/' + this.resource, this.getRequestConfig(params));
   }
 
   get(resource, params = {}) {
-    // fixme: remove /content/ segment and /undefined to be RESTful
-    return axios.get('/services/' + this.resource + '/content/' + resource.id + '/undefined', this.getRequestConfig(params));
+    return axios.get('/services/' + this.resource + '/' + resource.id + '/' + resource.password, this.getRequestConfig(params));
   }
 
   update(resource, params = {}) {
-    return axios.put('/services/' + this.resource + '/' + resource.id + '/', resource, this.getRequestConfig(params));
-  }
-
-  remove(resource, params = {}) {
-    return axios.delete('/services/' + this.resource + '/' + resource.id + '/', this.getRequestConfig(params));
+    return axios.put('/services/' + this.resource, resource, this.getRequestConfig(params));
   }
 }

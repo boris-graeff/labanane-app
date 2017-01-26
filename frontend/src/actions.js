@@ -1,11 +1,11 @@
 import HTTP from './api/http'
 import youtubeVideos from './api/youtube-api'
 
-const playlist = new HTTP('playlist')
+const playlists = new HTTP('playlists')
 
 export default {
   getAllPlaylists: ({dispatch}) => {
-    return playlist.all()
+    return playlists.all()
       .then(response => {
         dispatch('SET_PLAYLISTS', response.data)
       })
@@ -14,7 +14,7 @@ export default {
       })
   },
   getPlaylist: ({dispatch}, id) => {
-    return playlist.get({id})
+    return playlists.get({id})
       .then(response => {
         dispatch('SET_PLAYLIST', id, response.data)
       })
@@ -23,10 +23,7 @@ export default {
       })
   },
   createPlaylist: ({dispatch}, name, password) => {
-    return playlist.create({name, password})
-      .then(response => {
-
-      })
+    return playlists.create({name, password})
       .catch(() => {
         console.error('Playlist creation request failed')
       })

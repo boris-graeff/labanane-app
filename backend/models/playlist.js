@@ -8,7 +8,6 @@ var TrackSchema = new mongoose.Schema({
 })
 
 var PlaylistSchema = new mongoose.Schema({
-  id: String,
   name: String,
   password: String,
   timestamp: Number,
@@ -17,7 +16,7 @@ var PlaylistSchema = new mongoose.Schema({
   length: Number
 })
 
-PlaylistSchema.pre('update', function(next) {
+PlaylistSchema.pre('save', function(next) {
   this.length = this.content.length
   this.timestamp = Date.now()
   next()
