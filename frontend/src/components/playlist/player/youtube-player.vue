@@ -157,7 +157,7 @@
   }
 </script>
 
-<style lang='sass'>
+<style lang='scss' rel='stylesheet/scss' type='text/css'>
   .youtube-player {
     iframe {
       position: absolute;

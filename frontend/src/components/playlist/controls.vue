@@ -55,8 +55,8 @@
   }
 </script>
 
-<style lang='sass'>
-  @import 'src/styles/constants.scss';
+<style lang='scss' rel='stylesheet/scss' type='text/css'>
+  @import '../../styles/constants.scss';
 
   .controls {
     padding: 0 $space-medium;

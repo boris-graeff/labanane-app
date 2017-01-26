@@ -18,7 +18,7 @@
   }
 </script>
 
-<style lang='sass'>
+<style lang='scss' rel='stylesheet/scss' type='text/css'>
 
   .home-page {
     height: 100vh;

@@ -141,7 +141,7 @@
   }
 </script>
 
-<style lang='sass'>
+<style lang='scss' rel='stylesheet/scss' type='text/css'>
   #soundcloud-player {
     position: absolute;
     top: 0;

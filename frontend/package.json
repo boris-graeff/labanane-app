@@ -13,10 +13,9 @@
     "levenshtein": "^1.0.5",
     "lodash": "^4.17.4",
     "soundcloud": "^3.1.2",
-    "vue": "^2.0.1",
-    "vue-resource": "^1.0.3",
-    "vue-router": "^2.0.2",
-    "vuex": "^1.0.0",
+    "vue": "^2.1.10",
+    "vue-router": "^2.1.3",
+    "vuex": "^1.0.1",
     "youtube-player": "^4.0.2"
   },
   "devDependencies": {
@@ -33,8 +32,9 @@
     "file-loader": "^0.9.0",
     "nock": "^9.0.2",
     "node-sass": "^3.13.0",
-    "sass-loader": "^4.0.2",
-    "vue-loader": "^9.7.0",
+    "sass-loader": "^4.1.1",
+    "vue-loader": "^10.0.4",
+    "vue-template-compiler": "^2.1.10",
     "webpack": "^2.1.0-beta.27",
     "webpack-dev-server": "^2.1.0-beta.12",
     "xo": "^0.17.1"
