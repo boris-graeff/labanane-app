@@ -1,5 +1,5 @@
 <template>
-  <div class='youtube-player' v-bind:class='{"is_active": is_active}'>
+  <div class='youtube-player' :class='{"is_active": is_active}'>
     <div id='youtube-player'></div>
   </div>
 </template>

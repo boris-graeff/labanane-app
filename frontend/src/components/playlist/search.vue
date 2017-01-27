@@ -8,7 +8,7 @@
     <ul class='tracks list'>
       <li v-for='track in results'
           :class='{"youtube": track.provider === "youtube", "soundcloud": track.provider === "soundcloud"}'
-          @click='addTrack(track)'>
+          @click='add(track)'>
         <div><span>{{track.name}}</span><span></span></div>
       </li>
     </ul>
@@ -60,7 +60,6 @@
                 id: track.id.videoId,
                 name: track.snippet.title,
                 provider: 'youtube',
-                artwork: track.artwork_url,
                 duration: 0,
                 leven: levenshtein(track.snippet.title, that.input)
               }
@@ -85,8 +84,8 @@
             })
       },
 
-      addTrack(track) {
-        this.$store.dispatch('ADD_TRACK', track)
+      add(track) {
+        this.addTrack(track)
         this.savePlaylist()
       }
     },
@@ -94,6 +93,7 @@
       actions: {
         getYoutubeList: actions.getYoutubeList,
         savePlaylist: actions.savePlaylist,
+        addTrack: actions.addTrack
       }
     }
   }

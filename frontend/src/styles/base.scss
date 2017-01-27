@@ -114,6 +114,7 @@ input[type=radio], input[type=checkbox]{
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      height: 100%;
     }
 
     &.youtube:before {

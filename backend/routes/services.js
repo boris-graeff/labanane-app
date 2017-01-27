@@ -58,7 +58,7 @@ router.get('/playlists', (req, res) => {
 router.put('/playlists', (req, res) => {
   var params = req.body,
     key = {
-      id: params.id,
+      name: params.name,
       password: params.password
     },
     content = {

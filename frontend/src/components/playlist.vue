@@ -14,7 +14,7 @@
               <button type='button' class='btn-volume-on' v-if='volume > 0' @click='mute'></button>
               <button type='button' class='btn-volume-off' v-else @click='unmute'></button>
               <div class='volume-bar'>
-                <input type='range' v-model='volume' v-bind:style='{width: volume + "%"}' step='2'/>
+                <input type='range' v-model='volume' :style='{width: volume + "%"}' step='2'/>
               </div>
             </div>
           </div>

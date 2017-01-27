@@ -72,5 +72,11 @@ export default {
   setTrackError: ({dispatch}) => {
     dispatch('SET_TRACK_ERROR')
     dispatch('SET_NEXT_TRACK')
+  },
+  addTrack: ({dispatch}, track) => {
+    dispatch('ADD_TRACK', track)
+  },
+  removeTrack: ({dispatch}, index) => {
+    dispatch('REMOVE_TRACK', index)
   }
 }

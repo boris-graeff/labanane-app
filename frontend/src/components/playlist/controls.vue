@@ -1,7 +1,7 @@
 <template>
   <div class='controls'>
     <div class='progress-bar'>
-      <input type='range' v-model='progression' v-bind:style='{width: progression.toFixed(1) + "%"}' step='0.1' />
+      <input type='range' v-model='progression' :style='{width: progression.toFixed(1) + "%"}' step='0.1' />
     </div>
     <ul>
       <li>

@@ -1,7 +1,7 @@
 <template>
   <div id='soundcloud-player'
-       v-bind:style="{backgroundImage: 'url(' + track.artwork + ')'}"
-       v-bind:class='{"is_active": is_active}' >
+       :style="{backgroundImage: 'url(' + track.artwork + ')'}"
+       :class='{"is_active": is_active}' >
 
   </div>
 </template>
