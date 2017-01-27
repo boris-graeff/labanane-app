@@ -1,5 +1,5 @@
 import axios from 'axios'
-import api from '../constants'
+import constants from '../constants'
 
 export default class HTTP {
   constructor(resource) {
@@ -9,7 +9,7 @@ export default class HTTP {
   getRequestConfig(params = {}) {
     return {
       ...params,
-      baseURL: api.baseURL,
+      baseURL: constants.baseURL,
       headers: {}
     }
   }
