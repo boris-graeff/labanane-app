@@ -6,12 +6,10 @@ var express = require('express'),
 
 router.post('/playlists', (req, res) => {
   var params = req.body
-  params = _.extend(params, {
-    length: params.tracks.length,
-    timestamp: Date.now()
-  })
+  params.length = 0
+  params.timestamp = Date.now()
 
-  new Playlist(params).save((err, playlist) => {
+  new Playlist(params).save((err) => {
     if (err) {
       res.status(500).send({ error: "Unexpected error" })
     }
@@ -49,7 +47,7 @@ router.get('/playlists', (req, res) => {
     }
     else {
       res.json(playlists.map(p => {
-        return { name: p.name, length: p.length }
+        return { name: p.name, length: p.length, timestamp: p.timestamp }
       }))
     }
   })
@@ -58,9 +56,18 @@ router.get('/playlists', (req, res) => {
 // UPDATE
 
 router.put('/playlists', (req, res) => {
-  var params = req.body
+  var params = req.body,
+    key = {
+      id: params.id,
+      password: params.password
+    },
+    content = {
+      tracks: params.tracks,
+      length: params.tracks.length,
+      timestamp: Date.now()
+    }
 
-  Playlist.findOneAndUpdate({id: params.id, password: params.password}, {tracks: params.tracks}, (err, playlist) => {
+  Playlist.findOneAndUpdate(key, content, (err, playlist) => {
     if (err) {
       res.status(500).send({ error: "Unexpected error" })
     }
