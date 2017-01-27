@@ -2,10 +2,13 @@
   <div class='tracks'>
     <div v-show='playlist.tracks.length '>{{ playlist.tracks.length }}</div>
     <ul class='list'>
-      <li v-for='t in playlist.tracks'
+      <li v-for='(t, index) in playlist.tracks'
           @click='setTrack(t)'
           v-bind:class='{"selected": t.id == track.id, "error": t.error, "youtube": t.provider === "youtube", "soundcloud": t.provider === "soundcloud"}'>
-        <div>{{t.name}}</div>
+        <div>
+          <span>{{t.name}}</span>
+          <button type='button' @click='removeTrack(index)'>X</button>
+        </div>
       </li>
     </ul>
   </div>
@@ -16,6 +19,12 @@
 
   export default {
     name: 'tracks',
+    methods: {
+      removeTrack(index){
+        this.playlist.tracks.splice(index, 1)
+        // TODO
+      }
+    },
     vuex: {
       getters: {
         playlist: state => state.playlist,

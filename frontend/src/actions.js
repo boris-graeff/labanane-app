@@ -14,7 +14,6 @@ export default {
       })
   },
   getPlaylist: ({dispatch}, name, password) => {
-    console.log(name, password)
     return playlists.get({name, password})
       .then(response => {
         dispatch('SET_PLAYLIST', name, password, response.data)
