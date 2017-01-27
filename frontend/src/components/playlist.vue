@@ -6,7 +6,7 @@
           <div>
             <div>
               <router-link :to="{ name: 'home'}" class='link-home'>
-                <img src='/images/labanane-logo.svg' alt="LaBanane logo" />
+                <img src='/images/labanane-logo.svg' alt="LaBanane logo"/>
               </router-link>
               <h1>{{playlist.name}}</h1>
             </div>
@@ -14,7 +14,7 @@
               <button type='button' class='btn-volume-on' v-if='volume > 0' @click='mute'></button>
               <button type='button' class='btn-volume-off' v-else @click='unmute'></button>
               <div class='volume-bar'>
-                <input type='range' v-model='volume' v-bind:style='{width: volume + "%"}' step='2' />
+                <input type='range' v-model='volume' v-bind:style='{width: volume + "%"}' step='2'/>
               </div>
             </div>
           </div>
@@ -34,6 +34,7 @@
 
 <script>
   import actions from '../actions'
+  import localStoragePassword from '../helpers/localStoragePassword'
   import tracks from './playlist/tracks.vue'
   import controls from './playlist/controls.vue'
   import player from './playlist/player.vue'
@@ -49,7 +50,7 @@
     },
     data: function () {
       return {
-        id: '',
+        name: '',
         lastVolumeValue: 100
       }
     },
@@ -64,15 +65,17 @@
       }
     },
     mounted () {
-      this.id = this.$route.params.id;
-      this.getPlaylist(this.id);
+      var name = this.$route.params.name,
+        password = localStoragePassword.get(name)
+
+      this.getPlaylist(name, password)
     },
     methods: {
       mute() {
         this.lastVolumeValue = this.player.volume
         this.setVolume(0)
       },
-      unmute() {
+      unmute() {
         this.setVolume(this.lastVolumeValue)
       }
     },
@@ -99,7 +102,8 @@
     header {
       padding: $space-medium $space-medium $space-small;
 
-      > div:first-child {
+      >
+      div:first-child {
         display: flex;
         justify-content: space-between;
       }
@@ -107,9 +111,11 @@
       a {
         transition: transform 300ms ease-in-out;
 
-        &:hover {
+        &
+        :hover {
           transform: rotate(360deg);
         }
+
       }
     }
 
@@ -144,7 +150,7 @@
       margin-top: $space-big;
     }
 
-    .link-home  {
+    .link-home {
       display: inline-block;
       line-height: 0;
       vertical-align: middle;
@@ -172,7 +178,7 @@
     }
   }
 
-  .btn-volume-on{
+  .btn-volume-on {
     background-image: url('/images/icn-volume-on.svg');
   }
 
@@ -187,29 +193,29 @@
     [type=range] {
       background: url('/images/volume-step-op50.svg') repeat-x;
 
-    &::-ms-thumb {
-       width: 0;
-     }
+      &::-ms-thumb {
+        width: 0;
+      }
 
-    &::-moz-range-thumb {
-       width: 0;
-     }
+      &::-moz-range-thumb {
+        width: 0;
+      }
 
-    &::-webkit-slider-thumb {
-       width: 0;
-     }
+      &::-webkit-slider-thumb {
+        width: 0;
+      }
 
-    &::-webkit-slider-runnable-track {
-       border-bottom: 0;
-     }
+      &::-webkit-slider-runnable-track {
+        border-bottom: 0;
+      }
 
-    &::-moz-range-track {
-       border-bottom: 0;
-     }
+      &::-moz-range-track {
+        border-bottom: 0;
+      }
 
-    &:after {
-       background: url('/images/volume-step-op100.svg') repeat-x;
-     }
+      &:after {
+        background: url('/images/volume-step-op100.svg') repeat-x;
+      }
     }
   }
 </style>

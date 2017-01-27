@@ -1,7 +1,7 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import home from './components/home.vue';
-import playlist from './components/playlist.vue';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import home from './components/home.vue'
+import playlist from './components/playlist.vue'
 
 Vue.use(VueRouter);
 
@@ -15,10 +15,10 @@ const router = new VueRouter({
     },
     {
       name: 'playlist',
-      path: '/playlist/:id',
+      path: '/playlist/:name',
       component: playlist
     }
   ]
-});
+})
 
-export default router;
+export default router

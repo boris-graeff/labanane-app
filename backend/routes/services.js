@@ -2,19 +2,29 @@ var express = require('express'),
   Playlist = require('../models/playlist'),
   router = express.Router()
 
+// CREATE
+
 router.post('/playlists', (req, res) => {
-  new Playlist(req.body).save((err, playlist) => {
+  var params = req.body
+  params = _.extend(params, {
+    length: params.tracks.length,
+    timestamp: Date.now()
+  })
+
+  new Playlist(params).save((err, playlist) => {
     if (err) {
       res.status(500).send({ error: "Unexpected error" })
     }
     else {
-      res.json(playlist)
+      res.json(true)
     }
   })
 })
 
-router.get('/playlists/:id/:password', (req, res) => {
-  Playlist.findOne({name: req.params.id}, (err, playlist) => {
+// GET
+
+router.get('/playlists/:name/:password', (req, res) => {
+  Playlist.findOne({name: req.params.name}, (err, playlist) => {
     if (err) {
       res.status(500).send({ error: "Unexpected error" })
     }
@@ -23,12 +33,14 @@ router.get('/playlists/:id/:password', (req, res) => {
     }
     else {
       res.json({
-        content: playlist.content,
+        tracks: playlist.tracks,
         isAuth: req.params.password === playlist.password
       })
     }
   })
 })
+
+// GET ALL
 
 router.get('/playlists', (req, res) => {
   Playlist.find({}, (err, playlists) => {
@@ -43,10 +55,12 @@ router.get('/playlists', (req, res) => {
   })
 })
 
+// UPDATE
+
 router.put('/playlists', (req, res) => {
   var params = req.body
 
-  Playlist.findOneAndUpdate({id: params.id, password: params.password}, {content: params.content}, (err, playlist) => {
+  Playlist.findOneAndUpdate({id: params.id, password: params.password}, {tracks: params.tracks}, (err, playlist) => {
     if (err) {
       res.status(500).send({ error: "Unexpected error" })
     }

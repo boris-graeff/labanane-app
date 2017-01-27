@@ -34,6 +34,7 @@
 
 <script>
   import actions from '../../actions'
+  import localStoragePassword from '../../helpers/localStoragePassword'
 
   export default {
     name: 'create-playlist',
@@ -48,8 +49,11 @@
         event.preventDefault()
 
         if(this.name && this.password){
-
           this.createPlaylist(this.name, this.password)
+            .then(() => {
+              localStoragePassword.add(this.name, this.password)
+              this.$router.push({name: 'playlist', params: {name: this.name}})
+            })
         }
       }
     },

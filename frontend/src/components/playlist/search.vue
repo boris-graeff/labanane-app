@@ -6,7 +6,9 @@
       <input type='text' v-model='input' id='search-input' />
     </div>
     <ul class='tracks list'>
-      <li v-for='track in results' :class='{"youtube": track.provider === "youtube", "soundcloud": track.provider === "soundcloud"}'>
+      <li v-for='track in results'
+          :class='{"youtube": track.provider === "youtube", "soundcloud": track.provider === "soundcloud"}'
+          @click='addTrack(track)'>
         <div><span>{{track.name}}</span><span></span></div>
       </li>
     </ul>
@@ -55,7 +57,7 @@
           .then(results => {
             return  results.data.items.map(track => {
               return {
-                id: track.id,
+                id: track.id.videoId,
                 name: track.snippet.title,
                 provider: 'youtube',
                 artwork: track.artwork_url,
@@ -81,11 +83,17 @@
                 }
               })
             })
+      },
+
+      addTrack(track) {
+        this.$store.dispatch('ADD_TRACK', track)
+        this.savePlaylist()
       }
     },
     vuex: {
       actions: {
-        getYoutubeList: actions.getYoutubeList
+        getYoutubeList: actions.getYoutubeList,
+        savePlaylist: actions.savePlaylist,
       }
     }
   }

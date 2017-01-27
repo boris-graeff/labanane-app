@@ -10,22 +10,29 @@ export default {
         dispatch('SET_PLAYLISTS', response.data)
       })
       .catch(() => {
-        console.error('Playlists request failed')
+        console.error("Playlists request failed")
       })
   },
-  getPlaylist: ({dispatch}, id) => {
-    return playlists.get({id})
+  getPlaylist: ({dispatch}, name, password) => {
+    console.log(name, password)
+    return playlists.get({name, password})
       .then(response => {
-        dispatch('SET_PLAYLIST', id, response.data)
+        dispatch('SET_PLAYLIST', name, password, response.data)
       })
       .catch(() => {
-        console.error('Playlist request failed')
+        console.error("Playlist request failed")
       })
   },
   createPlaylist: ({dispatch}, name, password) => {
     return playlists.create({name, password})
       .catch(() => {
-        console.error('Playlist creation request failed')
+        console.error("Playlist creation request failed")
+      })
+  },
+  savePlaylist: (store) => {
+    return playlists.update(store.state.playlist)
+      .catch(() => {
+        console.error("Playlist saving request failed")
       })
   },
 

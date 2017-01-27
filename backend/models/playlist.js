@@ -12,14 +12,8 @@ var PlaylistSchema = new mongoose.Schema({
   password: String,
   timestamp: Number,
   artwork: String,
-  content: [TrackSchema],
+  tracks: [TrackSchema],
   length: Number
-})
-
-PlaylistSchema.pre('save', function(next) {
-  this.length = this.content.length
-  this.timestamp = Date.now()
-  next()
 })
 
 module.exports = mongoose.model('Playlist', PlaylistSchema)
