@@ -40,7 +40,8 @@ const store = new Vuex.Store({
     playlist: {
       name: '',
       tracks: [],
-      password: ''
+      password: '',
+      canEdit: false
     },
     track: {
       id: '',
@@ -70,12 +71,9 @@ const store = new Vuex.Store({
     },
     SET_PLAYLIST: (state, name, password, data) => {
       state.playlist.name = name;
-      state.playlist.tracks = data.tracks;
-      state.isAuth = data.isAuth;
-
-      if(data.isAuth){
-        state.playlist.password = password
-      }
+      state.playlist.tracks = data.tracks
+      state.playlist.canEdit = data.isAuth
+      state.playlist.password = data.isAuth ? password : ''
     },
     SET_TRACK: (state, track) => {
       setTrack(state, track)

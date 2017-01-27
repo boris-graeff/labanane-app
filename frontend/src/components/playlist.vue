@@ -22,7 +22,7 @@
         </header>
 
         <controls></controls>
-        <search></search>
+        <search v-if='playlist.canEdit'></search>
       </div>
       <div>
         <tracks></tracks>
@@ -102,8 +102,7 @@
     header {
       padding: $space-medium $space-medium $space-small;
 
-      >
-      div:first-child {
+      > div:first-child {
         display: flex;
         justify-content: space-between;
       }
@@ -111,8 +110,7 @@
       a {
         transition: transform 300ms ease-in-out;
 
-        &
-        :hover {
+        &:hover {
           transform: rotate(360deg);
         }
 
