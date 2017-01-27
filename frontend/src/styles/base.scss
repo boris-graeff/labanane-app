@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,600');
-@import './reset';
 @import './constants.scss';
+@import './reset.scss';
 @import './inputs.scss';
 
 html {
@@ -125,4 +125,11 @@ input[type=radio], input[type=checkbox]{
       background-image: url('/images/icn-soundcloud.svg')
     }
   }
+}
+
+.error-message {
+  background: rgba($black, 0.2);
+  font-size: 1.4rem;
+  padding: $space-small;
+  margin-top: $space-small;
 }

@@ -24,9 +24,6 @@ export default {
   },
   createPlaylist: ({dispatch}, name, password) => {
     return playlists.create({name, password})
-      .catch(() => {
-        console.error("Playlist creation request failed")
-      })
   },
   savePlaylist: (store) => {
     return playlists.update(store.state.playlist)

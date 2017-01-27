@@ -6,7 +6,7 @@
 
 ``` bash
 # install mongodb
-https://docs.mongodb.com
+# see https://docs.mongodb.com
 
 # install dependencies
 npm install

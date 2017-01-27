@@ -11,7 +11,7 @@ router.post('/playlists', (req, res) => {
 
   new Playlist(params).save((err) => {
     if (err) {
-      res.status(500).send({ error: "Unexpected error" })
+      res.status(422).send({ error: "Playlist name already exists" })
     }
     else {
       res.json(true)

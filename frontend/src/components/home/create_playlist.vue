@@ -16,17 +16,20 @@
         Tips: please note that you will not be able to reset your password
       </div>
       <form @submit='create'>
-        <div>
-          <div class='text-box'>
-            <label for='playlist-name'>Name</label>
-            <input type='text' id='playlist-name' v-model='name'>
+        <div class='text-box'>
+          <label for='playlist-name'>Name</label>
+          <input type='text' id='playlist-name' v-model='name'>
+          <div class='error-message' v-show='show_error'>
+            Sorry, this name is already taken :(
           </div>
+        </div>
+        <div>
           <div class='text-box'>
             <label for='playlist-password'>Password</label>
             <input type='password' id='playlist-password' v-model='password'>
           </div>
+          <button type='submit'>Create</button>
         </div>
-        <button type='submit'>Create</button>
       </form>
     </div>
   </div>
@@ -41,7 +44,13 @@
     data: function () {
       return {
         name: '',
-        password: ''
+        password: '',
+        show_error: false
+      }
+    },
+    watch: {
+      name() {
+        this.show_error = false
       }
     },
     methods : {
@@ -54,6 +63,9 @@
               localStoragePassword.add(this.name, this.password)
               this.$router.push({name: 'playlist', params: {name: this.name}})
             })
+          .catch((response) => {
+            this.show_error = true
+          })
         }
       }
     },
@@ -94,11 +106,16 @@
     }
 
     form {
-      > div {
+      max-width: 410px;
+
+      > div:nth-child(2){
         display: flex;
+        align-items: flex-end;
       }
 
-      .text-box + .text-box {
+      button {
+        min-width: 200px;
+        height: 40px;
         margin-left: $space-medium;
       }
     }
