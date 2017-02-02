@@ -1,6 +1,5 @@
 <template>
   <div class='tracks'>
-    <div v-show='playlist.tracks.length '>{{ playlist.tracks.length }}</div>
     <ul class='list'>
       <li v-for='(t, index) in playlist.tracks'
           @click='setTrack(t)'
@@ -47,9 +46,12 @@
     position: relative;
     height: 100%;
     overflow-y: auto;
+    padding-top: $topbar-height;
 
     .list {
       min-height: 100%;
+      max-width: 800px;
+      margin: auto;
     }
 
     button {
@@ -67,19 +69,6 @@
     li:hover button {
       transform: scale(1) rotate(90deg);
       opacity: 1;
-    }
-
-    > div {
-      right: 0;
-      top: 0;
-      padding: $space-small;
-      line-height: 1;
-      background: $black;
-      color: $yellow;
-      font-size: 3rem;
-      position: fixed;
-      min-width: 50px;
-      text-align: center;
     }
   }
 </style>
