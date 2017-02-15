@@ -75,12 +75,11 @@ input[type=radio], input[type=checkbox]{
     }
 
     &:hover {
-      background: rgba($black, 0.2);
+      background-color: rgba($wheat, 0.2);
     }
 
     &.selected {
-      background: $black;
-      color: $yellow;
+      background-color: $wheat;
     }
 
     &.error {

@@ -1,13 +1,13 @@
 <template>
   <section class='playlist-page'>
+    <router-link :to="{ name: 'home'}" class='link-home'>
+      <img src='/images/labanane-logo.svg' alt="LaBanane logo"/>
+    </router-link>
     <div class='content' v-if='providers.youtube.ready'>
-      <topbar></topbar>
-      <div class='content'>
-        <!--search v-if='playlist.canEdit'></search>-->
-        <tracks></tracks>
-      </div>
-      <player></player>
+        <search v-if='playlist.canEdit'></search>
+        <tracklist></tracklist>
     </div>
+    <player></player>
     <youtube-player></youtube-player>
     <soundcloud-player></soundcloud-player>
   </section>
@@ -17,8 +17,7 @@
   import actions from '../actions'
   import localStoragePassword from '../helpers/localStoragePassword'
 
-  import topbar from './playlist/topbar.vue'
-  import tracks from './playlist/tracks.vue'
+  import tracklist from './playlist/tracklist.vue'
   import player from './playlist/player.vue'
   import search from './playlist/search.vue'
   import youtubePlayer from './playlist/players/youtube-player.vue'
@@ -27,8 +26,7 @@
   export default {
     name: 'playlist',
     components: {
-      'topbar': topbar,
-      'tracks': tracks,
+      'tracklist': tracklist,
       'player': player,
       'search': search,
       'youtube-player': youtubePlayer,
@@ -42,7 +40,8 @@
     },
     vuex: {
       getters: {
-        providers: state => state.providers
+        providers: state => state.providers,
+        playlist: state => state.playlist
       },
       actions: {
         getPlaylist: actions.getPlaylist
@@ -57,6 +56,35 @@
   .playlist-page {
     display: flex;
     flex-direction: column;
-  }
 
+    .content {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .tracklist {
+      width: 70%;
+    }
+
+    .search {
+      width: 40%;
+
+      + .tracklist {
+        width: 60%;
+      }
+    }
+
+    .link-home {
+      position: absolute;
+      top: $space-small;
+      left: $space-small;
+      width: 40px;
+      height: 40px;
+      transition: transform 300ms ease-in-out;
+
+      &:hover {
+        transform: rotate(360deg);
+      }
+    }
+  }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class='search'>
-    <h2>Add track</h2>
+    <h2>Add tracks</h2>
     <div class='text-box'>
-      <label for='search-input'>Track name</label>
+      <label for='search-input'>Search by name</label>
       <input type='text' v-model='input' id='search-input' />
     </div>
     <ul class='tracks list'>
@@ -103,7 +103,14 @@
   @import '../../styles/constants.scss';
 
   .search {
-    padding: $space-medium;
+    padding: 4*$space-big 0 $space-medium $space-medium;
+    height: 100vh;
+    overflow: hidden;
+
+    h2 {
+      font-weight: 300;
+      font-size: 3rem;
+    }
 
     .tracks {
       overflow: hidden;

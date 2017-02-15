@@ -8,6 +8,10 @@
 # install mongodb
 # see https://docs.mongodb.com
 
+# start mongodb
+sudo service mongod start
+
+
 # install dependencies
 npm install
 

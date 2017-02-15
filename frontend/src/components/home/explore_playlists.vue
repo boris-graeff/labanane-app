@@ -32,7 +32,7 @@
       filtered_playlists () {
         var input = this.input
 
-        return this.playlists.filter( track => {
+        return this.playlists.filter( (track) => {
           return track.name.indexOf(input) >= 0
         })
       }

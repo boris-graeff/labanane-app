@@ -3,27 +3,25 @@
     <div class='progress-bar'>
       <input type='range' v-model='progression' :style='{width: progression.toFixed(1) + "%"}' step='0.1' />
     </div>
-    <div class='content'></div>
+    <div class='content'>
       <div class='track-name'>{{track.name}}</div>
-      <div class='controls'>
-        <ul>
-          <li>
-            <button type='button' class='btn-previous' @click='prev'></button>
-          </li>
-          <li v-show='player.state !== "playing"'>
-            <button type='button' class='btn-play' @click='play'></button>
-          </li>
-          <li v-show='player.state === "playing"'>
-            <button type='button' class='btn-pause' @click='pause'></button>
-          </li>
-          <li>
-            <button type='button' class='btn-shuffle' @click='toggleShuffle' :class='{"enabled": player.shuffle}'></button>
-          </li>
-          <li>
-            <button type='button' class='btn-next' @click='next'></button>
-          </li>
-        </ul>
-      </div>
+      <ul class='controls'>
+        <li>
+          <button type='button' class='btn-previous' @click='prev'></button>
+        </li>
+        <li v-show='player.state !== "playing"'>
+          <button type='button' class='btn-play' @click='play'></button>
+        </li>
+        <li v-show='player.state === "playing"'>
+          <button type='button' class='btn-pause' @click='pause'></button>
+        </li>
+        <li>
+          <button type='button' class='btn-shuffle' @click='toggleShuffle' :class='{"enabled": player.shuffle}'></button>
+        </li>
+        <li>
+          <button type='button' class='btn-next' @click='next'></button>
+        </li>
+      </ul>
       <div class='volume'>
         <button type='button' class='btn-volume-on' v-if='volume > 0' @click='mute'></button>
         <button type='button' class='btn-volume-off' v-else @click='unmute'></button>
@@ -95,12 +93,11 @@
 
   .player {
     position: fixed;
-    height: $player-height;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(white, 0.5);
     padding: $space-small;
+    background: $wheat;
 
     .content {
       display: flex;
@@ -108,43 +105,39 @@
       justify-content: space-between;
     }
 
-    .track-name {
-      font-size: 2rem;
-    }
-  }
-
-  .controls {
-    padding: 0 $space-medium;
-
-    ul {
-      display: flex;
-      justify-content: space-between;
-
-      li {
-        width: 20%;
-      }
-    }
-
     button {
-      width: 100%;
-      height: 60px;
+      width: 48px;
+      height: 48px;
+      padding: $space-small $space-medium;
       transition: background-color 300ms ease-in-out;
       background-color: transparent;
       background-repeat: no-repeat;
-      background-size: contain;
+      background-size: 40px;
       background-position: center center;
+      border-radius: 100%;
 
       &:hover {
         background-color: rgba($black, 0.1);
       }
     }
-  }
 
-  .progress-bar {
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    right: 0;
+    .track-name {
+      flex: 1;
+      font-size: 2rem;
+    }
+
+    .controls {
+      display: flex;
+      flex: 0;
+      justify-content: center;
+    }
+
+    .volume {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
   }
 
   .btn-next {
@@ -171,21 +164,6 @@
     }
   }
 
-  .volume {
-    width: 200px;
-    display: flex;
-    align-items: center;
-
-    button {
-      width: 40px;
-      height: 40px;
-      transition: background-color 300ms ease-in-out;
-      background-color: transparent;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center center;
-    }
-  }
 
   .btn-volume-on {
     background-image: url('/images/icn-volume-on.svg');
@@ -196,8 +174,7 @@
   }
 
   .volume-bar {
-    width: 100%;
-    max-width: 400px;
+    width: 200px;
 
     [type=range] {
       background: url('/images/volume-step-op50.svg') repeat-x;

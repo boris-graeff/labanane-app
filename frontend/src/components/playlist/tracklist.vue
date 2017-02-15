@@ -1,9 +1,11 @@
 <template>
-  <div class='tracks'>
-    <ul class='list'>
+  <div class='tracklist'>
+    <h1>{{ playlist.name }}</h1>
+    <ul class='tracks list'>
       <li v-for='(t, index) in playlist.tracks'
           @click='setTrack(t)'
           :class='{"selected": t.id == track.id, "error": t.error, "youtube": t.provider === "youtube", "soundcloud": t.provider === "soundcloud"}'>
+        <span>{{index+1}}</span>
         <div>
           <span>{{t.name}}</span>
           <button type='button' @click='remove(index, $event)'></button>
@@ -17,7 +19,7 @@
   import actions from '../../actions'
 
   export default {
-    name: 'tracks',
+    name: 'tracklist',
     methods: {
       remove(index, event){
         event.stopPropagation()
@@ -42,20 +44,23 @@
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
   @import '../../styles/constants.scss';
 
-  .tracks {
+  .tracklist {
     position: relative;
-    height: 100%;
     overflow-y: auto;
     padding-top: $topbar-height;
+    padding-left: $space-big*2;
+    padding-bottom: $space-big*4;
+    height: 100vh;
+    background-color: rgba($wheat, 0.15);
 
-    .list {
-      min-height: 100%;
-      max-width: 800px;
-      margin: auto;
+    h1 {
+      font-size: 4rem;
+      font-weight: 300;
+      padding: $space-small 0;
     }
 
     button {
-      height: 100%;
+      height: 25px;
       width: 30px;
       padding: 0;
       background: url('/images/icn-cross.svg') no-repeat;
@@ -66,9 +71,25 @@
       opacity: 0;
     }
 
-    li:hover button {
-      transform: scale(1) rotate(90deg);
-      opacity: 1;
+    .tracks {
+      height: calc(100% - 68px); // TODO
+
+      li {
+        &:hover button {
+          transform: scale(1) rotate(90deg);
+          opacity: 1;
+        }
+
+        > span {
+          position: absolute;
+          font-size: 10px;
+          transform: translate(-$space-small, -50%);
+          top: 50%;
+          right: 100%;
+          text-align: right;
+          width: $space-big;
+        }
+      }
     }
   }
 </style>
