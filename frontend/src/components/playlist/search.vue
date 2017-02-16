@@ -106,6 +106,9 @@
     padding: 4*$space-big 0 $space-medium $space-medium;
     height: 100vh;
     overflow: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
 
     h2 {
       font-weight: 300;

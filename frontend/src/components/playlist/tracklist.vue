@@ -47,12 +47,10 @@
 
   .tracklist {
     position: relative;
-    overflow-y: auto;
     padding-top: $topbar-height;
     padding-left: $space-big*2;
-    padding-bottom: $space-big*4;
-    height: 100vh;
     background-color: rgba($wheat, 0.15);
+    min-height: 100vh;
 
     h1 {
       font-size: 4rem;
@@ -73,7 +71,8 @@
     }
 
     .tracks {
-      height: calc(100% - 68px); // TODO
+      min-height: calc(100% - 68px);
+      padding-bottom: 50vh;
 
       li {
         &:hover button {

@@ -98,6 +98,7 @@
     bottom: 0;
     padding: $space-small;
     background: $wheat;
+    box-shadow: 0px -4px 16px 0px rgba($black, 0.2);
 
     .content {
       display: flex;
@@ -130,6 +131,10 @@
       display: flex;
       flex: 0;
       justify-content: center;
+
+      > li {
+        margin: 0 $space-small;
+      }
     }
 
     .volume {
@@ -177,30 +182,18 @@
     width: 200px;
 
     [type=range] {
-      background: url('/images/volume-step-op50.svg') repeat-x;
+      background-image: url('/images/volume-step-op50.svg');
+      background-size: 100% 100%;
+      height: 16px;
 
-      &::-ms-thumb {
-        width: 0;
+      &:before, &:after {
+        background: url('/images/volume-bar.svg') repeat-x;
+        border-radius: 0;
+        height: 100%;
       }
 
-      &::-moz-range-thumb {
-        width: 0;
-      }
-
-      &::-webkit-slider-thumb {
-        width: 0;
-      }
-
-      &::-webkit-slider-runnable-track {
-        border-bottom: 0;
-      }
-
-      &::-moz-range-track {
-        border-bottom: 0;
-      }
-
-      &:after {
-        background: url('/images/volume-step-op100.svg') repeat-x;
+      &:before {
+        opacity: 0.3;
       }
     }
   }

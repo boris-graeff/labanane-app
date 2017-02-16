@@ -160,7 +160,7 @@
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
   .youtube-player {
     iframe {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       z-index: -1;

@@ -143,7 +143,7 @@
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
   #soundcloud-player {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;

@@ -75,7 +75,8 @@
     }
 
     .link-home {
-      position: absolute;
+      position: fixed;
+      z-index: 1;
       top: $space-small;
       left: $space-small;
       width: 40px;
