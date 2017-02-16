@@ -1,8 +1,9 @@
 <template>
   <div class='tracklist'>
     <h1>{{ playlist.name }}</h1>
-    <ul class='tracks list'>
+    <transition-group name='tracklist' tag='ul' class='tracks list'>
       <li v-for='(t, index) in playlist.tracks'
+          key='index'
           @click='setTrack(t)'
           :class='{"selected": t.id == track.id, "error": t.error, "youtube": t.provider === "youtube", "soundcloud": t.provider === "soundcloud"}'>
         <span>{{index+1}}</span>
@@ -11,7 +12,7 @@
           <button type='button' @click='remove(index, $event)'></button>
         </div>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 

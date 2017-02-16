@@ -67,7 +67,6 @@ const store = new Vuex.Store({
       state.playlist.tracks.push(track)
     },
     REMOVE_TRACK: (state, index) => {
-      console.log(index)
       state.playlist.tracks.splice(index, 1)
     },
     SET_PLAYLISTS: (state, playlists) => {

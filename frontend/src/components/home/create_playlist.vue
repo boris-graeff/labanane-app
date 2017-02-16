@@ -38,6 +38,7 @@
 <script>
   import actions from '../../actions'
   import localStoragePassword from '../../helpers/localStoragePassword'
+  import stringHelper from '../../helpers/string'
 
   export default {
     name: 'create-playlist',
@@ -50,6 +51,7 @@
     },
     watch: {
       name() {
+        this.name = stringHelper.slugify(this.name)
         this.show_error = false
       }
     },
