@@ -1,9 +1,6 @@
 <template>
   <div class='auth'>
-
-    <button v-if='expanded' type='button' @click='expanded=false' class='btn-close'></button>
-    <button v-else type='button' @click='expanded=true' class='btn-edit'></button>
-    <form  v-if='expanded' @submit.prevent='do_auth'>
+    <form @submit.prevent='do_auth'>
       <h2>Authentication</h2>
       <p>Please enter playlist password</p>
       <div>
@@ -64,12 +61,7 @@
   @import '../../styles/constants.scss';
 
   .auth {
-    position: fixed;
-    right: calc(70% + 6px);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    top: 53px;
+    padding-left: $space-medium;
 
     h2 {
       font-weight: 300;
@@ -94,22 +86,5 @@
       }
     }
 
-    .btn-edit, .btn-close {
-      padding: 0;
-      height: 48px;
-      width: 48px;
-      background-color: rgba($wheat, 0.15);
-      background-repeat: no-repeat;
-      background-size: 30px;
-      background-position: center center;
-    }
-
-    .btn-edit {
-      background-image: url('/images/icn-edit.svg');
-    }
-
-    .btn-close {
-      background-image: url('/images/icn-cross.svg');
-    }
   }
 </style>

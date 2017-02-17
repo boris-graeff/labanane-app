@@ -103,12 +103,8 @@
   @import '../../styles/constants.scss';
 
   .search {
-    padding: 4*$space-big 0 $space-medium $space-medium;
-    height: 100vh;
-    overflow: hidden;
-    position: fixed;
-    left: 0;
-    top: 0;
+    width: 100%;
+    padding-left: $space-medium;
 
     h2 {
       font-weight: 300;

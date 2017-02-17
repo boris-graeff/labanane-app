@@ -4,9 +4,8 @@
       <img src='/images/labanane-logo.svg' alt="LaBanane logo"/>
     </router-link>
     <div class='content' v-if='providers.youtube.ready'>
-        <search v-if='playlist.canEdit'></search>
-        <auth v-else></auth>
-        <tracklist></tracklist>
+      <actions-panel></actions-panel>
+      <tracklist></tracklist>
     </div>
     <player></player>
     <youtube-player></youtube-player>
@@ -19,9 +18,8 @@
   import localStoragePassword from '../helpers/localStoragePassword'
 
   import tracklist from './playlist/tracklist.vue'
+  import actionsPanel from './playlist/actions-panel.vue'
   import player from './playlist/player.vue'
-  import search from './playlist/search.vue'
-  import auth from './playlist/auth.vue'
   import youtubePlayer from './playlist/players/youtube-player.vue'
   import soundcloudPlayer from './playlist/players/soundcloud-player.vue'
 
@@ -29,9 +27,8 @@
     name: 'playlist',
     components: {
       'tracklist': tracklist,
+      'actions-panel': actionsPanel,
       'player': player,
-      'search': search,
-      'auth': auth,
       'youtube-player': youtubePlayer,
       'soundcloud-player': soundcloudPlayer
     },
@@ -43,8 +40,7 @@
     },
     vuex: {
       getters: {
-        providers: state => state.providers,
-        playlist: state => state.playlist
+        providers: state => state.providers
       },
       actions: {
         getPlaylist: actions.getPlaylist
@@ -65,20 +61,8 @@
       justify-content: flex-end;
     }
 
-    .tracklist {
-      width: 70%;
-    }
-
-    .search {
-      width: 40%;
-
-      + .tracklist {
-        width: 60%;
-      }
-    }
-
     .link-home {
-      position: absolute;
+      position: fixed;
       top: $space-small;
       left: $space-small;
       width: 40px;
