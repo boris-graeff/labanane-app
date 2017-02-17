@@ -16,13 +16,11 @@
           <button type='button' class='btn-pause' @click='pause'></button>
         </li>
         <li>
-          <button type='button' class='btn-shuffle' @click='toggleShuffle' :class='{"enabled": player.shuffle}'></button>
-        </li>
-        <li>
           <button type='button' class='btn-next' @click='next'></button>
         </li>
       </ul>
       <div class='volume'>
+        <button type='button' class='btn-shuffle' @click='toggleShuffle' :class='{"enabled": player.shuffle}'></button>
         <button type='button' class='btn-volume-on' v-if='volume > 0' @click='mute'></button>
         <button type='button' class='btn-volume-off' v-else @click='unmute'></button>
         <div class='volume-bar'>
@@ -98,7 +96,6 @@
     bottom: 0;
     padding: $space-small;
     background: $wheat;
-    box-shadow: 0px -4px 16px 0px rgba($black, 0.2);
 
     .content {
       display: flex;
@@ -109,7 +106,7 @@
     button {
       width: 48px;
       height: 48px;
-      padding: $space-small $space-medium;
+      padding: 0;
       transition: background-color 300ms ease-in-out;
       background-color: transparent;
       background-repeat: no-repeat;
