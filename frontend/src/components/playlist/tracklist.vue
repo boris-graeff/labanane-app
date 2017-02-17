@@ -9,7 +9,7 @@
         <span>{{index+1}}</span>
         <div>
           <span>{{t.name}}</span>
-          <button type='button' @click='remove(index, $event)'></button>
+          <button type='button' @click.prevent='remove(index)'></button>
         </div>
       </li>
     </transition-group>
@@ -22,8 +22,7 @@
   export default {
     name: 'tracklist',
     methods: {
-      remove(index, event){
-        event.stopPropagation()
+      remove(index){
         this.removeTrack(index)
         this.savePlaylist()
       }

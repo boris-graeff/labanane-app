@@ -17,6 +17,7 @@ export default {
     return playlists.get({name, password})
       .then(response => {
         dispatch('SET_PLAYLIST', name, password, response.data)
+        return response.data
       })
       .catch(() => {
         console.error("Playlist request failed")

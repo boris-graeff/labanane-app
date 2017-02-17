@@ -5,6 +5,7 @@
     </router-link>
     <div class='content' v-if='providers.youtube.ready'>
         <search v-if='playlist.canEdit'></search>
+        <auth v-else></auth>
         <tracklist></tracklist>
     </div>
     <player></player>
@@ -20,6 +21,7 @@
   import tracklist from './playlist/tracklist.vue'
   import player from './playlist/player.vue'
   import search from './playlist/search.vue'
+  import auth from './playlist/auth.vue'
   import youtubePlayer from './playlist/players/youtube-player.vue'
   import soundcloudPlayer from './playlist/players/soundcloud-player.vue'
 
@@ -29,6 +31,7 @@
       'tracklist': tracklist,
       'player': player,
       'search': search,
+      'auth': auth,
       'youtube-player': youtubePlayer,
       'soundcloud-player': soundcloudPlayer
     },
@@ -75,12 +78,12 @@
     }
 
     .link-home {
-      position: fixed;
-      z-index: 1;
+      position: absolute;
       top: $space-small;
       left: $space-small;
       width: 40px;
       height: 40px;
+      z-index: 1;
       transition: transform 300ms ease-in-out;
 
       &:hover {

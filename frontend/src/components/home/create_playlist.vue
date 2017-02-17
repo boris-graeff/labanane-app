@@ -15,7 +15,7 @@
       <div class='tips'>
         Tips: please note that you will not be able to reset your password
       </div>
-      <form @submit='create'>
+      <form @submit.prevent='create'>
         <div class='text-box'>
           <label for='playlist-name'>Name</label>
           <input type='text' id='playlist-name' v-model='name'>
@@ -57,7 +57,6 @@
     },
     methods : {
       create(event) {
-        event.preventDefault()
 
         if(this.name && this.password){
           this.createPlaylist(this.name, this.password)
