@@ -21,6 +21,8 @@
       </ul>
       <div class='volume'>
         <button type='button' class='btn-shuffle' @click='toggleShuffle' :class='{"enabled": player.shuffle}'></button>
+        <button v-show='player.videoMode' type='button' @click='toggleVideoMode' class='btn-video-mode-off'></button>
+        <button v-show='!player.videoMode' type='button' @click='toggleVideoMode' class='btn-video-mode-on'></button>
         <button type='button' class='btn-volume-on' v-if='volume > 0' @click='mute'></button>
         <button type='button' class='btn-volume-off' v-else @click='unmute'></button>
         <div class='volume-bar'>
@@ -80,6 +82,7 @@
         pause: actions.setPause,
         setSeekPosition: actions.setSeekPosition,
         toggleShuffle: actions.toggleShuffle,
+        toggleVideoMode: actions.toggleVideoMode,
         setVolume: actions.setVolume
       }
     }
@@ -166,6 +169,13 @@
     }
   }
 
+  .btn-video-mode-on {
+    background-image: url('/images/icn-video-mode-on.svg');
+  }
+
+  .btn-video-mode-off {
+    background-image: url('/images/icn-video-mode-off.svg');
+  }
 
   .btn-volume-on {
     background-image: url('/images/icn-volume-on.svg');

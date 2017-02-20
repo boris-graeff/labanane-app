@@ -1,8 +1,7 @@
 <template>
   <div id='soundcloud-player'
        :style="{backgroundImage: 'url(' + track.artwork + ')'}"
-       :class='{"is_active": is_active}' >
-
+       :class='{"is-active": isActive, "video-mode-on": videoMode}' >
   </div>
 </template>
 
@@ -15,7 +14,7 @@
     sound: null,
     data: function(){
       return {
-        is_active: false
+        isActive: false
       }
     },
     created () {
@@ -24,7 +23,7 @@
     watch: {
       state(){
         if (this.provider === 'soundcloud') {
-          this.is_active = true
+          this.isActive = true
           if(this.state === 'loading'){
             this.load()
           }
@@ -52,7 +51,7 @@
       },
       provider(){
         if(this.provider !== 'soundcloud') {
-          this.is_active = false
+          this.isActive = false
           this.stop()
         }
       }
@@ -128,8 +127,7 @@
         seekPosition: state => state.player.seekPosition,
         state: state => state.player.state,
         volume: state => state.player.volume,
-
-        player: state => state.player,
+        videoMode: state => state.player.videoMode
       },
       actions: {
         setPlay: actions.setPlay,
@@ -148,14 +146,18 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1;
-    filter: grayscale(100%);
-    background-size: cover;
     opacity: 0;
-    transition: opacity 300ms ease-in-out;
+    z-index: -1;
+    transition: opacity 300ms ease-in-out, filter 300ms ease-in-out;
+    filter: grayscale(100%) blur(10px);
 
-    &.is_active {
+    &.is-active {
        opacity: 0.2;
+
+      &.video-mode-on {
+        opacity: 0.5;
+        filter: grayscale(100%);
+      }
     }
   }
 </style>

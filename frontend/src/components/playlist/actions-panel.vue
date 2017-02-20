@@ -1,6 +1,8 @@
 <template>
   <div class='actions-panel' :class='{"expanded" : expanded}'>
-    <div>
+    <div class='buttons'>
+      <button v-show='videoMode' type='button' @click='toggleVideoMode' class='btn-video-mode-off'></button>
+      <button v-show='!videoMode' type='button' @click='toggleVideoMode' class='btn-video-mode-on'></button>
       <button v-show='expanded' type='button' @click='expanded=false' class='btn-close'></button>
       <button v-show='!expanded' type='button' @click='expanded=true' class='btn-edit'></button>
     </div>
@@ -11,6 +13,7 @@
 </template>
 
 <script>
+  import actions from '../../actions'
   import search from './search.vue'
   import auth from './auth.vue'
 
@@ -26,8 +29,12 @@
       }
     },
     vuex: {
+      actions: {
+        toggleVideoMode: actions.toggleVideoMode
+      },
       getters: {
-        playlist: state => state.playlist
+        playlist: state => state.playlist,
+        videoMode: state => state.player.videoMode
       }
     }
   }
@@ -48,14 +55,22 @@
     align-items: flex-end;
     will-change: width;
 
-    .btn-edit, .btn-close {
-      padding: 0;
-      height: 48px;
-      width: 48px;
-      background-color: rgba($wheat, 0.15);
-      background-repeat: no-repeat;
-      background-size: 30px;
-      background-position: center center;
+    .buttons {
+      display: flex;
+
+      button {
+        padding: 0;
+        height: 48px;
+        width: 48px;
+        background-color: rgba($wheat, 0.15);
+        background-repeat: no-repeat;
+        background-size: 30px;
+        background-position: center center;
+
+        + button {
+          margin-left: 6px;
+        }
+      }
     }
 
     .btn-edit {
@@ -64,6 +79,14 @@
 
     .btn-close {
       background-image: url('/images/icn-cross.svg');
+    }
+
+    .btn-video-mode-on {
+      background-image: url('/images/icn-video-mode-on.svg');
+    }
+
+    .btn-video-mode-off {
+      background-image: url('/images/icn-video-mode-off.svg');
     }
 
     &.expanded {

@@ -55,6 +55,9 @@ export default {
   toggleShuffle: ({dispatch}) => {
     dispatch('TOGGLE_SHUFFLE')
   },
+  toggleVideoMode: ({dispatch}) => {
+    dispatch('TOGGLE_VIDEO_MODE')
+  },
   prevTrack: ({dispatch}) => {
     dispatch('SET_PREVIOUS_TRACK')
   },

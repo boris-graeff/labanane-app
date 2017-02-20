@@ -51,6 +51,7 @@ const store = new Vuex.Store({
     },
     player: {
       shuffle: false,
+      videoMode: false,
       state: '',
       volume: 100,
       progression: 0,
@@ -109,6 +110,9 @@ const store = new Vuex.Store({
     },
     TOGGLE_SHUFFLE: (state) => {
       state.player.shuffle = !state.player.shuffle
+    },
+    TOGGLE_VIDEO_MODE: (state) => {
+      state.player.videoMode = !state.player.videoMode
     },
     SET_NEXT_TRACK: state => {
       let tracks = state.playlist.tracks,

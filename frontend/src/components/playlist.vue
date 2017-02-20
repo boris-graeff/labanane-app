@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'home'}" class='link-home'>
       <img src='/images/labanane-logo.svg' alt="LaBanane logo"/>
     </router-link>
-    <div class='content' v-if='providers.youtube.ready'>
+    <div class='content' v-if='providers.youtube.ready' v-show='!videoMode'>
       <actions-panel></actions-panel>
       <tracklist></tracklist>
     </div>
@@ -40,7 +40,8 @@
     },
     vuex: {
       getters: {
-        providers: state => state.providers
+        providers: state => state.providers,
+        videoMode: state => state.player.videoMode
       },
       actions: {
         getPlaylist: actions.getPlaylist

@@ -1,5 +1,5 @@
 <template>
-  <div class='youtube-player' :class='{"is_active": is_active}'>
+  <div class='youtube-player' :class='{"is-active": isActive, "video-mode-on": videoMode}'>
     <div id='youtube-player'></div>
   </div>
 </template>
@@ -14,7 +14,7 @@
     timer: null,
     data: function(){
       return {
-        is_active: false
+        isActive: false
       }
     },
     mounted () {
@@ -23,7 +23,7 @@
     watch: {
       state(){
         if (this.provider === 'youtube') {
-          this.is_active = true
+          this.isActive = true
           if(this.state === 'loading'){
             this.load()
           }
@@ -46,7 +46,7 @@
       },
       provider(){
         if(this.provider !== 'youtube') {
-          this.is_active = false
+          this.isActive = false
           this.stop()
         }
       }
@@ -144,7 +144,8 @@
         provider: state => state.track.provider,
         seekPosition: state => state.player.seekPosition,
         state: state => state.player.state,
-        volume: state => state.player.volume
+        volume: state => state.player.volume,
+        videoMode: state => state.player.videoMode
       },
       actions: {
         setPlay: actions.setPlay,
@@ -164,13 +165,20 @@
       top: 0;
       left: 0;
       z-index: -1;
-      filter: blur(30px);
       opacity: 0;
-      transition: opacity 300ms ease-in-out;
+      filter: blur(30px);
+      transition: opacity 300ms ease-in-out, filter 300ms ease-in-out;
     }
 
-    &.is_active iframe {
-      opacity: 0.2;
-   }
+    &.is-active {
+      iframe {
+        opacity: 0.2;
+      }
+
+      &.video-mode-on iframe {
+        filter: none;
+        opacity: 1;
+      }
+    }
   }
 </style>
