@@ -97,7 +97,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    padding: $space-small;
+    padding: 0 $space-small;
+    height: $player-height;
     background: $wheat;
 
     .content {

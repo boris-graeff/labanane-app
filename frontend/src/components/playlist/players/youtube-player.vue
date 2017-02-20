@@ -159,11 +159,14 @@
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
+  @import "../../../styles/base.scss";
+
   .youtube-player {
     iframe {
       position: fixed;
       top: 0;
       left: 0;
+      height: calc(100% - #{$player-height});
       z-index: -1;
       opacity: 0;
       filter: blur(30px);
@@ -177,7 +180,7 @@
 
       &.video-mode-on iframe {
         filter: none;
-        opacity: 1;
+        opacity: 0.8;
       }
     }
   }

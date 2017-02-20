@@ -74,7 +74,7 @@
     background-color: rgba($wheat, 0.15);
     min-height: 100vh;
     width: 80%;
-    transition: width 300ms ease-in-out;
+    transition: width 200ms ease-in-out, transform 200ms ease-in-out;
 
 
     h1 {

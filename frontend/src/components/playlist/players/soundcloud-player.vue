@@ -140,12 +140,14 @@
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
+  @import "../../../styles/base.scss";
+
   #soundcloud-player {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: $player-height;
     opacity: 0;
     z-index: -1;
     transition: opacity 300ms ease-in-out, filter 300ms ease-in-out;
@@ -153,10 +155,20 @@
 
     &.is-active {
        opacity: 0.2;
+      animation: zoom 60s infinite alternate linear;
 
       &.video-mode-on {
         opacity: 0.5;
         filter: grayscale(100%);
+      }
+    }
+
+    @keyframes zoom {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(2) rotate(6deg);
       }
     }
   }

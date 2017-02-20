@@ -3,10 +3,12 @@
     <router-link :to="{ name: 'home'}" class='link-home'>
       <img src='/images/labanane-logo.svg' alt="LaBanane logo"/>
     </router-link>
-    <div class='content' v-if='providers.youtube.ready' v-show='!videoMode'>
-      <actions-panel></actions-panel>
-      <tracklist></tracklist>
-    </div>
+    <transition name='video-mode'>
+      <div class='content' v-if='providers.youtube.ready' v-show='!videoMode'>
+        <actions-panel></actions-panel>
+        <tracklist></tracklist>
+      </div>
+    </transition>
     <player></player>
     <youtube-player></youtube-player>
     <soundcloud-player></soundcloud-player>
@@ -62,6 +64,21 @@
     .content {
       display: flex;
       justify-content: flex-end;
+      overflow-x: hidden;
+      transition: opacity 200ms ease-in-out;
+    }
+
+    .video-mode-enter,
+    .video-mode-leave-to {
+      opacity: 0;
+
+      .actions-panel {
+        transform: translateX(-200px);
+      }
+
+      .tracklist {
+        transform: translateX(200px);
+      }
     }
 
     .link-home {

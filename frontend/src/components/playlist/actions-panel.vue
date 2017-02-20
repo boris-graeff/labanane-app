@@ -1,8 +1,6 @@
 <template>
   <div class='actions-panel' :class='{"expanded" : expanded}'>
     <div class='buttons'>
-      <button v-show='videoMode' type='button' @click='toggleVideoMode' class='btn-video-mode-off'></button>
-      <button v-show='!videoMode' type='button' @click='toggleVideoMode' class='btn-video-mode-on'></button>
       <button v-show='expanded' type='button' @click='expanded=false' class='btn-close'></button>
       <button v-show='!expanded' type='button' @click='expanded=true' class='btn-edit'></button>
     </div>
@@ -29,12 +27,8 @@
       }
     },
     vuex: {
-      actions: {
-        toggleVideoMode: actions.toggleVideoMode
-      },
       getters: {
-        playlist: state => state.playlist,
-        videoMode: state => state.player.videoMode
+        playlist: state => state.playlist
       }
     }
   }
@@ -45,7 +39,7 @@
 
   .actions-panel {
     width: 20%;
-    transition: width 300ms ease-in-out;
+    transition: width 200ms ease-in-out, transform 200ms ease-in-out;
     position: fixed;
     top: 56px;
     left: 0;
@@ -66,6 +60,11 @@
         background-repeat: no-repeat;
         background-size: 30px;
         background-position: center center;
+        transition: background-color 200ms ease-in-out;
+
+        &:hover {
+          background-color: rgba($wheat, 0.8);
+        }
 
         + button {
           margin-left: 6px;

@@ -1,10 +1,10 @@
 // Based on https://github.com/darlanrod/input-range-scss
 
 $track-color: transparent !default;
-$thumb-height: 4px !default;
-$thumb-width: 4px !default;
+$thumb-height: 12px !default;
+$thumb-width: 12px !default;
 $track-width: 100% !default;
-$track-height: 10px !default;
+$track-height: 12px !default;
 $track-border: none;
 
 @mixin track() {
@@ -116,7 +116,7 @@ $track-border: none;
 
   &:after {
     width: inherit;
-    height: 4px;
+    height: 2px;
   }
 }
 
