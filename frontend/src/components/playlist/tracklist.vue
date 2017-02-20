@@ -1,18 +1,24 @@
 <template>
   <div class='tracklist'>
     <h1>{{ playlist.name }}</h1>
-    <transition-group name='tracklist' tag='ul' class='tracks list'>
-      <li v-for='(t, index) in playlist.tracks'
-          key='index'
-          @click='setTrack(t)'
-          :class='{"selected": t.id == track.id, "error": t.error, "youtube": t.provider === "youtube", "soundcloud": t.provider === "soundcloud"}'>
-        <span>{{index+1}}</span>
-        <div>
-          <span>{{t.name}}</span>
-          <button type='button' @click.prevent='remove(index)'></button>
-        </div>
-      </li>
-    </transition-group>
+    <div @dragover.prevent @drop='onDropEnd'>
+      <transition-group name='tracklist' tag='ul' class='tracks list'>
+        <li v-for='(t, index) in playlist.tracks'
+            key='index'
+            draggable=playlist.canEdit
+            @dragover.prevent
+            @drop.stop='onDrop(t, index, $event)'
+            @dragstart='onDragStart(t, index, $event)'
+            @click='setTrack(t)'
+            :class='{"selected": t.id == track.id, "error": t.error, "youtube": t.provider === "youtube", "soundcloud": t.provider === "soundcloud"}'>
+          <span>{{index+1}}</span>
+          <div>
+            <span>{{t.name}}</span>
+            <button type='button' @click.prevent='remove(index)'></button>
+          </div>
+        </li>
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -25,6 +31,21 @@
       remove(index){
         this.removeTrack(index)
         this.savePlaylist()
+      },
+      onDrop(track, index, event) {
+        var track = JSON.parse(event.dataTransfer.getData('track'))
+        track.id ? this.moveTrack(track, index) :  this.addTrack(track, index+1)
+        this.savePlaylist()
+      },
+      onDropEnd(event){
+        var track = JSON.parse(event.dataTransfer.getData('track'))
+        track.id ? this.moveTrack(track) :  this.addTrack(track)
+        this.savePlaylist()
+      },
+      onDragStart (track, index, event) {
+        track.index = index
+        event.dataTransfer.effectAllowed = 'move'
+        event.dataTransfer.setData('track', JSON.stringify(track))
       }
     },
     vuex: {
@@ -35,7 +56,9 @@
       actions: {
         setTrack: actions.setTrack,
         removeTrack: actions.removeTrack,
-        savePlaylist: actions.savePlaylist
+        savePlaylist: actions.savePlaylist,
+        addTrack: actions.addTrack,
+        moveTrack: actions.moveTrack
       }
     }
   }
@@ -74,7 +97,7 @@
 
     .tracks {
       min-height: calc(100% - 68px);
-      padding-bottom: 50vh;
+      padding-bottom: 30vh;
 
       li {
         &:hover button {

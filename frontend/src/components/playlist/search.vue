@@ -7,6 +7,8 @@
     </div>
     <ul class='tracks list'>
       <li v-for='track in results'
+          draggable=true
+          @dragstart='onDragStart(track, $event)'
           :class='{"youtube": track.provider === "youtube", "soundcloud": track.provider === "soundcloud"}'
           @click='add(track)'>
         <div><span>{{track.name}}</span><span></span></div>
@@ -85,9 +87,13 @@
       },
 
       add(track) {
-        track.id = Date.now()
         this.addTrack(track)
         this.savePlaylist()
+      },
+
+      onDragStart (track, event) {
+        event.dataTransfer.effectAllowed = 'move'
+        event.dataTransfer.setData('track', JSON.stringify(track))
       }
     },
     vuex: {

@@ -69,8 +69,24 @@ const store = new Vuex.Store({
       state.playlist.tracks.length = 0
       state.playlist.canEdit = false
     } ,
-    ADD_TRACK: (state, track) => {
-      state.playlist.tracks.push(track)
+    ADD_TRACK: (state, track, index) => {
+      track.id = Date.now()
+      if(index !== undefined){
+        state.playlist.tracks.splice(index, 0, track)
+      }
+      else {
+        state.playlist.tracks.push(track)
+      }
+    },
+    MOVE_TRACK: (state, track, index) => {
+      state.playlist.tracks.splice(track.index, 1)
+
+      if(index !== undefined){
+        state.playlist.tracks.splice(index, 0, track)
+      }
+      else {
+        state.playlist.tracks.push(track)
+      }
     },
     REMOVE_TRACK: (state, index) => {
       state.playlist.tracks.splice(index, 1)
