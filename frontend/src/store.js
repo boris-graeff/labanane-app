@@ -64,6 +64,11 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    INIT_PLAYLIST: (state, name) => {
+      state.playlist.name = name
+      state.playlist.tracks.length = 0
+      state.playlist.canEdit = false
+    } ,
     ADD_TRACK: (state, track) => {
       state.playlist.tracks.push(track)
     },

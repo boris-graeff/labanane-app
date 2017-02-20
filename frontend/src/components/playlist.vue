@@ -32,10 +32,11 @@
       'youtube-player': youtubePlayer,
       'soundcloud-player': soundcloudPlayer
     },
-    mounted () {
+    created () {
       var name = this.$route.params.name,
           password = localStoragePassword.get(name)
 
+      this.initPlaylist(name)
       this.getPlaylist(name, password)
     },
     vuex: {
@@ -44,7 +45,8 @@
         videoMode: state => state.player.videoMode
       },
       actions: {
-        getPlaylist: actions.getPlaylist
+        getPlaylist: actions.getPlaylist,
+        initPlaylist: actions.initPlaylist
       }
     }
   }
