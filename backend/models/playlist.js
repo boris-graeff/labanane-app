@@ -4,6 +4,7 @@ var TrackSchema = new mongoose.Schema({
   id: String,
   name: String,
   provider: String,
+  providerId: String,
   artwork: String
 })
 

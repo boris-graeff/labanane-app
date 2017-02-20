@@ -98,7 +98,7 @@
 
       load() {
         this.stop()
-        this.ytbPlayer.loadVideoById({'videoId': this.track.id})
+        this.ytbPlayer.loadVideoById({'videoId': this.track.providerId})
       },
 
       play () {

@@ -57,7 +57,7 @@
           .then(results => {
             return  results.data.items.map(track => {
               return {
-                id: track.id.videoId,
+                providerId: track.id.videoId,
                 name: track.snippet.title,
                 provider: 'youtube',
                 duration: 0,
@@ -73,7 +73,7 @@
             .then(results => {
               return results.map(track => {
                 return {
-                  id: track.id,
+                  providerId: track.id,
                   name: track.title,
                   provider: 'soundcloud',
                   artwork: track.artwork_url,
@@ -85,6 +85,7 @@
       },
 
       add(track) {
+        track.id = Date.now()
         this.addTrack(track)
         this.savePlaylist()
       }

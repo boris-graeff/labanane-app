@@ -52,7 +52,7 @@
     min-height: 100vh;
     width: 80%;
     transition: width 300ms ease-in-out;
-    will-change: width;
+
 
     h1 {
       font-size: 4rem;
