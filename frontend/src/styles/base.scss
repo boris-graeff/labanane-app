@@ -75,7 +75,7 @@ input[type=radio], input[type=checkbox]{
     }
 
     &:hover {
-      background-color: rgba($wheat, 0.2);
+      background-color: rgba($wheat, 0.5);
     }
 
     &.selected {
@@ -117,7 +117,7 @@ input[type=radio], input[type=checkbox]{
     }
 
     &.youtube:before {
-      background-image: url('/images/icn-youtube.svg')
+      background-image: url('/images/icn-you-tube.svg') // you-tube adblock hack
     }
 
     &.soundcloud:before {

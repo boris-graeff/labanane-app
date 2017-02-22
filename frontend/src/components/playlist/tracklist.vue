@@ -5,7 +5,7 @@
       <transition-group name='tracklist' tag='ul' class='tracks list'>
         <li v-for='(t, index) in playlist.tracks'
             key='index'
-            draggable=playlist.canEdit
+            :draggable='playlist.canEdit'
             @dragover.prevent
             @drop.stop='onDrop(t, index, $event)'
             @dragstart='onDragStart(t, index, $event)'

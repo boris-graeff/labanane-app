@@ -110,6 +110,7 @@
     button {
       width: 48px;
       height: 48px;
+      display: block;
       padding: 0;
       transition: background-color 300ms ease-in-out;
       background-color: transparent;
@@ -143,6 +144,14 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
+    }
+
+    .btn-shuffle, .btn-video-mode-on, .btn-video-mode-off, .btn-volume-on, .btn-volume-off {
+      background-size: 35px;
+    }
+
+    .btn-video-mode-on, .btn-video-mode-off {
+      background-position: top 5px center;
     }
   }
 

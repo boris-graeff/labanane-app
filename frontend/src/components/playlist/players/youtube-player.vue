@@ -55,7 +55,12 @@
       loadPlayer () {
         this.ytbPlayer = YtbPlayer('youtube-player', {
           height: '100%',
-          width: '100%'
+          width: '100%',
+          playerVars: {
+            modestbranding: 1,
+            showinfo: 0,
+            controls: 0
+          }
         })
         this.ytbPlayer.on('stateChange', this.onStateChange)
         this.ytbPlayer.on('ready', this.onPlayerReady)

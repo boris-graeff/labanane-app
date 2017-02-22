@@ -9,7 +9,6 @@ export default class HTTP {
   getRequestConfig(params = {}) {
     return {
       ...params,
-      baseURL: constants.baseURL,
       headers: {}
     }
   }
