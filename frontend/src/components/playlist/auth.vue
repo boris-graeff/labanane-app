@@ -19,6 +19,7 @@
 
 <script>
   import actions from '../../actions'
+  import localStoragePassword from '../../helpers/localStoragePassword'
 
   export default {
     name: 'auth',
@@ -41,6 +42,9 @@
               .then(response => {
                 if(! response.isAuth){
                   this.show_error = true
+                }
+                else {
+                  localStoragePassword.add(this.playlist.name, this.password)
                 }
               })
         }

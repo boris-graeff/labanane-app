@@ -1,7 +1,8 @@
 <template>
   <div class='player'>
-    <div class='progress-bar'>
+    <div class='slider progress-bar'>
       <input type='range' v-model='progression' :style='{width: progression.toFixed(1) + "%"}' step='0.1' />
+      <span :style='{width: progression.toFixed(1) + "%"}'></span>
     </div>
     <div class='content'>
       <div class='track-name'>{{track.name}}</div>
@@ -25,8 +26,9 @@
         <button v-show='!player.videoMode' type='button' @click='toggleVideoMode' class='btn-video-mode-on'></button>
         <button type='button' class='btn-volume-on' v-if='volume > 0' @click='mute'></button>
         <button type='button' class='btn-volume-off' v-else @click='unmute'></button>
-        <div class='volume-bar'>
-          <input type='range' v-model='volume' :style='{width: volume + "%"}' step='2'/>
+        <div class='slider volume-bar'>
+          <input type='range' v-model='volume' step='2'/>
+          <span :style='{width: volume + "%"}'></span>
         </div>
       </div>
     </div>
@@ -195,23 +197,16 @@
     background-image: url('/images/icn-volume-off.svg');
   }
 
-  .volume-bar {
+  .slider.volume-bar {
     width: 200px;
 
-    [type=range] {
-      background-image: url('/images/volume-step-op50.svg');
-      background-size: 100% 100%;
-      height: 16px;
-
-      &:before, &:after {
-        background: url('/images/volume-bar.svg') repeat-x;
-        border-radius: 0;
-        height: 100%;
-      }
-
-      &:before {
-        opacity: 0.3;
-      }
+    &:before, span:after {
+      background-color: transparent;
+      background-image: url('/images/volume-bar.svg');
+      background-repeat: repeat-x;
+      background-position: left center;
+      border-radius: 0;
+      height: 100%;
     }
   }
 </style>

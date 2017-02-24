@@ -4,10 +4,13 @@ var express = require('express'),
 
 // CREATE
 
+Playlist.remove({}, function(){})
+
 router.post('/playlists', (req, res) => {
   var params = req.body
   params.length = 0
   params.timestamp = Date.now()
+  params.tracks = []
 
   new Playlist(params).save((err) => {
     if (err) {

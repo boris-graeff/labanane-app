@@ -88,7 +88,6 @@
 
       add(track) {
         this.addTrack(track)
-        this.savePlaylist()
       },
 
       onDragStart (track, event) {
@@ -99,7 +98,6 @@
     vuex: {
       actions: {
         getYoutubeList: actions.getYoutubeList,
-        savePlaylist: actions.savePlaylist,
         addTrack: actions.addTrack
       }
     }

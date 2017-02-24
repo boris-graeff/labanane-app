@@ -96,16 +96,20 @@ $track-border: none;
   &:focus::-ms-fill-upper {
     background: $track-color;
   }
+}
 
-  &:before, &:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: -1;
-    border-radius: 6px;
-    background: $black;
+.slider {
+  position: relative;
+
+  &:before, span:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: -1;
+      border-radius: 6px;
+      background: $black;
   }
 
   &:before {
@@ -114,7 +118,7 @@ $track-border: none;
     opacity: 0.2;
   }
 
-  &:after {
+  span:after {
     width: inherit;
     height: 2px;
   }

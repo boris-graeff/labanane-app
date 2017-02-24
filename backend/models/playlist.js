@@ -10,7 +10,7 @@ var TrackSchema = new mongoose.Schema({
 
 var PlaylistSchema = new mongoose.Schema({
   name: {type: String, unique: true, required: true},
-  password: {type: String, unique: true, required: true},
+  password: {type: String, required: true},
   timestamp: {type: Number, required: true},
   tracks: [TrackSchema],
   length: {type: Number, required: true}

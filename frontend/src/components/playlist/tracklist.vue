@@ -27,20 +27,22 @@
 
   export default {
     name: 'tracklist',
+    watch: {
+      'playlist.tracks'() {
+        this.savePlaylist()
+      }
+    },
     methods: {
       remove(index){
         this.removeTrack(index)
-        this.savePlaylist()
       },
       onDrop(track, index, event) {
         var track = JSON.parse(event.dataTransfer.getData('track'))
         track.id ? this.moveTrack(track, index) :  this.addTrack(track, index+1)
-        this.savePlaylist()
       },
       onDropEnd(event){
         var track = JSON.parse(event.dataTransfer.getData('track'))
         track.id ? this.moveTrack(track) :  this.addTrack(track)
-        this.savePlaylist()
       },
       onDragStart (track, index, event) {
         track.index = index
@@ -56,9 +58,9 @@
       actions: {
         setTrack: actions.setTrack,
         removeTrack: actions.removeTrack,
-        savePlaylist: actions.savePlaylist,
         addTrack: actions.addTrack,
-        moveTrack: actions.moveTrack
+        moveTrack: actions.moveTrack,
+        savePlaylist: actions.savePlaylist
       }
     }
   }
