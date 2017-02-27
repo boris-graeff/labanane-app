@@ -107,6 +107,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      overflow: hidden;
     }
 
     button {
@@ -114,15 +115,29 @@
       height: 48px;
       display: block;
       padding: 0;
-      transition: background-color 300ms ease-in-out;
       background-color: transparent;
       background-repeat: no-repeat;
       background-size: 40px;
       background-position: center center;
-      border-radius: 100%;
+      position: relative;
 
-      &:hover {
+      &:before {
+        content: '';
         background-color: rgba($black, 0.1);
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        opacity: 0;
+        transform: scale(0);
+        transition: transform 200ms cubic-bezier(0.64, 0.57, 0.67, 1.53), opacity 200ms ease-in-out;
+        border-radius: 100%;
+      }
+
+      &:hover:before,  &.enabled:before {
+        transform: scale(1);
+        opacity: 1;
       }
     }
 
@@ -175,10 +190,6 @@
 
   .btn-shuffle {
     background-image: url('/images/icn-shuffle.svg');
-
-    &.enabled {
-      background-color: rgba($black, 0.1);
-    }
   }
 
   .btn-video-mode-on {

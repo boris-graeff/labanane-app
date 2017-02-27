@@ -114,8 +114,16 @@ const store = new Vuex.Store({
       state.playlist.tracks[ getCurrentIndex(state)].error = true
     },
     SET_PLAY: (state) => {
-      if(state.track){
-        state.player.state = 'playing'
+      if(state.playlist.tracks.length){
+        if(! state.track.id){
+          let tracks = state.playlist.tracks,
+            index = (state.player.shuffle) ? getRandomIndex(state) : 0
+          console.log(index)
+          setTrack(state, tracks[index])
+        }
+        else {
+          state.player.state = 'playing'
+        }
       }
     },
     SET_PAUSE: (state) => {

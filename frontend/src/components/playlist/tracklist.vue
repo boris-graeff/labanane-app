@@ -14,7 +14,7 @@
           <span>{{index+1}}</span>
           <div>
             <span>{{t.name}}</span>
-            <button type='button' @click.prevent='remove(index)'></button>
+            <button v-if='playlist.canEdit' type='button' @click.prevent='remove(index)'></button>
           </div>
         </li>
       </transition-group>
