@@ -22,7 +22,7 @@ export default class HTTP {
   }
 
   get(resource, params = {}) {
-    return axios.get('/services/' + this.resource + '/' + resource.name + '/' + resource.password, this.getRequestConfig(params))
+    return axios.get('/services/' + this.resource + '/' + resource.id + '/' + resource.password, this.getRequestConfig(params))
   }
 
   update(resource, params = {}) {

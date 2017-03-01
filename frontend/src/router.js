@@ -15,7 +15,7 @@ const router = new VueRouter({
     },
     {
       name: 'playlist',
-      path: '/playlist/:name',
+      path: '/playlist/:id',
       component: playlist
     },
     {

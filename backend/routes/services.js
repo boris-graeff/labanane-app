@@ -4,28 +4,31 @@ var express = require('express'),
 
 // CREATE
 
-Playlist.remove({}, function(){})
-
 router.post('/playlists', (req, res) => {
-  var params = req.body
+  var params = req.body,
+    id = params.name.toLowerCase()
+
   params.length = 0
   params.timestamp = Date.now()
   params.tracks = []
+  params.id = id
 
   new Playlist(params).save((err) => {
     if (err) {
       res.status(422).send({ error: "Playlist name already exists" })
     }
     else {
-      res.json(true)
+      res.json({
+        id: id
+      })
     }
   })
 })
 
 // GET
 
-router.get('/playlists/:name/:password', (req, res) => {
-  Playlist.findOne({name: req.params.name}, (err, playlist) => {
+router.get('/playlists/:id/:password', (req, res) => {
+  Playlist.findOne({id: req.params.id}, (err, playlist) => {
     if (err) {
       res.status(500).send({ error: "Unexpected error" })
     }
@@ -34,6 +37,7 @@ router.get('/playlists/:name/:password', (req, res) => {
     }
     else {
       res.json({
+        name: playlist.name,
         tracks: playlist.tracks,
         isAuth: req.params.password === playlist.password
       })
@@ -50,7 +54,12 @@ router.get('/playlists', (req, res) => {
     }
     else {
       res.json(playlists.map(p => {
-        return { name: p.name, length: p.length, timestamp: p.timestamp }
+        return {
+          id: p.id,
+          name: p.name,
+          length: p.length,
+          timestamp: p.timestamp
+        }
       }))
     }
   })

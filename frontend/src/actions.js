@@ -13,10 +13,10 @@ export default {
         console.error("Playlists request failed")
       })
   },
-  getPlaylist: ({dispatch}, name, password) => {
-    return playlists.get({name, password})
+  getPlaylist: ({dispatch}, id, password) => {
+    return playlists.get({id, password})
       .then(response => {
-        dispatch('SET_PLAYLIST', name, password, response.data)
+        dispatch('SET_PLAYLIST', id, password, response.data)
         return response.data
       })
       .catch(() => {

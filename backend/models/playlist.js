@@ -9,7 +9,8 @@ var TrackSchema = new mongoose.Schema({
 })
 
 var PlaylistSchema = new mongoose.Schema({
-  name: {type: String, unique: true, required: true},
+  id: {type: String, unique: true, required: true},
+  name: {type: String, required: true},
   password: {type: String, required: true},
   timestamp: {type: Number, required: true},
   tracks: [TrackSchema],

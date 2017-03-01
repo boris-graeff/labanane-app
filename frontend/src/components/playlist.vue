@@ -35,11 +35,11 @@
       'soundcloud-player': soundcloudPlayer
     },
     created () {
-      var name = this.$route.params.name,
-          password = localStoragePassword.get(name)
+      var id = this.$route.params.id,
+          password = localStoragePassword.get(id)
 
-      this.initPlaylist(name)
-      this.getPlaylist(name, password)
+      this.initPlaylist(id)
+      this.getPlaylist(id, password)
     },
     vuex: {
       getters: {

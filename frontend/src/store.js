@@ -38,6 +38,7 @@ const store = new Vuex.Store({
     constants,
     playlists: [],
     playlist: {
+      id: '',
       name: '',
       tracks: [],
       password: '',
@@ -64,8 +65,8 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    INIT_PLAYLIST: (state, name) => {
-      state.playlist.name = name
+    INIT_PLAYLIST: (state, id) => {
+      state.playlist.id = id
       state.playlist.tracks.length = 0
       state.playlist.canEdit = false
     } ,
@@ -94,8 +95,9 @@ const store = new Vuex.Store({
     SET_PLAYLISTS: (state, playlists) => {
       state.playlists = playlists.sort( (a, b) => b.timestamp - a.timestamp)
     },
-    SET_PLAYLIST: (state, name, password, data) => {
-      state.playlist.name = name;
+    SET_PLAYLIST: (state, id, password, data) => {
+      state.playlist.id = data.id
+      state.playlist.name = data.name
       state.playlist.tracks = data.tracks
       state.playlist.canEdit = data.isAuth
       state.playlist.password = data.isAuth ? password : ''
@@ -118,7 +120,6 @@ const store = new Vuex.Store({
         if(! state.track.id){
           let tracks = state.playlist.tracks,
             index = (state.player.shuffle) ? getRandomIndex(state) : 0
-          console.log(index)
           setTrack(state, tracks[index])
         }
         else {
