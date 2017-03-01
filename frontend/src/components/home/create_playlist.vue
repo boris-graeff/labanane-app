@@ -90,7 +90,8 @@
     justify-content: center;
 
     > div {
-      max-width: 565px;
+      max-width: 600px;
+      padding: $space-medium;
     }
 
     h1 {
@@ -118,6 +119,27 @@
         min-width: 200px;
         height: 40px;
         margin-left: $space-medium;
+      }
+    }
+
+    @media screen and (max-width: 800px){
+      width:  100%;
+      display: block;
+      margin-bottom: 2*$space-big;
+      height: auto;
+    }
+
+    @media screen and (max-width: 440px){
+
+      form {
+        > div:nth-child(2) {
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+          margin-top: 2rem;
+        }
       }
     }
   }

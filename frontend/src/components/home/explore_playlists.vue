@@ -93,5 +93,22 @@
     .list {
       min-height: 100%;
     }
+
+    @media screen and (max-width: 800px){
+      width:  100%;
+      height: auto;
+
+      .filter {
+        position: static;
+        padding: $space-medium;
+        flex-direction: column;
+        height: auto;
+        width: auto;
+
+        input {
+          margin: 0;
+        }
+      }
+    }
   }
 </style>

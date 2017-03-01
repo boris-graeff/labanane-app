@@ -95,5 +95,10 @@
         width: 70%;
       }
     }
+
+
+    @media screen and (max-width: 800px){
+      display: none;
+    }
   }
 </style>
