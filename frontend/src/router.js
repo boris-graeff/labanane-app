@@ -17,6 +17,12 @@ const router = new VueRouter({
       name: 'playlist',
       path: '/playlist/:name',
       component: playlist
+    },
+    {
+      path: '*',
+      redirect: {
+        name: 'home'
+      }
     }
   ]
 })
