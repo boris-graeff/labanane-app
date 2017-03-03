@@ -1,9 +1,6 @@
 <template>
   <div class='actions-panel' :class='{"expanded" : expanded}'>
-    <div class='buttons'>
-      <button v-show='expanded' type='button' @click='expanded=false' class='btn-close'></button>
-      <button v-show='!expanded' type='button' @click='expanded=true' class='btn-edit'></button>
-    </div>
+    <button type='button' @click='expanded=!expanded' class='btn-toggle' :class='{"on": expanded}'></button>
     <search v-if='expanded && playlist.canEdit'></search>
     <auth v-if='expanded && !playlist.canEdit'></auth>
     </div>
@@ -49,35 +46,24 @@
     align-items: flex-end;
     will-change: width;
 
-    .buttons {
-      display: flex;
+    .btn-toggle {
+      padding: 0;
+      height: 48px;
+      width: 48px;
+      background-color: rgba($wheat, 0.15);
+      transition: background-color 200ms ease-in-out;
 
-      button {
-        padding: 0;
-        height: 48px;
-        width: 48px;
-        background-color: rgba($wheat, 0.15);
-        background-repeat: no-repeat;
-        background-size: 30px;
-        background-position: center center;
-        transition: background-color 200ms ease-in-out;
-
-        &:hover {
-          background-color: rgba($wheat, 0.8);
-        }
-
-        + button {
-          margin-left: 6px;
-        }
+      &:before {
+        background-image: url('/images/icn-edit.svg');
       }
-    }
 
-    .btn-edit {
-      background-image: url('/images/icn-edit.svg');
-    }
+      &:after {
+        background-image: url('/images/icn-cross.svg');
+      }
 
-    .btn-close {
-      background-image: url('/images/icn-cross.svg');
+      &:hover {
+        background-color: rgba($wheat, 0.8);
+      }
     }
 
     .btn-video-mode-on {
