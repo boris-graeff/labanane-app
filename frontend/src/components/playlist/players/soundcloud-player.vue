@@ -140,7 +140,7 @@
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import "../../../styles/base.scss";
+  @import "../../../styles/constants.scss";
 
   #soundcloud-player {
     position: fixed;
