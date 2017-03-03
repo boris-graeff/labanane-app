@@ -19,11 +19,11 @@
     name: 'actions-panel',
     components: {
       'search': search,
-      'auth': auth,
+      'auth': auth
     },
     data: function(){
       return {
-        expanded: false
+        expanded: !this.playlist.tracks.length
       }
     },
     vuex: {

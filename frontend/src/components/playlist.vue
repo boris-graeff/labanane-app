@@ -4,7 +4,7 @@
       <img src='/images/labanane-logo.svg' alt="LaBanane logo"/>
     </router-link>
     <transition name='video-mode'>
-      <div class='content' v-if='providers.youtube.ready' v-show='!videoMode'>
+      <div class='content' v-if='providers.youtube.ready && !loading' v-show='!videoMode'>
         <actions-panel></actions-panel>
         <tracklist></tracklist>
       </div>
@@ -34,12 +34,20 @@
       'youtube-player': youtubePlayer,
       'soundcloud-player': soundcloudPlayer
     },
+    data: function(){
+      return {
+        loading: true
+      }
+    },
     created () {
       var id = this.$route.params.id,
           password = localStoragePassword.get(id)
 
       this.initPlaylist(id)
       this.getPlaylist(id, password)
+          .then(() => {
+            this.loading = false
+          })
     },
     vuex: {
       getters: {
