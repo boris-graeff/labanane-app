@@ -87,7 +87,7 @@
       },
 
       add(track) {
-        this.addTrack(track)
+        this.addTrack(_.cloneDeep(track))
       },
 
       onDragStart (track, event) {

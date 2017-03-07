@@ -78,6 +78,7 @@ const store = new Vuex.Store({
     } ,
     ADD_TRACK: (state, track, index) => {
       track.id = Date.now()
+
       if(index !== undefined){
         state.playlist.tracks.splice(index, 0, track)
       }
