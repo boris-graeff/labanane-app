@@ -1,6 +1,6 @@
 <template>
   <div class='tracklist'>
-    <h1>{{ playlist.name }}</h1>
+    <h1><span v-show='playlist.tracks.length > 1'>{{ playlist.tracks.length }} tracks</span>{{ playlist.name }}</h1>
     <div @dragover.prevent @drop='onDropEnd'>
       <transition-group name='tracklist' tag='ul' class='tracks list'>
         <li v-for='(t, index) in playlist.tracks'
@@ -84,6 +84,19 @@
       font-size: 4rem;
       font-weight: 300;
       padding: $space-small 0;
+      position: relative;
+
+      span {
+        background: rgba($black, 0.1);
+        font-size: 1.6rem;
+        position: absolute;
+        vertical-align: top;
+        padding: 2px 4px;
+        font-weight: normal;
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+      }
     }
 
     button {
