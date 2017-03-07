@@ -83,7 +83,7 @@ export default {
   removeTrack: ({dispatch}, index) => {
     dispatch('REMOVE_TRACK', index)
   },
-  initPlaylist: ({dispatch}, name) => {
-    dispatch('INIT_PLAYLIST', name)
+  initPlaylist: ({dispatch}, id) => {
+    dispatch('INIT_PLAYLIST', id)
   }
 }

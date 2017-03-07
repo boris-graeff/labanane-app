@@ -38,7 +38,7 @@
     methods: {
       do_auth() {
         if(this.password.length){
-          this.getPlaylist(this.playlist.name, this.password)
+          this.getPlaylist(this.playlist.id, this.password)
               .then(response => {
                 if(! response.isAuth){
                   this.show_error = true

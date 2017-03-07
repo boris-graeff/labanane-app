@@ -96,7 +96,7 @@ const store = new Vuex.Store({
       state.playlists = playlists.sort( (a, b) => b.timestamp - a.timestamp)
     },
     SET_PLAYLIST: (state, id, password, data) => {
-      state.playlist.id = data.id
+      state.playlist.id = id
       state.playlist.name = data.name
       state.playlist.tracks = data.tracks
       state.playlist.canEdit = data.isAuth
