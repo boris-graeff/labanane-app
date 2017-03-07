@@ -150,6 +150,7 @@
       display: flex;
       flex: 0;
       justify-content: center;
+      min-width: 204px;
 
       > li {
         margin: 0 $space-small;

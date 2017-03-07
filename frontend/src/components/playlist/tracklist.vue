@@ -60,7 +60,8 @@
         removeTrack: actions.removeTrack,
         addTrack: actions.addTrack,
         moveTrack: actions.moveTrack,
-        savePlaylist: actions.savePlaylist
+        savePlaylist: actions.savePlaylist,
+        nextTrack: actions.nextTrack
       }
     }
   }
@@ -98,7 +99,7 @@
     }
 
     .tracks {
-      min-height: calc(100% - 68px);
+      min-height: 100vh;
       padding-bottom: 30vh;
 
       li {

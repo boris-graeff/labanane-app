@@ -34,6 +34,9 @@
           else if(this.state === 'paused'){
             this.pause()
           }
+          else if(this.state === 'stopped'){
+            this.stop()
+          }
         }
       },
       volume(){

@@ -24,6 +24,12 @@ function getPreviousIndex (state) {
   return index < 0 ? (state.playlist.tracks.length - 1) : index
 }
 
+function setNextTrack (state) {
+  let tracks = state.playlist.tracks,
+    index = (state.player.shuffle) ? getRandomIndex(state) : getNextIndex(state)
+  setTrack(state, tracks[index])
+}
+
 function setTrack (state, track) {
   for(let prop of Object.keys(track)) {
     state.track[prop] = track[prop]
@@ -91,6 +97,12 @@ const store = new Vuex.Store({
     },
     REMOVE_TRACK: (state, index) => {
       state.playlist.tracks.splice(index, 1)
+      if(state.playlist.tracks.length){
+        setNextTrack(state)
+      }
+      else {
+        state.player.state = 'stopped'
+      }
     },
     SET_PLAYLISTS: (state, playlists) => {
       state.playlists = playlists.sort( (a, b) => b.timestamp - a.timestamp)
@@ -113,7 +125,8 @@ const store = new Vuex.Store({
     },
     SET_TRACK_ERROR: (state) => {
       state.player.state = 'stopped'
-      state.playlist.tracks[ getCurrentIndex(state)].error = true
+      state.playlist.tracks[getCurrentIndex(state)].error = true
+      setNextTrack(state)
     },
     SET_PLAY: (state) => {
       if(state.playlist.tracks.length){
@@ -145,9 +158,7 @@ const store = new Vuex.Store({
       state.player.videoMode = !state.player.videoMode
     },
     SET_NEXT_TRACK: state => {
-      let tracks = state.playlist.tracks,
-      index = (state.player.shuffle) ? getRandomIndex(state) : getNextIndex(state)
-      setTrack(state, tracks[index])
+      setNextTrack(state)
     },
     SET_YOUTUBE_READY: state => {
       state.providers.youtube.ready = true;
