@@ -38,9 +38,10 @@
     width: 20%;
     transition: width 200ms ease-in-out, transform 200ms ease-in-out;
     position: fixed;
-    top: 56px;
     left: 0;
-    padding: 0 6px;
+    top: 0;
+    padding: 56px 6px 0 6px;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: flex-end;

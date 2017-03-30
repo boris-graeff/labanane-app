@@ -113,10 +113,18 @@ input[type=radio], input[type=checkbox]{
 
     div {
       margin-left: 35px;
+      padding-right: 6px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       height: 100%;
+
+      span:first-child {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 100%;
+      }
     }
 
     &.youtube:before {

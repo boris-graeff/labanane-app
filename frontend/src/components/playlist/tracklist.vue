@@ -102,6 +102,7 @@
     button {
       height: 25px;
       width: 30px;
+      min-width: 30px;
       padding: 0;
       background: url('/images/icn-cross.svg') no-repeat;
       background-size: contain;

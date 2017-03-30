@@ -221,4 +221,23 @@
       height: 100%;
     }
   }
+
+  @media screen and (max-width: 800px){
+    .player {
+      height: 100px;
+
+      .content {
+        flex-wrap: wrap;
+      }
+
+      .track-name {
+        flex: initial;
+        width: 100%;
+      }
+
+      .btn-volume-on, .btn-volume-off, .slider.volume-bar {
+        display: none;
+      }
+    }
+  }
 </style>

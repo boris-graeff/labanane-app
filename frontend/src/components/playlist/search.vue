@@ -5,15 +5,17 @@
       <label for='search-input'>Search by name</label>
       <input type='text' v-model='input' id='search-input' />
     </div>
-    <ul class='tracks list'>
-      <li v-for='track in results'
-          draggable=true
-          @dragstart='onDragStart(track, $event)'
-          :class='{"youtube": track.provider === "youtube", "soundcloud": track.provider === "soundcloud"}'
-          @click='add(track)'>
-        <div><span>{{track.name}}</span><span></span></div>
-      </li>
-    </ul>
+    <div class='search-results'>
+      <ul class='tracks list'>
+        <li v-for='track in results'
+            draggable=true
+            @dragstart='onDragStart(track, $event)'
+            :class='{"youtube": track.provider === "youtube", "soundcloud": track.provider === "soundcloud"}'
+            @click='add(track)'>
+          <div><span>{{track.name}}</span></div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -110,14 +112,26 @@
   .search {
     width: 100%;
     padding-left: $space-medium;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
 
     h2 {
       font-weight: 300;
       font-size: 3rem;
     }
 
+    .search-results {
+      overflow-y: auto;
+      overflow-x: hidden;
+      flex: 1;
+      margin-right: -21px;
+    }
+
     .tracks {
-      overflow: hidden;
+      padding-bottom: 140px;
+      min-height: 100%;
     }
   }
 </style>
