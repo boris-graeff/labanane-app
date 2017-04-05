@@ -158,6 +158,9 @@ const store = new Vuex.Store({
     TOGGLE_VIDEO_MODE: (state) => {
       state.player.videoMode = !state.player.videoMode
     },
+    RESET_VIDEO_MODE: (state) => {
+      state.player.videoMode = false
+    },
     SET_NEXT_TRACK: state => {
       setNextTrack(state)
     },

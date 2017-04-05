@@ -58,6 +58,9 @@ export default {
   toggleVideoMode: ({dispatch}) => {
     dispatch('TOGGLE_VIDEO_MODE')
   },
+  resetVideoMode: ({dispatch}) => {
+    dispatch('RESET_VIDEO_MODE')
+  },
   prevTrack: ({dispatch}) => {
     dispatch('SET_PREVIOUS_TRACK')
   },

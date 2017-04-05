@@ -43,6 +43,7 @@
       var id = this.$route.params.id,
           password = localStoragePassword.get(id)
 
+      this.resetVideoMode()
       this.initPlaylist(id)
       this.getPlaylist(id, password)
           .then(() => {
@@ -56,7 +57,8 @@
       },
       actions: {
         getPlaylist: actions.getPlaylist,
-        initPlaylist: actions.initPlaylist
+        initPlaylist: actions.initPlaylist,
+        resetVideoMode: actions.resetVideoMode,
       }
     }
   }
