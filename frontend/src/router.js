@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import home from '@/components/home.vue'
-import playlist from '@/components/playlist.vue'
+import home from '@/components/home'
+import playlist from '@/components/playlist'
 
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const router = new VueRouter({
   mode: 'history',
   routes: [
     {
@@ -27,3 +27,5 @@ export default new VueRouter({
     }
   ]
 })
+
+export default router

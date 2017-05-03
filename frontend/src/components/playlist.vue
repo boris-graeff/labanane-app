@@ -4,10 +4,12 @@
       <img src='/static/labanane-logo.svg' alt="LaBanane logo"/>
     </router-link>
     <transition name='video-mode'>
-      <div class='content' v-if='providers.youtube.ready && !loading' v-show='!player.videoMode'>
-        <actions-panel></actions-panel>
-        <tracklist></tracklist>
-      </div>
+      <template v-if='providers.youtube.ready && !loading'>
+        <div class='content' v-show='!player.videoMode'>
+          <actions-panel></actions-panel>
+          <tracklist></tracklist>
+        </div>
+      </template>
     </transition>
     <player></player>
     <youtube-player></youtube-player>
@@ -41,7 +43,16 @@
       }
     },
 
-    props: ['playlistId'],
+    props: ['playlistId', 'trackId'],
+
+    watch: {
+      'track.id' () {
+        document.title = this.track.name
+      },
+      trackId () {
+        this.setTrack(this.trackId)
+      }
+    },
 
     created () {
       const id = this.playlistId
@@ -52,10 +63,14 @@
       this.getPlaylist({id, password})
           .then(() => {
             this.loading = false
+            document.title = this.playlist.name
+            if (this.trackId) {
+              this.setTrack(this.trackId)
+            }
           })
     },
 
-    computed: mapState(['providers', 'player', 'playlist']),
+    computed: mapState(['providers', 'player', 'playlist', 'track']),
     methods: mapActions(['getPlaylist', 'initPlaylist', 'resetVideoMode', 'setTrack'])
   }
 </script>

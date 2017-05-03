@@ -11,6 +11,12 @@ function getCurrentIndex (state) {
   })
 }
 
+function findTrackById (state, trackId) {
+  return state.playlist.tracks.find(track => {
+    return track.id === trackId
+  })
+}
+
 function getRandomIndex (state) {
   return Math.floor(Math.random() * state.playlist.tracks.length)
 }
@@ -117,7 +123,8 @@ const store = new Vuex.Store({
       state.playlist.canEdit = data.isAuth
       state.playlist.password = data.isAuth ? password : ''
     },
-    SET_TRACK (state, track) {
+    SET_TRACK (state, trackId) {
+      const track = findTrackById(state, trackId)
       setTrack(state, track)
     },
     SET_PROGRESSION (state, progression) {

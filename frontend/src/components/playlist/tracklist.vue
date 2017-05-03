@@ -9,7 +9,7 @@
             @dragover.prevent
             @drop.stop='onDrop(t, index, $event)'
             @dragstart='onDragStart(t, index, $event)'
-            @click='setTrack(t)'
+            @click='changeTrack(t)'
             :class='{"selected": t.id == track.id, "error": t.error, "youtube": t.provider === "youtube", "soundcloud": t.provider === "soundcloud"}'>
           <span>{{index+1}}</span>
           <div>
@@ -34,7 +34,12 @@
     },
     computed: mapState(['track', 'playlist']),
     methods: {
-      ...mapActions(['setTrack', 'removeTrack', 'addTrack', 'moveTrack', 'savePlaylist', 'nextTrack']),
+      ...mapActions(['removeTrack', 'addTrack', 'moveTrack', 'savePlaylist', 'nextTrack']),
+
+      changeTrack (track) {
+        this.$router.replace({name: 'playlist', params: {trackId: track.id}})
+      },
+
       remove (index) {
         this.removeTrack(index)
       },
