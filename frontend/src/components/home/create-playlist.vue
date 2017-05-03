@@ -58,13 +58,13 @@
     computed: mapState(['playlist']),
     methods: {
       ...mapActions(['createPlaylist']),
-      create (event) {
+      create () {
         if (this.name && this.password) {
           this.createPlaylist(this.name, this.password)
               .then((response) => {
-                let id = response.data.id
-                localStoragePassword.add(id, this.password)
-                this.$router.push({name: 'playlist', params: {id: id}})
+                const playlistId = response.data.id
+                localStoragePassword.add(playlistId, this.password)
+                this.$router.push({name: 'playlist', params: {playlistId}})
               })
               .catch((response) => {
                 this.show_error = true

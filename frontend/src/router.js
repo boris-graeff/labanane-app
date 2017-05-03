@@ -15,7 +15,8 @@ export default new VueRouter({
     },
     {
       name: 'playlist',
-      path: '/playlist/:id',
+      path: '/playlist/:playlistId/:trackId?',
+      props: true,
       component: playlist
     },
     {

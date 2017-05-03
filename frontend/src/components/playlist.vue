@@ -39,13 +39,14 @@
         loading: true
       }
     },
+    props: ['playlistId'],
     created () {
-      const id = this.$route.params.id
-      const password = localStoragePassword.get(id)
+      const {playlistId} = this.playlistId
+      const password = localStoragePassword.get(playlistId)
 
       this.resetVideoMode()
-      this.initPlaylist(id)
-      this.getPlaylist(id, password)
+      this.initPlaylist(playlistId)
+      this.getPlaylist(playlistId, password)
           .then(() => {
             this.loading = false
           })
