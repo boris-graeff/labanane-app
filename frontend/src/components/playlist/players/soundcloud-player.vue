@@ -1,7 +1,7 @@
 <template>
   <div id='soundcloud-player'
        :style="{backgroundImage: 'url(' + track.artwork + ')'}"
-       :class='{"is-active": isActive, "video-mode-on": videoMode}' >
+       :class='{"is-active": isActive, "video-mode-on": player.videoMode}' >
   </div>
 </template>
 
@@ -21,34 +21,43 @@
       this.initPlayer()
     },
     watch: {
-      state () {
-        if (this.provider === 'soundcloud') {
+      'player.state' () {
+        const {state, volume} = this.player
+        const {provider} = this.track
+
+        if (provider === 'soundcloud') {
           this.isActive = true
-          if (this.state === 'loading') {
+          if (state === 'loading') {
             this.load()
           }
-          else if (this.state === 'playing') {
+          else if (state === 'playing') {
             this.play()
-            this.setVolume(this.volume)
+            this.setVolume(volume)
           }
-          else if (this.state === 'paused') {
+          else if (state === 'paused') {
             this.pause()
           }
-          else if (this.state === 'stopped') {
+          else if (state === 'stopped') {
             this.stop()
           }
         }
       },
-      seekPosition () {
-        if (this.provider === 'soundcloud') {
-          this.seekTo(this.seekPosition)
+      'player.seekPosition' () {
+        const {seekPosition} = this.player
+        const {provider} = this.track
+
+        if (provider === 'soundcloud') {
+          this.seekTo(seekPosition)
         }
       },
-      volume () {
-        this.setVolume(this.volume)
+      'player.volume' () {
+        const {volume} = this.player
+        this.setVolume(volume)
       },
-      provider () {
-        if (this.provider !== 'soundcloud') {
+      'track.provider' () {
+        const {provider} = this.track
+
+        if (provider !== 'soundcloud') {
           this.isActive = false
           this.stop()
         }
@@ -117,7 +126,7 @@
         this.sound.dispose()
       }
     },
-    computed: mapState(['constants', 'track', 'provider', 'seekPosition', 'state', 'volume', 'videoMode'])
+    computed: mapState(['constants', 'track', 'player'])
   }
 </script>
 
@@ -136,7 +145,7 @@
     filter: grayscale(100%) blur(10px);
 
     &.is-active {
-       opacity: 0.2;
+      opacity: 0.2;
       animation: zoom 60s infinite alternate linear;
 
       &.video-mode-on {

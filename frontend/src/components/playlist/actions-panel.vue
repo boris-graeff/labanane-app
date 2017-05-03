@@ -1,9 +1,8 @@
 <template>
-  <div class='actions-panel' :class='{"expanded" : expanded}'>
-    <button type='button' @click='expanded=!expanded' class='btn-toggle' :class='{"on": expanded}'></button>
-    <search v-if='expanded && playlist.canEdit'></search>
-    <auth v-if='expanded && !playlist.canEdit'></auth>
-    </div>
+  <div class='actions-panel' :class='{"expanded" : isExpanded}'>
+    <button type='button' @click='isExpanded = !isExpanded' class='btn-toggle' :class='{"on": isExpanded}'></button>
+    <search v-if='isExpanded && playlist.canEdit'></search>
+    <auth v-if='isExpanded && !playlist.canEdit'></auth>
   </div>
 </template>
 
@@ -14,17 +13,19 @@
 
   export default {
     name: 'actions-panel',
+    data () {
+      return {
+        isExpanded: false
+      }
+    },
     components: {
       'search': search,
       'auth': auth
     },
-    computed: {
-      ...mapState(['playlist']),
-
-      expanded () {
-        return !this.playlist.tracks.length
-      }
-    }
+    mounted () {
+      this.isExpanded = !this.playlist.tracks.length
+    },
+    computed: mapState(['playlist'])
   }
 </script>
 

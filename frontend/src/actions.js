@@ -13,7 +13,7 @@ export default {
         console.error('Playlists request failed')
       })
   },
-  getPlaylist: (context, id, password) => {
+  getPlaylist: (context, {id, password}) => {
     return playlists.get({id, password})
       .then(response => {
         const {data} = response
@@ -24,7 +24,7 @@ export default {
         console.error('Playlist request failed')
       })
   },
-  createPlaylist: (context, name, password) => {
+  createPlaylist: (context, {name, password}) => {
     return playlists.create({name, password})
   },
   savePlaylist: (store) => {

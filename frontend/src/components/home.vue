@@ -18,7 +18,7 @@
   }
 </script>
 
-<style lang='scss' rel='stylesheet/scss' type='text/css'>
+<style lang='scss' scoped rel='stylesheet/scss' type='text/css'>
 
   .home-page {
     height: 100vh;

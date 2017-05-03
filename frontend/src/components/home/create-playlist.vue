@@ -19,7 +19,7 @@
         <div class='text-box'>
           <label for='playlist-name'>Name</label>
           <input type='text' id='playlist-name' v-model='name'>
-          <div class='error-message' v-show='show_error'>
+          <div class='error-message' v-show='showError'>
             Sorry, this name is already taken :(
           </div>
         </div>
@@ -42,32 +42,34 @@
 
   export default {
     name: 'create-playlist',
-    data: function () {
+    data () {
       return {
         name: '',
         password: '',
-        show_error: false
+        showError: false
       }
     },
     watch: {
       name () {
         this.name = stringHelper.slugify(this.name)
-        this.show_error = false
+        this.showError = false
       }
     },
     computed: mapState(['playlist']),
     methods: {
       ...mapActions(['createPlaylist']),
       create () {
-        if (this.name && this.password) {
-          this.createPlaylist(this.name, this.password)
+        const {name, password} = this
+
+        if (name && password) {
+          this.createPlaylist({name, password})
               .then((response) => {
                 const playlistId = response.data.id
-                localStoragePassword.add(playlistId, this.password)
+                localStoragePassword.add(playlistId, password)
                 this.$router.push({name: 'playlist', params: {playlistId}})
               })
               .catch((response) => {
-                this.show_error = true
+                this.showError = true
               })
         }
       }

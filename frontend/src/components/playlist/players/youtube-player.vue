@@ -1,5 +1,5 @@
 <template>
-  <div class='youtube-player' :class='{"is-active": isActive, "video-mode-on": videoMode}'>
+  <div class='youtube-player' :class='{"is-active": isActive, "video-mode-on": player.videoMode}'>
     <div id='youtube-player'></div>
   </div>
 </template>
@@ -21,34 +21,42 @@
       this.loadPlayer()
     },
     watch: {
-      state () {
-        if (this.provider === 'youtube') {
+      'player.state' () {
+        const {state, volume} = this.player
+        const {provider} = this.track
+
+        if (provider === 'youtube') {
           this.isActive = true
-          if (this.state === 'loading') {
+          if (state === 'loading') {
             this.load()
           }
-          else if (this.state === 'playing') {
+          else if (state === 'playing') {
             this.play()
-            this.setVolume(this.volume)
+            this.setVolume(volume)
           }
-          else if (this.state === 'paused') {
+          else if (state === 'paused') {
             this.pause()
           }
-          else if (this.state === 'stopped') {
+          else if (state === 'stopped') {
             this.stop()
           }
         }
       },
-      volume () {
-        this.setVolume(this.volume)
+      'player.volume' () {
+        const {volume} = this.player
+        this.setVolume(volume)
       },
-      seekPosition () {
-        if (this.provider === 'youtube') {
-          this.seekTo(this.seekPosition)
+      'player.seekPosition' () {
+        const {provider} = this.track
+        const {seekPosition} = this.player
+
+        if (provider === 'youtube') {
+          this.seekTo(seekPosition)
         }
       },
-      provider () {
-        if (this.provider !== 'youtube') {
+      'track.provider' () {
+        const {provider} = this.track
+        if (provider !== 'youtube') {
           this.isActive = false
           this.stop()
         }
@@ -76,20 +84,21 @@
       },
 
       onStateChange (event) {
-        if (this.track.provider !== 'youtube') {
+        const {provider} = this.track
+
+        if (provider !== 'youtube') {
           this.resetTimer()
         }
 
-        const that = this
         const YT = window.YT
 
         if (event.data === YT.PlayerState.PLAYING) { // Playing
           this.setPlay()
 
-          this.timer = setInterval(function () {
-            Promise.all([that.ytbPlayer.getCurrentTime(), that.ytbPlayer.getDuration()])
+          this.timer = setInterval(() => {
+            Promise.all([this.ytbPlayer.getCurrentTime(), this.ytbPlayer.getDuration()])
                 .then((values) => {
-                  that.setProgression(values[0] / values[1] * 100)
+                  this.setProgression(values[0] / values[1] * 100)
                 })
           }, 1000)
         }
@@ -146,7 +155,7 @@
       this.resetTimer()
     },
 
-    computed: mapState(['constants', 'track', 'provider', 'seekPosition', 'state', 'volume', 'videoMode'])
+    computed: mapState(['constants', 'track', 'player'])
   }
 </script>
 

@@ -23,7 +23,7 @@
 
   export default {
     name: 'explore-playlists',
-    data: function () {
+    data () {
       return {
         input: ''
       }

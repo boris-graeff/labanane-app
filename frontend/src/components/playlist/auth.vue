@@ -38,14 +38,17 @@
     methods: {
       ...mapActions(['getPlaylist']),
       do_auth () {
-        if (this.password.length) {
-          this.getPlaylist(this.playlist.id, this.password)
+        const password = this.password
+        const id = this.playlist.id
+
+        if (password.length) {
+          this.getPlaylist({id, password})
               .then(response => {
                 if (!response.isAuth) {
                   this.show_error = true
                 }
                 else {
-                  localStoragePassword.add(this.playlist.name, this.password)
+                  localStoragePassword.add(this.playlist.name, password)
                 }
               })
         }

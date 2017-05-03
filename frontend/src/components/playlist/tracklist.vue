@@ -39,11 +39,11 @@
         this.removeTrack(index)
       },
       onDrop (track, index, event) {
-        console.error(track)
-        const track2 = JSON.parse(event.dataTransfer.getData('track'))
-        track2.id ? this.moveTrack(track2, index) : this.addTrack(track2, index + 1)
+        const clonedTrack = JSON.parse(event.dataTransfer.getData('track'))
+        clonedTrack.id ? this.moveTrack(clonedTrack, index) : this.addTrack(clonedTrack, index + 1)
       },
       onDropEnd (event) {
+        // todo investigate
         const track = JSON.parse(event.dataTransfer.getData('track'))
         track.id ? this.moveTrack(track) : this.addTrack(track)
       },
