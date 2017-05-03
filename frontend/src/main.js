@@ -1,12 +1,14 @@
-import Vue from 'vue';
-import store from './store';
-import app from './components/app.vue';
-import router from './router';
+import Vue from 'vue'
+import App from './app'
+import router from './router'
+import store from './store'
 
-// eslint-disable-next-line no-new
+Vue.config.productionTip = false
+
+/* eslint-disable no-new */
 new Vue({
-	store,
-	router: router,
-	el: '#app',
-	render: h => h(app)
-});
+  el: '#app',
+  router,
+  store,
+  render: h => h(App)
+})

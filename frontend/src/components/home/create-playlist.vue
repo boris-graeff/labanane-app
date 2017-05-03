@@ -3,7 +3,7 @@
     <div>
       <header>
         <h1>
-          <img src='/images/labanane-title.svg' alt="LaBanane" title="LaBanane" />
+          <img src='/static/labanane-title.svg' alt="LaBanane" title="LaBanane"/>
         </h1>
         <p>
           Welcome to LaBanane, the application for sharing and listening to your favorite music !<br>
@@ -19,7 +19,7 @@
         <div class='text-box'>
           <label for='playlist-name'>Name</label>
           <input type='text' id='playlist-name' v-model='name'>
-          <div class='error-message' v-show='show_error'>
+          <div class='error-message' v-show='showError'>
             Sorry, this name is already taken :(
           </div>
         </div>
@@ -36,47 +36,42 @@
 </template>
 
 <script>
-  import actions from '../../actions'
-  import localStoragePassword from '../../helpers/localStoragePassword'
-  import stringHelper from '../../helpers/string'
+  import { mapState, mapActions } from 'vuex'
+  import localStoragePassword from '@/helpers/localStoragePassword'
+  import stringHelper from '@/helpers/string'
 
   export default {
     name: 'create-playlist',
-    data: function () {
+    data () {
       return {
         name: '',
         password: '',
-        show_error: false
+        showError: false
       }
     },
     watch: {
-      name() {
+      name () {
         this.name = stringHelper.slugify(this.name)
-        this.show_error = false
+        this.showError = false
       }
     },
-    methods : {
-      create(event) {
+    computed: mapState(['playlist']),
+    methods: {
+      ...mapActions(['createPlaylist']),
+      create () {
+        const {name, password} = this
 
-        if(this.name && this.password){
-          this.createPlaylist(this.name, this.password)
-            .then((response) => {
-              let id = response.data.id
-              localStoragePassword.add(id, this.password)
-              this.$router.push({name: 'playlist', params: {id: id}})
-            })
-          .catch((response) => {
-            this.show_error = true
-          })
+        if (name && password) {
+          this.createPlaylist({name, password})
+              .then((response) => {
+                const playlistId = response.data.id
+                localStoragePassword.add(playlistId, password)
+                this.$router.push({name: 'playlist', params: {playlistId}})
+              })
+              .catch((response) => {
+                this.showError = true
+              })
         }
-      }
-    },
-    vuex: {
-      actions: {
-        createPlaylist: actions.createPlaylist
-      },
-      getters: {
-        playlist: state => state.playlist
       }
     }
   }
@@ -84,11 +79,11 @@
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import '../../styles/constants.scss';
+  @import '~@/styles/constants';
 
   .create {
     height: 100vh;
-    width:  60%;
+    width: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -114,7 +109,7 @@
     form {
       max-width: 410px;
 
-      > div:nth-child(2){
+      > div:nth-child(2) {
         display: flex;
         align-items: flex-end;
       }
@@ -126,14 +121,14 @@
       }
     }
 
-    @media screen and (max-width: 800px){
-      width:  100%;
+    @media screen and (max-width: 800px) {
+      width: 100%;
       display: block;
       margin-bottom: 2*$space-big;
       height: auto;
     }
 
-    @media screen and (max-width: 440px){
+    @media screen and (max-width: 440px) {
 
       form {
         > div:nth-child(2) {

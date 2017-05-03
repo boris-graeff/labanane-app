@@ -6,8 +6,8 @@
     </label>
     <div>
       <ul class='list'>
-        <li v-for='p in filtered_playlists'>
-          <router-link :to="{ name: 'playlist', params: {id: p.id}}">
+        <li v-for='p in filteredPlaylists'>
+          <router-link :to="{ name: 'playlist', params: {playlistId: p.id}}">
             <div>
               <span>{{ p.name }}</span><span>{{ p.length }}</span>
             </div>
@@ -19,20 +19,21 @@
 </template>
 
 <script>
-  import actions from '../../actions'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'explore-playlists',
-    data: function () {
+    data () {
       return {
         input: ''
       }
     },
     computed: {
-      filtered_playlists () {
-        var input = this.input
+      ...mapState(['playlists']),
+      filteredPlaylists () {
+        const input = this.input
 
-        return this.playlists.filter( (track) => {
+        return this.playlists.filter((track) => {
           return track.name.indexOf(input) >= 0
         })
       }
@@ -40,19 +41,12 @@
     mounted () {
       this.getAllPlaylists()
     },
-    vuex: {
-      getters: {
-        playlists: state => state.playlists
-      },
-      actions: {
-        getAllPlaylists: actions.getAllPlaylists
-      }
-    }
+    methods: mapActions(['getAllPlaylists'])
   }
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import '../../styles/constants.scss';
+  @import '~@/styles/constants';
 
   .explore {
     height: 100vh;

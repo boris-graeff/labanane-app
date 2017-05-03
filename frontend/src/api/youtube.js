@@ -1,8 +1,8 @@
-import axios from 'axios';
-import constants from '../constants';
+import axios from 'axios'
+import constants from '../constants'
 
 export default {
-  get(keywords) {
+  get (keywords) {
     return axios.get('https://www.googleapis.com/youtube/v3/search', {
       params: {
         part: 'snippet',

@@ -2,7 +2,7 @@
 @import './constants';
 @import './reset';
 @import './inputs';
-@import 'input_range';
+@import './input_range';
 
 html {
   font-size: 10px;
@@ -63,7 +63,7 @@ input[type=radio], input[type=checkbox]{
 }
 
 .list {
-  background: url("/images/tracks-background.png");
+  background: url("~@/assets/tracks-background.png");
 
   li {
     height: 25px;
@@ -128,11 +128,11 @@ input[type=radio], input[type=checkbox]{
     }
 
     &.youtube:before {
-      background-image: url('/images/icn-you-tube.svg') // you-tube adblock hack
+      background-image: url('~@/assets/icn-you-tube.svg') // you-tube adblock hack
     }
 
     &.soundcloud:before {
-      background-image: url('/images/icn-soundcloud.svg')
+      background-image: url('~@/assets/icn-soundcloud.svg')
     }
   }
 }

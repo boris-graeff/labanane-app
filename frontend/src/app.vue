@@ -13,7 +13,7 @@
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import "~@/styles/base";
+  @import "~@/styles/base.scss";
 
   .page-enter-active, .page-leave-active {
     transition: opacity 200ms ease-in-out;

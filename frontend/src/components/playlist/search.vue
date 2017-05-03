@@ -20,22 +20,22 @@
 </template>
 
 <script>
-  import actions from '../../actions'
+  import { mapActions } from 'vuex'
   import SC from 'soundcloud'
   import _ from 'lodash'
   import levenshtein from 'levenshtein'
 
   export default {
     name: 'search',
-    data: function(){
+    data () {
       return {
         input: '',
         results: []
       }
     },
     watch: {
-      input() {
-        if(this.input.length){
+      input () {
+        if (this.input.length) {
           this.search()
         }
         else {
@@ -44,22 +44,23 @@
       }
     },
     methods: {
-      search: _.debounce(function(){
-        var that = this
+      ...mapActions(['getYoutubeList', 'addTrack']),
+      search: _.debounce(function () {
+        const that = this
 
         // fixme : reject pending promise if necessary
 
         Promise.all([this.soundcloudSearch(), this.youtubeSearch()])
             .then(results => {
-              that.results = _.flatten(results).sort((a,b) => a.leven - b.leven)
+              that.results = _.flatten(results).sort((a, b) => a.leven - b.leven)
             })
       }, 240),
 
-      youtubeSearch() {
-        var that = this
+      youtubeSearch () {
+        const that = this
         return this.getYoutubeList(this.input)
           .then(results => {
-            return  results.data.items.map(track => {
+            return results.data.items.map(track => {
               return {
                 providerId: track.id.videoId,
                 name: track.snippet.title,
@@ -71,8 +72,8 @@
           })
       },
 
-      soundcloudSearch() {
-        var that = this
+      soundcloudSearch () {
+        const that = this
         return SC.get('/tracks', {q: this.input, limit: this.$store.state.constants.MAX_RESULTS})
             .then(results => {
               return results.map(track => {
@@ -88,7 +89,7 @@
             })
       },
 
-      add(track) {
+      add (track) {
         this.addTrack(_.cloneDeep(track))
       },
 
@@ -96,18 +97,12 @@
         event.dataTransfer.effectAllowed = 'move'
         event.dataTransfer.setData('track', JSON.stringify(track))
       }
-    },
-    vuex: {
-      actions: {
-        getYoutubeList: actions.getYoutubeList,
-        addTrack: actions.addTrack
-      }
     }
   }
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import '../../styles/constants.scss';
+  @import '~@/styles/constants';
 
   .search {
     width: 100%;

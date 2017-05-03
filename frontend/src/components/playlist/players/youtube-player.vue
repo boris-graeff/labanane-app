@@ -1,18 +1,18 @@
 <template>
-  <div class='youtube-player' :class='{"is-active": isActive, "video-mode-on": videoMode}'>
+  <div class='youtube-player' :class='{"is-active": isActive, "video-mode-on": player.videoMode}'>
     <div id='youtube-player'></div>
   </div>
 </template>
 
 <script>
   import YtbPlayer from 'youtube-player'
-  import actions from '../../../actions'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'youtube-player',
     ytbPlayer: null,
     timer: null,
-    data: function(){
+    data () {
       return {
         isActive: false
       }
@@ -21,40 +21,49 @@
       this.loadPlayer()
     },
     watch: {
-      state(){
-        if (this.provider === 'youtube') {
+      'player.state' () {
+        const {state, volume} = this.player
+        const {provider} = this.track
+
+        if (provider === 'youtube') {
           this.isActive = true
-          if(this.state === 'loading'){
+          if (state === 'loading') {
             this.load()
           }
-          else if(this.state === 'playing'){
+          else if (state === 'playing') {
             this.play()
-            this.setVolume(this.volume)
+            this.setVolume(volume)
           }
-          else if(this.state === 'paused'){
+          else if (state === 'paused') {
             this.pause()
           }
-          else if(this.state === 'stopped'){
+          else if (state === 'stopped') {
             this.stop()
           }
         }
       },
-      volume(){
-        this.setVolume(this.volume)
+      'player.volume' () {
+        const {volume} = this.player
+        this.setVolume(volume)
       },
-      seekPosition(){
-        if (this.provider === 'youtube') {
-          this.seekTo(this.seekPosition)
+      'player.seekPosition' () {
+        const {provider} = this.track
+        const {seekPosition} = this.player
+
+        if (provider === 'youtube') {
+          this.seekTo(seekPosition)
         }
       },
-      provider(){
-        if(this.provider !== 'youtube') {
+      'track.provider' () {
+        const {provider} = this.track
+        if (provider !== 'youtube') {
           this.isActive = false
           this.stop()
         }
       }
     },
     methods: {
+      ...mapActions(['setPlay', 'nextTrack', 'setYoutubeReady', 'setProgression', 'setTrackError']),
       loadPlayer () {
         this.ytbPlayer = YtbPlayer('youtube-player', {
           height: '100%',
@@ -75,36 +84,38 @@
       },
 
       onStateChange (event) {
-        if(this.track.provider !== 'youtube'){
+        const {provider} = this.track
+
+        if (provider !== 'youtube') {
           this.resetTimer()
         }
 
-        var that = this
+        const YT = window.YT
 
-        if(event.data === YT.PlayerState.PLAYING) { // Playing
+        if (event.data === YT.PlayerState.PLAYING) { // Playing
           this.setPlay()
 
-          this.timer = setInterval(function(){
-            Promise.all([that.ytbPlayer.getCurrentTime(), that.ytbPlayer.getDuration()])
+          this.timer = setInterval(() => {
+            Promise.all([this.ytbPlayer.getCurrentTime(), this.ytbPlayer.getDuration()])
                 .then((values) => {
-                  that.setProgression(values[0] / values[1] * 100)
+                  this.setProgression(values[0] / values[1] * 100)
                 })
           }, 1000)
         }
         else {
           this.resetTimer()
 
-          if(event.data == 0){
+          if (event.data === 0) {
             this.nextTrack()
           }
         }
       },
 
-      onError() {
+      onError () {
         this.setTrackError()
       },
 
-      load() {
+      load () {
         this.stop()
         this.ytbPlayer.loadVideoById({'videoId': this.track.providerId})
       },
@@ -118,10 +129,9 @@
       },
 
       stop () {
-        if (!this.ytbPlayer)
-          return;
-
-        this.ytbPlayer.stopVideo()
+        if (this.ytbPlayer) {
+          this.ytbPlayer.stopVideo()
+        }
       },
 
       setVolume (volume) {
@@ -129,7 +139,7 @@
       },
 
       seekTo (percent) {
-        var allowSeekAhead = true
+        const allowSeekAhead = true
         this.ytbPlayer.getDuration()
             .then(duration => {
               this.ytbPlayer.seekTo(percent * duration / 100, allowSeekAhead)
@@ -145,29 +155,12 @@
       this.resetTimer()
     },
 
-    vuex: {
-      getters: {
-        constants: state => state.constants,
-        track: state => state.track,
-        provider: state => state.track.provider,
-        seekPosition: state => state.player.seekPosition,
-        state: state => state.player.state,
-        volume: state => state.player.volume,
-        videoMode: state => state.player.videoMode
-      },
-      actions: {
-        setPlay: actions.setPlay,
-        nextTrack: actions.nextTrack,
-        setYoutubeReady: actions.setYoutubeReady,
-        setProgression: actions.setProgression,
-        setTrackError: actions.setTrackError
-      }
-    }
+    computed: mapState(['constants', 'track', 'player'])
   }
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import "../../../styles/constants.scss";
+  @import "~@/styles/constants";
 
   .youtube-player {
     iframe {

@@ -18,12 +18,12 @@
 </template>
 
 <script>
-  import actions from '../../actions'
-  import localStoragePassword from '../../helpers/localStoragePassword'
+  import { mapState, mapActions } from 'vuex'
+  import localStoragePassword from '@/helpers/localStoragePassword'
 
   export default {
     name: 'auth',
-    data: function(){
+    data () {
       return {
         expanded: false,
         password: '',
@@ -31,38 +31,35 @@
       }
     },
     watch: {
-      password() {
+      password () {
         this.show_error = false
       }
     },
     methods: {
-      do_auth() {
-        if(this.password.length){
-          this.getPlaylist(this.playlist.id, this.password)
+      ...mapActions(['getPlaylist']),
+      do_auth () {
+        const password = this.password
+        const id = this.playlist.id
+
+        if (password.length) {
+          this.getPlaylist({id, password})
               .then(response => {
-                if(! response.isAuth){
+                if (!response.isAuth) {
                   this.show_error = true
                 }
                 else {
-                  localStoragePassword.add(this.playlist.name, this.password)
+                  localStoragePassword.add(this.playlist.name, password)
                 }
               })
         }
       }
     },
-    vuex: {
-      getters: {
-        playlist: state => state.playlist
-      },
-      actions: {
-        getPlaylist: actions.getPlaylist
-      }
-    }
+    computed: mapState(['playlist'])
   }
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import '../../styles/constants.scss';
+  @import '~@/styles/constants';
 
   .auth {
     padding-left: $space-medium;

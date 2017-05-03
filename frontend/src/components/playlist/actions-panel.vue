@@ -1,38 +1,36 @@
 <template>
-  <div class='actions-panel' :class='{"expanded" : expanded}'>
-    <button type='button' @click='expanded=!expanded' class='btn-toggle' :class='{"on": expanded}'></button>
-    <search v-if='expanded && playlist.canEdit'></search>
-    <auth v-if='expanded && !playlist.canEdit'></auth>
-    </div>
+  <div class='actions-panel' :class='{"expanded" : isExpanded}'>
+    <button type='button' @click='isExpanded = !isExpanded' class='btn-toggle' :class='{"on": isExpanded}'></button>
+    <search v-if='isExpanded && playlist.canEdit'></search>
+    <auth v-if='isExpanded && !playlist.canEdit'></auth>
   </div>
 </template>
 
 <script>
-  import actions from '../../actions'
-  import search from './search.vue'
-  import auth from './auth.vue'
+  import { mapState } from 'vuex'
+  import search from '@/components/playlist/search.vue'
+  import auth from '@/components/playlist/auth.vue'
 
   export default {
     name: 'actions-panel',
+    data () {
+      return {
+        isExpanded: false
+      }
+    },
     components: {
       'search': search,
       'auth': auth
     },
-    data: function(){
-      return {
-        expanded: !this.playlist.tracks.length
-      }
+    mounted () {
+      this.isExpanded = !this.playlist.tracks.length
     },
-    vuex: {
-      getters: {
-        playlist: state => state.playlist
-      }
-    }
+    computed: mapState(['playlist'])
   }
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import '../../styles/constants.scss';
+  @import '~@/styles/constants';
 
   .actions-panel {
     width: 20%;
@@ -55,11 +53,11 @@
       transition: background-color 200ms ease-in-out;
 
       &:before {
-        background-image: url('/images/icn-edit.svg');
+        background-image: url('~@/assets/icn-edit.svg');
       }
 
       &:after {
-        background-image: url('/images/icn-cross.svg');
+        background-image: url('~@/assets/icn-cross.svg');
       }
 
       &:hover {
@@ -68,11 +66,11 @@
     }
 
     .btn-video-mode-on {
-      background-image: url('/images/icn-video-mode-on.svg');
+      background-image: url('~@/assets/icn-video-mode-on.svg');
     }
 
     .btn-video-mode-off {
-      background-image: url('/images/icn-video-mode-off.svg');
+      background-image: url('~@/assets/icn-video-mode-off.svg');
     }
 
     &.expanded {

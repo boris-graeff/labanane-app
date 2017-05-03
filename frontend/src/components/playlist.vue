@@ -1,10 +1,10 @@
 <template>
   <section class='playlist-page'>
     <router-link :to="{ name: 'home'}" class='link-home'>
-      <img src='/images/labanane-logo.svg' alt="LaBanane logo"/>
+      <img src='/static/labanane-logo.svg' alt="LaBanane logo"/>
     </router-link>
     <transition name='video-mode'>
-      <div class='content' v-if='providers.youtube.ready && !loading' v-show='!videoMode'>
+      <div class='content' v-if='providers.youtube.ready && !loading' v-show='!player.videoMode'>
         <actions-panel></actions-panel>
         <tracklist></tracklist>
       </div>
@@ -16,14 +16,14 @@
 </template>
 
 <script>
-  import actions from '../actions'
-  import localStoragePassword from '../helpers/localStoragePassword'
+  import localStoragePassword from '@/helpers/localStoragePassword'
+  import { mapState, mapActions } from 'vuex'
 
-  import tracklist from './playlist/tracklist.vue'
-  import actionsPanel from './playlist/actions-panel.vue'
-  import player from './playlist/player.vue'
-  import youtubePlayer from './playlist/players/youtube-player.vue'
-  import soundcloudPlayer from './playlist/players/soundcloud-player.vue'
+  import tracklist from '@/components/playlist/tracklist.vue'
+  import actionsPanel from '@/components/playlist/actions-panel.vue'
+  import player from '@/components/playlist/player.vue'
+  import youtubePlayer from '@/components/playlist/players/youtube-player.vue'
+  import soundcloudPlayer from '@/components/playlist/players/soundcloud-player.vue'
 
   export default {
     name: 'playlist',
@@ -34,38 +34,34 @@
       'youtube-player': youtubePlayer,
       'soundcloud-player': soundcloudPlayer
     },
-    data: function(){
+
+    data () {
       return {
         loading: true
       }
     },
+
+    props: ['playlistId'],
+
     created () {
-      var id = this.$route.params.id,
-          password = localStoragePassword.get(id)
+      const id = this.playlistId
+      const password = localStoragePassword.get(id)
 
       this.resetVideoMode()
       this.initPlaylist(id)
-      this.getPlaylist(id, password)
+      this.getPlaylist({id, password})
           .then(() => {
             this.loading = false
           })
     },
-    vuex: {
-      getters: {
-        providers: state => state.providers,
-        videoMode: state => state.player.videoMode
-      },
-      actions: {
-        getPlaylist: actions.getPlaylist,
-        initPlaylist: actions.initPlaylist,
-        resetVideoMode: actions.resetVideoMode,
-      }
-    }
+
+    computed: mapState(['providers', 'player', 'playlist']),
+    methods: mapActions(['getPlaylist', 'initPlaylist', 'resetVideoMode', 'setTrack'])
   }
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import '../styles/constants.scss';
+  @import '~@/styles/constants';
 
   .playlist-page {
     display: flex;
