@@ -3,7 +3,7 @@
     <div>
       <header>
         <h1>
-          <img src='/images/labanane-title.svg' alt="LaBanane" title="LaBanane" />
+          <img src='/static/labanane-title.svg' alt="LaBanane" title="LaBanane"/>
         </h1>
         <p>
           Welcome to LaBanane, the application for sharing and listening to your favorite music !<br>
@@ -36,13 +36,13 @@
 </template>
 
 <script>
-  import actions from '../../actions'
-  import localStoragePassword from '../../helpers/localStoragePassword'
-  import stringHelper from '../../helpers/string'
+  import { mapState, mapActions } from 'vuex'
+  import localStoragePassword from '@/helpers/localStoragePassword'
+  import stringHelper from '@/helpers/string'
 
   export default {
     name: 'create-playlist',
-    data: function () {
+    data: function () {
       return {
         name: '',
         password: '',
@@ -50,33 +50,26 @@
       }
     },
     watch: {
-      name() {
+      name () {
         this.name = stringHelper.slugify(this.name)
         this.show_error = false
       }
     },
-    methods : {
-      create(event) {
-
-        if(this.name && this.password){
+    computed: mapState(['playlist']),
+    methods: {
+      ...mapActions(['createPlaylist']),
+      create (event) {
+        if (this.name && this.password) {
           this.createPlaylist(this.name, this.password)
-            .then((response) => {
-              let id = response.data.id
-              localStoragePassword.add(id, this.password)
-              this.$router.push({name: 'playlist', params: {id: id}})
-            })
-          .catch((response) => {
-            this.show_error = true
-          })
+              .then((response) => {
+                let id = response.data.id
+                localStoragePassword.add(id, this.password)
+                this.$router.push({name: 'playlist', params: {id: id}})
+              })
+              .catch((response) => {
+                this.show_error = true
+              })
         }
-      }
-    },
-    vuex: {
-      actions: {
-        createPlaylist: actions.createPlaylist
-      },
-      getters: {
-        playlist: state => state.playlist
       }
     }
   }
@@ -84,11 +77,11 @@
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import '../../styles/constants.scss';
+  @import '~@/styles/constants';
 
   .create {
     height: 100vh;
-    width:  60%;
+    width: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -114,7 +107,7 @@
     form {
       max-width: 410px;
 
-      > div:nth-child(2){
+      > div:nth-child(2) {
         display: flex;
         align-items: flex-end;
       }
@@ -126,14 +119,14 @@
       }
     }
 
-    @media screen and (max-width: 800px){
-      width:  100%;
+    @media screen and (max-width: 800px) {
+      width: 100%;
       display: block;
       margin-bottom: 2*$space-big;
       height: auto;
     }
 
-    @media screen and (max-width: 440px){
+    @media screen and (max-width: 440px) {
 
       form {
         > div:nth-child(2) {

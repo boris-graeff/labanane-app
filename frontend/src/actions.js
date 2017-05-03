@@ -1,92 +1,93 @@
-import appAPI from './api/app'
-import youtubeAPI from './api/youtube'
+import AppAPI from '@/api/app'
+import youtubeAPI from '@/api/youtube'
 
-const playlists = new appAPI('playlists')
+const playlists = new AppAPI('playlists')
 
 export default {
-  getAllPlaylists: ({dispatch}) => {
+  getAllPlaylists: (context) => {
     return playlists.all()
       .then(response => {
-        dispatch('SET_PLAYLISTS', response.data)
+        context.commit('SET_PLAYLISTS', response.data)
       })
       .catch(() => {
-        console.error("Playlists request failed")
+        console.error('Playlists request failed')
       })
   },
-  getPlaylist: ({dispatch}, id, password) => {
+  getPlaylist: (context, id, password) => {
     return playlists.get({id, password})
       .then(response => {
-        dispatch('SET_PLAYLIST', id, password, response.data)
-        return response.data
+        const {data} = response
+        context.commit('SET_PLAYLIST', {id, password, data})
+        return data
       })
       .catch(() => {
-        console.error("Playlist request failed")
+        console.error('Playlist request failed')
       })
   },
-  createPlaylist: ({dispatch}, name, password) => {
+  createPlaylist: (context, name, password) => {
     return playlists.create({name, password})
   },
   savePlaylist: (store) => {
     return playlists.update(store.state.playlist)
       .catch(() => {
-        console.error("Playlist saving request failed")
+        console.error('Playlist saving request failed')
       })
   },
 
-  getYoutubeList: ({dispatch}, keywords) => {
+  getYoutubeList: (context, keywords) => {
     return youtubeAPI.get(keywords)
   },
 
-  setTrack: ({dispatch}, track) => {
-    dispatch('SET_TRACK', track)
+  setTrack: (context, track) => {
+    context.commit('SET_TRACK', track)
   },
-  setPlay: ({dispatch}) => {
-    dispatch('SET_PLAY')
+  setPlay: (context) => {
+    context.commit('SET_PLAY')
   },
-  setPause: ({dispatch}) => {
-    dispatch('SET_PAUSE')
+  setPause: (context) => {
+    context.commit('SET_PAUSE')
   },
-  setVolume: ({dispatch}, volume) => {
-    dispatch('SET_VOLUME', volume)
+  setVolume: (context, volume) => {
+    context.commit('SET_VOLUME', volume)
   },
-  nextTrack: ({dispatch}) => {
-    dispatch('SET_NEXT_TRACK')
+  nextTrack: (context) => {
+    context.commit('SET_NEXT_TRACK')
   },
-  toggleShuffle: ({dispatch}) => {
-    dispatch('TOGGLE_SHUFFLE')
+  toggleShuffle: (context) => {
+    context.commit('TOGGLE_SHUFFLE')
   },
-  toggleVideoMode: ({dispatch}) => {
-    dispatch('TOGGLE_VIDEO_MODE')
+  toggleVideoMode: (context) => {
+    context.commit('TOGGLE_VIDEO_MODE')
   },
-  resetVideoMode: ({dispatch}) => {
-    dispatch('RESET_VIDEO_MODE')
+  resetVideoMode: (context) => {
+    context.commit('RESET_VIDEO_MODE')
   },
-  prevTrack: ({dispatch}) => {
-    dispatch('SET_PREVIOUS_TRACK')
+  prevTrack: (context) => {
+    context.commit('SET_PREVIOUS_TRACK')
   },
-  setYoutubeReady: ({dispatch}) => {
-    dispatch('SET_YOUTUBE_READY', 'youtube')
+  setYoutubeReady: (context) => {
+    context.commit('SET_YOUTUBE_READY', 'youtube')
   },
-  setProgression: ({dispatch}, progression) => {
-    dispatch('SET_PROGRESSION', progression)
+  setProgression: (context, progression) => {
+    context.commit('SET_PROGRESSION', progression)
   },
-  setSeekPosition: ({dispatch}, position) => {
-    dispatch('SET_SEEK_POSITION', position)
+  setSeekPosition: (context, position) => {
+    context.commit('SET_SEEK_POSITION', position)
   },
-  setTrackError: ({dispatch}) => {
-    dispatch('SET_TRACK_ERROR')
-    dispatch('SET_NEXT_TRACK')
+  setTrackError: (context) => {
+    context.commit('SET_TRACK_ERROR')
+    context.commit('SET_NEXT_TRACK')
   },
-  addTrack: ({dispatch}, track, index) => {
-    dispatch('ADD_TRACK', track, index)
+  addTrack: (context, track, index) => {
+    context.commit('ADD_TRACK', track, index)
   },
-  moveTrack: ({dispatch}, track, index) => {
-    dispatch('MOVE_TRACK', track, index)
+  moveTrack: (context, track, index) => {
+    context.commit('MOVE_TRACK', track, index)
   },
-  removeTrack: ({dispatch}, index) => {
-    dispatch('REMOVE_TRACK', index)
+  removeTrack: (context, index) => {
+    context.commit('REMOVE_TRACK', index)
   },
-  initPlaylist: ({dispatch}, id) => {
-    dispatch('INIT_PLAYLIST', id)
+  initPlaylist: (context, id) => {
+    context.commit('INIT_PLAYLIST', id)
   }
 }

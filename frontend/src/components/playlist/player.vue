@@ -36,63 +36,58 @@
 </template>
 
 <script>
-  import actions from '../../actions'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
     name: 'player',
-    data: function(){
+    data () {
       return {
         lastVolumeValue: 100
       }
     },
-    computed: {
+    computed: {
+      ...mapState(['player', 'track']),
       progression: {
-        get() {
+        get () {
           return this.player.progression
         },
-        set(value) {
+        set (value) {
           this.setSeekPosition(value)
         }
       },
       volume: {
-        get() {
+        get () {
           return this.player.volume
         },
-        set(value) {
+        set (value) {
           this.setVolume(value)
         }
       }
     },
     methods: {
-      mute() {
+      ...mapActions({
+        next: 'nextTrack',
+        prev: 'prevTrack',
+        play: 'setPlay',
+        pause: 'setPause',
+        setSeekPosition: 'setSeekPosition',
+        toggleShuffle: 'toggleShuffle',
+        toggleVideoMode: 'toggleVideoMode',
+        setVolume: 'setVolume'
+      }),
+      mute () {
         this.lastVolumeValue = this.player.volume
         this.setVolume(0)
       },
-      unmute() {
+      unmute () {
         this.setVolume(this.lastVolumeValue)
-      }
-    },
-    vuex: {
-      getters: {
-        player: state => state.player,
-        track: state => state.track
-      },
-      actions: {
-        next: actions.nextTrack,
-        prev: actions.prevTrack,
-        play: actions.setPlay,
-        pause: actions.setPause,
-        setSeekPosition: actions.setSeekPosition,
-        toggleShuffle: actions.toggleShuffle,
-        toggleVideoMode: actions.toggleVideoMode,
-        setVolume: actions.setVolume
       }
     }
   }
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import '../../styles/constants.scss';
+  @import '~@/styles/constants';
 
   .player {
     position: fixed;
@@ -174,39 +169,39 @@
   }
 
   .btn-next {
-    background-image: url('/images/icn-next.svg');
+    background-image: url('~@/assets/icn-next.svg');
   }
 
   .btn-previous {
-    background-image: url('/images/icn-previous.svg');
+    background-image: url('~@/assets/icn-previous.svg');
   }
 
   .btn-play {
-    background-image: url('/images/icn-play.svg');
+    background-image: url('~@/assets/icn-play.svg');
   }
 
   .btn-pause {
-    background-image: url('/images/icn-pause.svg');
+    background-image: url('~@/assets/icn-pause.svg');
   }
 
   .btn-shuffle {
-    background-image: url('/images/icn-shuffle.svg');
+    background-image: url('~@/assets/icn-shuffle.svg');
   }
 
   .btn-video-mode-on {
-    background-image: url('/images/icn-video-mode-on.svg');
+    background-image: url('~@/assets/icn-video-mode-on.svg');
   }
 
   .btn-video-mode-off {
-    background-image: url('/images/icn-video-mode-off.svg');
+    background-image: url('~@/assets/icn-video-mode-off.svg');
   }
 
   .btn-volume-on {
-    background-image: url('/images/icn-volume-on.svg');
+    background-image: url('~@/assets/icn-volume-on.svg');
   }
 
   .btn-volume-off {
-    background-image: url('/images/icn-volume-off.svg');
+    background-image: url('~@/assets/icn-volume-off.svg');
   }
 
   .slider.volume-bar {
@@ -214,7 +209,7 @@
 
     &:before, span:after {
       background-color: transparent;
-      background-image: url('/images/volume-bar.svg');
+      background-image: url('~@/assets/volume-bar.svg');
       background-repeat: repeat-x;
       background-position: left center;
       border-radius: 0;

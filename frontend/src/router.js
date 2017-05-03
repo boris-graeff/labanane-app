@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import home from './components/home.vue'
-import playlist from './components/playlist.vue'
+import home from '@/components/home.vue'
+import playlist from '@/components/playlist.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
-const router = new VueRouter({
+export default new VueRouter({
   mode: 'history',
   routes: [
     {
@@ -20,11 +20,9 @@ const router = new VueRouter({
     },
     {
       path: '*',
-      redirect: {
+      redirect: {
         name: 'home'
       }
     }
   ]
 })
-
-export default router

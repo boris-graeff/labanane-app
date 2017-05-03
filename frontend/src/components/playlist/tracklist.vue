@@ -23,52 +23,41 @@
 </template>
 
 <script>
-  import actions from '../../actions'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'tracklist',
     watch: {
-      'playlist.tracks'() {
+      'playlist.tracks' () {
         this.savePlaylist()
       }
     },
+    computed: mapState(['track', 'playlist']),
     methods: {
-      remove(index){
+      ...mapActions(['setTrack', 'removeTrack', 'addTrack', 'moveTrack', 'savePlaylist', 'nextTrack']),
+      remove (index) {
         this.removeTrack(index)
       },
-      onDrop(track, index, event) {
-        var track = JSON.parse(event.dataTransfer.getData('track'))
-        track.id ? this.moveTrack(track, index) :  this.addTrack(track, index+1)
+      onDrop (track, index, event) {
+        console.error(track)
+        const track2 = JSON.parse(event.dataTransfer.getData('track'))
+        track2.id ? this.moveTrack(track2, index) : this.addTrack(track2, index + 1)
       },
-      onDropEnd(event){
-        var track = JSON.parse(event.dataTransfer.getData('track'))
-        track.id ? this.moveTrack(track) :  this.addTrack(track)
+      onDropEnd (event) {
+        const track = JSON.parse(event.dataTransfer.getData('track'))
+        track.id ? this.moveTrack(track) : this.addTrack(track)
       },
       onDragStart (track, index, event) {
         track.index = index
         event.dataTransfer.effectAllowed = 'move'
         event.dataTransfer.setData('track', JSON.stringify(track))
       }
-    },
-    vuex: {
-      getters: {
-        playlist: state => state.playlist,
-        track: state => state.track
-      },
-      actions: {
-        setTrack: actions.setTrack,
-        removeTrack: actions.removeTrack,
-        addTrack: actions.addTrack,
-        moveTrack: actions.moveTrack,
-        savePlaylist: actions.savePlaylist,
-        nextTrack: actions.nextTrack
-      }
     }
   }
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import '../../styles/constants.scss';
+  @import '~@/styles/constants';
 
   .tracklist {
     position: relative;
@@ -104,7 +93,7 @@
       width: 30px;
       min-width: 30px;
       padding: 0;
-      background: url('/images/icn-cross.svg') no-repeat;
+      background: url('~@/assets/icn-cross.svg') no-repeat;
       background-size: contain;
       background-position: center center;
       transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;

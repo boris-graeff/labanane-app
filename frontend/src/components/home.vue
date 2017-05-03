@@ -6,8 +6,8 @@
 </template>
 
 <script>
-  import explorePlaylists from './home/explore_playlists.vue'
-  import createPlaylist from './home/create_playlist.vue'
+  import explorePlaylists from '@/components/home/explore-playlists.vue'
+  import createPlaylist from '@/components/home/create-playlist.vue'
 
   export default {
     name: 'home',

@@ -7,82 +7,78 @@
 
 <script>
   import SC from 'soundcloud'
-  import actions from '../../../actions'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'soundcloud-player',
     sound: null,
-    data: function(){
+    data () {
       return {
         isActive: false
       }
     },
     created () {
-      this.initPlayer();
+      this.initPlayer()
     },
     watch: {
-      state(){
+      state () {
         if (this.provider === 'soundcloud') {
           this.isActive = true
-          if(this.state === 'loading'){
+          if (this.state === 'loading') {
             this.load()
           }
-          else if(this.state === 'playing'){
+          else if (this.state === 'playing') {
             this.play()
             this.setVolume(this.volume)
           }
-          else if(this.state === 'paused'){
+          else if (this.state === 'paused') {
             this.pause()
           }
-          else if(this.state === 'stopped'){
+          else if (this.state === 'stopped') {
             this.stop()
           }
         }
       },
-      seekPosition(){
+      seekPosition () {
         if (this.provider === 'soundcloud') {
           this.seekTo(this.seekPosition)
         }
       },
-      volume(){
+      volume () {
         this.setVolume(this.volume)
       },
-      seekPosition(){
-        if (this.provider === 'soundcloud') {
-          this.seekTo(this.seekPosition)
-        }
-      },
-      provider(){
-        if(this.provider !== 'soundcloud') {
+      provider () {
+        if (this.provider !== 'soundcloud') {
           this.isActive = false
           this.stop()
         }
       }
     },
     methods: {
+      ...mapActions(['setPlay', 'nextTrack', 'setProgression', 'setTrackError']),
       initPlayer () {
         SC.initialize({
           client_id: this.constants.SOUNDCLOUD_KEY
-        });
+        })
       },
       load () {
-        var that = this
+        const that = this
         SC.stream('/tracks/' + this.track.providerId)
             .then(sound => {
               // Fixes chrome issue  https://github.com/soundcloud/soundcloud-javascript/issues/39
               if (sound.options.protocols[0] === 'rtmp') {
-                sound.options.protocols.splice(0, 1);
+                sound.options.protocols.splice(0, 1)
               }
 
               that.sound = sound
 
               sound.setVolume(that.volume)
 
-              sound.on('time', function(){
+              sound.on('time', function () {
                 that.setProgression(this.currentTime() / sound.streamInfo.duration * 100)
               })
 
-              sound.on('finish', function(){
+              sound.on('finish', function () {
                 that.nextTrack()
               })
 
@@ -96,54 +92,37 @@
         this.sound.play()
       },
       pause () {
-        if (!this.sound)
-          return;
-        this.sound.pause()
+        if (this.sound) {
+          this.sound.pause()
+        }
       },
       stop () {
-        if (!this.sound)
-          return;
-        this.sound.dispose()
+        if (this.sound) {
+          this.sound.dispose()
+        }
       },
       setVolume (volume) {
-        if (!this.sound)
-          return;
-
-        this.sound.setVolume(volume/100)
+        if (this.sound) {
+          this.sound.setVolume(volume / 100)
+        }
       },
       seekTo (percent) {
-        if (!this.sound)
-          return;
-        this.sound.seek(percent * this.sound.streamInfo.duration / 100);
+        if (this.sound) {
+          this.sound.seek(percent * this.sound.streamInfo.duration / 100)
+        }
       }
     },
-    beforeDestroy(){
-      if (!this.sound)
-        return;
-      this.sound.dispose()
-    },
-    vuex: {
-      getters: {
-        constants: state => state.constants,
-        track: state => state.track,
-        provider: state => state.track.provider,
-        seekPosition: state => state.player.seekPosition,
-        state: state => state.player.state,
-        volume: state => state.player.volume,
-        videoMode: state => state.player.videoMode
-      },
-      actions: {
-        setPlay: actions.setPlay,
-        nextTrack: actions.nextTrack,
-        setProgression: actions.setProgression,
-        setTrackError: actions.setTrackError
+    beforeDestroy () {
+      if (this.sound) {
+        this.sound.dispose()
       }
-    }
+    },
+    computed: mapState(['constants', 'track', 'provider', 'seekPosition', 'state', 'volume', 'videoMode'])
   }
 </script>
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
-  @import "../../../styles/constants.scss";
+  @import "~@/styles/constants";
 
   #soundcloud-player {
     position: fixed;
