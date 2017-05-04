@@ -4,9 +4,10 @@ var express = require('express'),
   logger = require('morgan'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
-  mongoose = require('mongoose')
+  mongoose = require('mongoose'),
+  services = require('./routes/services')
 
-var services = require('./routes/services')
+require('./cron-tasks')
 
 var app = express()
 
