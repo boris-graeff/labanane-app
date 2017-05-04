@@ -5,39 +5,29 @@ import actions from './actions'
 
 Vue.use(Vuex)
 
-function getCurrentIndex (state) {
-  return state.playlist.tracks.findIndex((t) => {
-    return t.id === state.track.id
-  })
-}
+const getCurrentIndex = (state) => state.playlist.tracks.findIndex((t) => t.id === state.track.id)
 
-function findTrackById (state, trackId) {
-  return state.playlist.tracks.find(track => {
-    return track.id === trackId
-  })
-}
+const findTrackById = (state, trackId) => state.playlist.tracks.find(track => track.id === trackId)
 
-function getRandomIndex (state) {
-  return Math.floor(Math.random() * state.playlist.tracks.length)
-}
+const getRandomIndex = (state) => Math.floor(Math.random() * state.playlist.tracks.length)
 
-function getNextIndex (state) {
-  let index = getCurrentIndex(state) + 1
+const getNextIndex = (state) => {
+  const index = getCurrentIndex(state) + 1
   return index >= state.playlist.tracks.length ? 0 : index
 }
 
-function getPreviousIndex (state) {
+const getPreviousIndex = (state) => {
   let index = getCurrentIndex(state) - 1
   return index < 0 ? (state.playlist.tracks.length - 1) : index
 }
 
-function setNextTrack (state) {
+const setNextTrack = (state) => {
   const tracks = state.playlist.tracks
   const index = (state.player.shuffle) ? getRandomIndex(state) : getNextIndex(state)
   setTrack(state, tracks[index])
 }
 
-function setTrack (state, track) {
+const setTrack = (state, track) => {
   for (let prop of Object.keys(track)) {
     state.track[prop] = track[prop]
   }
@@ -46,7 +36,7 @@ function setTrack (state, track) {
   state.player.state = 'loading'
 }
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   state: {
     constants: constants,
     playlists: [],
@@ -178,5 +168,3 @@ const store = new Vuex.Store({
     }
   }
 })
-
-export default store
