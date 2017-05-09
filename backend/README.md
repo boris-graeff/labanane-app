@@ -18,3 +18,9 @@ npm install
 # serve at localhost:4000
 npm start
 ```
+
+## Restore DB
+
+```
+mongorestore --gzip [path]
+```

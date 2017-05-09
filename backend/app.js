@@ -4,9 +4,10 @@ var express = require('express'),
   logger = require('morgan'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
-  mongoose = require('mongoose')
+  mongoose = require('mongoose'),
+  services = require('./routes/services')
 
-var services = require('./routes/services')
+require('./cron-tasks')
 
 var app = express()
 
@@ -21,14 +22,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../frontend/dist/')))
-
-/* Cross origin config
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-  next()
-})
-*/
 
 app.use('/services/', services)
 
