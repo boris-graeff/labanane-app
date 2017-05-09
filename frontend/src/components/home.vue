@@ -14,6 +14,9 @@
     components: {
       'explore-playlists': explorePlaylists,
       'create-playlist': createPlaylist
+    },
+    created () {
+      document.title = 'LaBanane'
     }
   }
 </script>
