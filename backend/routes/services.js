@@ -27,7 +27,7 @@ router.post('/playlists', (req, res) => {
 
 // GET
 
-router.get('/playlists/:id/:password', (req, res) => {
+router.get('/playlists/:id', (req, res) => {
   Playlist.findOne({id: req.params.id}, (err, playlist) => {
     if (err) {
       res.status(500).send({ error: "Unexpected error" })
@@ -38,8 +38,7 @@ router.get('/playlists/:id/:password', (req, res) => {
     else {
       res.json({
         name: playlist.name,
-        tracks: playlist.tracks,
-        isAuth: req.params.password === playlist.password
+        tracks: playlist.tracks
       })
     }
   })
@@ -70,7 +69,7 @@ router.get('/playlists', (req, res) => {
 router.put('/playlists', (req, res) => {
   var params = req.body,
     key = {
-      name: params.name,
+      id: params.id,
       password: params.password
     },
     content = {
@@ -88,6 +87,24 @@ router.put('/playlists', (req, res) => {
     }
     else {
       res.json(playlist)
+    }
+  })
+})
+
+// AUTH
+
+router.post('/playlists/auth', (req, res) => {
+  var params = req.body
+
+  Playlist.findOne({id: params.id, password: params.password}, (err, playlist) => {
+    if (err) {
+      res.status(500).send({ error: "Unexpected error" })
+    }
+    else if (!playlist){
+      res.status(422).send({ error: "Bad password" })
+    }
+    else {
+      res.json('ok')
     }
   })
 })
