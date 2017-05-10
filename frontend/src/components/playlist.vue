@@ -60,18 +60,23 @@
 
       this.resetVideoMode()
       this.initPlaylist(id)
-      this.getPlaylist({id, password})
+
+      const auth = password ? this.playlistAuth({id, password}) : Promise.resolve()
+      const content = this.getPlaylist({id})
           .then(() => {
-            this.loading = false
             document.title = this.playlist.name
             if (this.trackId) {
               this.setTrack(this.trackId)
             }
           })
+
+      Promise.all([auth, content]).then(() => {
+        this.loading = false
+      })
     },
 
     computed: mapState(['providers', 'player', 'playlist', 'track']),
-    methods: mapActions(['getPlaylist', 'initPlaylist', 'resetVideoMode', 'setTrack'])
+    methods: mapActions(['getPlaylist', 'playlistAuth', 'initPlaylist', 'resetVideoMode', 'setTrack'])
   }
 </script>
 

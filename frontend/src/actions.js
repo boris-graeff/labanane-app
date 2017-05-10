@@ -1,11 +1,9 @@
-import AppAPI from '@/api/app'
+import api from '@/api/app'
 import youtubeAPI from '@/api/youtube'
-
-const playlists = new AppAPI('playlists')
 
 export default {
   getAllPlaylists: (context) => {
-    return playlists.all()
+    return api.all()
       .then(response => {
         context.commit('SET_PLAYLISTS', response.data)
       })
@@ -13,24 +11,30 @@ export default {
         console.error('Playlists request failed')
       })
   },
-  getPlaylist: (context, {id, password}) => {
-    return playlists.get({id, password})
+  getPlaylist: (context, {id}) => {
+    return api.get({id})
       .then(response => {
         const {data} = response
-        context.commit('SET_PLAYLIST', {id, password, data})
-        return data
+        context.commit('SET_PLAYLIST', {id, data})
       })
       .catch(() => {
         console.error('Playlist request failed')
       })
   },
   createPlaylist: (context, {name, password}) => {
-    return playlists.create({name, password})
+    return api.create({name, password})
   },
   savePlaylist: (store) => {
-    return playlists.update(store.state.playlist)
+    return api.update(store.state.playlist)
       .catch(() => {
         console.error('Playlist saving request failed')
+      })
+  },
+  playlistAuth: (context, {id, password}) => {
+    return api.auth({id, password})
+      .then(response => {
+        const isAuth = true
+        context.commit('SET_PLAYLIST_AUTH', {isAuth, password})
       })
   },
 

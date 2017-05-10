@@ -1,9 +1,13 @@
 import axios from 'axios'
 import constants from '../constants'
 
+const client = axios.create({
+  baseURL: 'https://www.googleapis.com/youtube/v3'
+})
+
 export default {
   get (keywords) {
-    return axios.get('https://www.googleapis.com/youtube/v3/search', {
+    return client.get('/search', {
       params: {
         part: 'snippet',
         type: 'video',

@@ -110,8 +110,10 @@ export default new Vuex.Store({
       state.playlist.id = id
       state.playlist.name = data.name
       state.playlist.tracks = data.tracks
-      state.playlist.canEdit = data.isAuth
-      state.playlist.password = data.isAuth ? password : ''
+    },
+    SET_PLAYLIST_AUTH (state, {isAuth, password}) {
+      state.playlist.canEdit = isAuth
+      state.playlist.password = isAuth ? password : ''
     },
     SET_TRACK (state, trackId) {
       const track = findTrackById(state, trackId)

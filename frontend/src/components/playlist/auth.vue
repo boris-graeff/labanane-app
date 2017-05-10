@@ -36,21 +36,20 @@
       }
     },
     methods: {
-      ...mapActions(['getPlaylist']),
+      ...mapActions(['playlistAuth']),
+
       do_auth () {
         const password = this.password
         const id = this.playlist.id
 
         if (password.length) {
-          this.getPlaylist({id, password})
-              .then(response => {
-                if (!response.isAuth) {
-                  this.show_error = true
-                }
-                else {
-                  localStoragePassword.add(this.playlist.name, password)
-                }
-              })
+          this.playlistAuth({id, password})
+            .then(response => {
+              localStoragePassword.add(this.playlist.id, password)
+            })
+            .catch(response => {
+              this.show_error = true
+            })
         }
       }
     },

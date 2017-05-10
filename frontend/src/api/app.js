@@ -1,30 +1,27 @@
 import axios from 'axios'
 
-export default class HTTP {
-  constructor (resource) {
-    this.resource = resource
-  }
+const client = axios.create({
+  baseURL: '/services'
+})
 
-  getRequestConfig (params = {}) {
-    return {
-      ...params,
-      headers: {}
-    }
-  }
+export default {
+  create (params) {
+    return client.post('/playlists', params)
+  },
 
-  create (resource, params = {}) {
-    return axios.post('/services/' + this.resource, resource, this.getRequestConfig(params))
-  }
+  all () {
+    return client.get('/playlists')
+  },
 
-  all (params = {}) {
-    return axios.get('/services/' + this.resource, this.getRequestConfig(params))
-  }
+  get (params) {
+    return client.get(`/playlists/${params.id}`)
+  },
 
-  get (resource, params = {}) {
-    return axios.get('/services/' + this.resource + '/' + resource.id + '/' + resource.password, this.getRequestConfig(params))
-  }
+  update (params) {
+    return client.put('/playlists', params)
+  },
 
-  update (resource, params = {}) {
-    return axios.put('/services/' + this.resource, resource, this.getRequestConfig(params))
+  auth (params) {
+    return client.post('/playlists/auth', params)
   }
 }
