@@ -39,7 +39,11 @@ export default {
   },
 
   getYoutubeList: (context, keywords) => {
-    return youtubeAPI.get(keywords)
+    return youtubeAPI.search(keywords)
+  },
+
+  getYoutubeVideoDetails: (context, id) => {
+    return youtubeAPI.getDetails(id)
   },
 
   setTrack: (context, track) => {

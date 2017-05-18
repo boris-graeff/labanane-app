@@ -80,7 +80,7 @@
   }
 </script>
 
-<style lang='scss' rel='stylesheet/scss' type='text/css'>
+<style scoped lang='scss' rel='stylesheet/scss' type='text/css'>
   @import '~@/styles/constants';
 
   .playlist-page {

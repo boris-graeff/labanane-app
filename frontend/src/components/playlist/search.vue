@@ -24,6 +24,7 @@
   import SC from 'soundcloud'
   import _ from 'lodash'
   import levenshtein from 'levenshtein'
+  import moment from 'moment'
 
   export default {
     name: 'search',
@@ -44,7 +45,7 @@
       }
     },
     methods: {
-      ...mapActions(['getYoutubeList', 'addTrack']),
+      ...mapActions(['getYoutubeList', 'addTrack', 'getYoutubeVideoDetails']),
       search: _.debounce(function () {
         const that = this
 
@@ -90,7 +91,18 @@
       },
 
       add (track) {
-        this.addTrack(_.cloneDeep(track))
+        if (track.provider === 'youtube') {
+          // Go fetch track duration
+          this.getYoutubeVideoDetails(track.providerId)
+            .then(({data}) => {
+              const duration = data.items[0].contentDetails.duration
+              track.duration = moment.duration(duration).asMilliseconds()
+              this.addTrack(_.cloneDeep(track))
+            })
+        }
+        else {
+          this.addTrack(_.cloneDeep(track))
+        }
       },
 
       onDragStart (track, event) {
