@@ -21,11 +21,11 @@
   import localStoragePassword from '@/helpers/localStoragePassword'
   import { mapState, mapActions } from 'vuex'
 
-  import tracklist from '@/components/playlist/tracklist.vue'
-  import actionsPanel from '@/components/playlist/actions-panel.vue'
-  import player from '@/components/playlist/player.vue'
-  import youtubePlayer from '@/components/playlist/players/youtube-player.vue'
-  import soundcloudPlayer from '@/components/playlist/players/soundcloud-player.vue'
+  import tracklist from './playlist/tracklist.vue'
+  import actionsPanel from './playlist/actions-panel.vue'
+  import player from './playlist/player.vue'
+  import youtubePlayer from './playlist/players/youtube-player.vue'
+  import soundcloudPlayer from './playlist/players/soundcloud-player.vue'
 
   export default {
     name: 'playlist',

@@ -8,8 +8,8 @@
 
 <script>
   import { mapState } from 'vuex'
-  import search from '@/components/playlist/search.vue'
-  import auth from '@/components/playlist/auth.vue'
+  import search from './search.vue'
+  import auth from './auth.vue'
 
   export default {
     name: 'actions-panel',

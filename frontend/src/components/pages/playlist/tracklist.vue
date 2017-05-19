@@ -2,31 +2,40 @@
   <div class='tracklist'>
     <h1><span v-show='playlist.tracks.length > 1'>{{ playlist.tracks.length }} tracks</span>{{ playlist.name }}</h1>
     <div @dragover.prevent @drop='onDropEnd'>
-      <transition-group name='tracklist' tag='ul' class='tracks list'>
-        <li v-for='(t, index) in playlist.tracks'
-            key='index'
+      <list class='track-list'>
+        <track-list-item v-for='(t, index) in playlist.tracks'
+            :key='track.id'
+            :track='t'
+            :index='index+1'
             :draggable='playlist.canEdit'
-            @dragover.prevent
-            @drop.stop='onDrop(t, index, $event)'
-            @dragstart='onDragStart(t, index, $event)'
-            @click='changeTrack(t)'
-            :class='{"selected": t.id == track.id, "error": t.error, "youtube": t.provider === "youtube", "soundcloud": t.provider === "soundcloud"}'>
-          <span>{{index+1}}</span>
-          <div>
-            <span>{{t.name}}</span>
+            @dragover.native.prevent
+            @drop.native.stop='onDrop(t, index, $event)'
+            @dragstart.native='onDragStart(t, index, $event)'
+            @click.native='changeTrack(t)'
+            :class='{"selected": t.id == track.id, "error": t.error}'>
+          <span>{{t.name}}</span>
+          <div class='right-part'>
+            <span class='duration'>{{ formatDuration(t.duration)}}</span>
             <button v-if='playlist.canEdit' type='button' @click.prevent='remove(index)'></button>
           </div>
-        </li>
-      </transition-group>
+        </track-list-item>
+      </list>
     </div>
   </div>
 </template>
 
 <script>
   import { mapState, mapActions } from 'vuex'
+  import moment from 'moment'
+  import list from '@/components/list'
+  import trackListItem from '@/components/track-list-item'
 
   export default {
     name: 'tracklist',
+    components: {
+      'list': list,
+      'track-list-item': trackListItem
+    },
     watch: {
       'playlist.tracks' () {
         this.savePlaylist()
@@ -38,6 +47,21 @@
 
       changeTrack (track) {
         this.$router.replace({name: 'playlist', params: {trackId: track.id}})
+      },
+
+      formatDuration (duration) {
+        if (!duration) {
+          return '-'
+        }
+
+        const momentDuration = moment.duration(duration)
+        let hours = momentDuration.hours()
+        let minutes = momentDuration.minutes()
+        let seconds = momentDuration.seconds()
+        hours = (hours) ? `${hours}:` : ''
+        minutes = (minutes < 10) ? `0${minutes}:` : `${minutes}:`
+        seconds = (seconds < 10) ? `0${seconds}` : `${seconds}`
+        return hours + minutes + seconds
       },
 
       remove (index) {
@@ -73,7 +97,6 @@
     width: 80%;
     transition: width 200ms ease-in-out, transform 200ms ease-in-out;
 
-
     h1 {
       font-size: 4rem;
       font-weight: 300;
@@ -106,7 +129,7 @@
       opacity: 0;
     }
 
-    .tracks {
+    .track-list {
       min-height: 100vh;
       padding-bottom: 30vh;
 
@@ -115,16 +138,17 @@
           transform: scale(1) rotate(90deg);
           opacity: 1;
         }
+      }
 
-        > span {
-          position: absolute;
-          font-size: 10px;
-          transform: translate(-$space-small, -50%);
-          top: 50%;
-          right: 100%;
-          text-align: right;
-          width: $space-big;
-        }
+      .right-part {
+        display: flex;
+        align-items: center;
+      }
+
+      .duration {
+        display: inline-block;
+        font-size: 1.4rem;
+        padding: 0 6px;
       }
     }
 

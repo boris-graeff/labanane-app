@@ -6,15 +6,16 @@
       <input type='text' v-model='input' id='search-input' />
     </div>
     <div class='search-results'>
-      <ul class='tracks list'>
-        <li v-for='track in results'
+      <list>
+        <track-list-item v-for='(track, index) in results'
+            :key='index'
+            :track='track'
             draggable=true
-            @dragstart='onDragStart(track, $event)'
-            :class='{"youtube": track.provider === "youtube", "soundcloud": track.provider === "soundcloud"}'
-            @click='add(track)'>
-          <div><span>{{track.name}}</span></div>
-        </li>
-      </ul>
+            @dragstart.native='onDragStart(track, $event)'
+            @click.native='add(track)'>
+          {{track.name}}
+        </track-list-item>
+      </list>
     </div>
   </div>
 </template>
@@ -25,9 +26,15 @@
   import _ from 'lodash'
   import levenshtein from 'levenshtein'
   import moment from 'moment'
+  import list from '@/components/list'
+  import trackListItem from '@/components/track-list-item'
 
   export default {
     name: 'search',
+    components: {
+      'list': list,
+      'track-list-item': trackListItem
+    },
     data () {
       return {
         input: '',
