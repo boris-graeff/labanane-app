@@ -15,7 +15,7 @@
             :class='{"selected": t.id == track.id, "error": t.error}'>
           <span>{{t.name}}</span>
           <div class='right-part'>
-            <span class='duration'>{{ formatDuration(t.duration)}}</span>
+            <span class='duration'>{{ t.duration | formatDuration }}</span>
             <button v-if='playlist.canEdit' type='button' @click.prevent='remove(index)'></button>
           </div>
         </track-list-item>
@@ -26,7 +26,6 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import moment from 'moment'
   import list from '@/components/list'
   import trackListItem from '@/components/track-list-item'
 
@@ -47,21 +46,6 @@
 
       changeTrack (track) {
         this.$router.replace({name: 'playlist', params: {trackId: track.id}})
-      },
-
-      formatDuration (duration) {
-        if (!duration) {
-          return '-'
-        }
-
-        const momentDuration = moment.duration(duration)
-        let hours = momentDuration.hours()
-        let minutes = momentDuration.minutes()
-        let seconds = momentDuration.seconds()
-        hours = (hours) ? `${hours}:` : ''
-        minutes = (minutes < 10) ? `0${minutes}:` : `${minutes}:`
-        seconds = (seconds < 10) ? `0${seconds}` : `${seconds}`
-        return hours + minutes + seconds
       },
 
       remove (index) {

@@ -74,7 +74,7 @@
         const that = this
         SC.stream('/tracks/' + this.track.providerId)
             .then(sound => {
-              // Fixes chrome issue  https://github.com/soundcloud/soundcloud-javascript/issues/39
+              // Fixes chrome issuwe  https://github.com/soundcloud/soundcloud-javascript/issues/39
               if (sound.options.protocols[0] === 'rtmp') {
                 sound.options.protocols.splice(0, 1)
               }
