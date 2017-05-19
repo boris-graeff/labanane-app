@@ -12,6 +12,6 @@
 
 <style scoped lang='scss' rel='stylesheet/scss' type='text/css'>
   ul {
-    background: url("~@/assets/tracks-background.png");
+    background: url("~@/assets/tracks-background.svg");
   }
 </style>

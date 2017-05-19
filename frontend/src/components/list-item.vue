@@ -15,14 +15,14 @@
 
   li {
     position: relative;
-    height: 25px;
+    height: 30px;
     padding: 0 6px;
-    line-height: 25px;
+    line-height: 30px;
     transition: background 300ms ease-in-out, color 300ms ease-in-out;
     cursor: pointer;
 
     &:hover {
-      background-color: rgba($wheat, 0.5);
+      background-color: rgba($wheat, 0.8);
     }
   }
 </style>
