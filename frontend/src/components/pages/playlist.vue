@@ -11,9 +11,9 @@
         </div>
       </template>
     </transition>
-    <player></player>
-    <youtube-player></youtube-player>
-    <soundcloud-player></soundcloud-player>
+    <player @seekTo='value => seekTo(value)'></player>
+    <youtube-player ref='youtubePlayer'></youtube-player>
+    <soundcloud-player ref='soundcloudPlayer'></soundcloud-player>
   </section>
 </template>
 
@@ -76,7 +76,17 @@
     },
 
     computed: mapState(['providers', 'player', 'playlist', 'track']),
-    methods: mapActions(['getPlaylist', 'playlistAuth', 'initPlaylist', 'resetVideoMode', 'setTrack'])
+    methods: {
+      ...mapActions(['getPlaylist', 'playlistAuth', 'initPlaylist', 'resetVideoMode', 'setTrack']),
+      seekTo (value) {
+        if (this.track.provider === 'youtube') {
+          this.$refs.youtubePlayer.seekTo(value)
+        }
+        else {
+          this.$refs.soundcloudPlayer.seekTo(value)
+        }
+      }
+    }
   }
 </script>
 

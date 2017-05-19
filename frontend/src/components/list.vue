@@ -1,7 +1,7 @@
 <template>
-  <transition-group name='list' tag='ul' class='list'>
+  <ul class='list'>
     <slot></slot>
-  </transition-group>
+  </ul>
 </template>
 
 <script>

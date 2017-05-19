@@ -76,11 +76,11 @@ export default {
   setYoutubeReady: (context) => {
     context.commit('SET_YOUTUBE_READY', 'youtube')
   },
-  setProgression: (context, progression) => {
-    context.commit('SET_PROGRESSION', progression)
+  setCurrentTime: (context, currentTime) => {
+    context.commit('SET_CURRENT_TIME', currentTime)
   },
-  setSeekPosition: (context, position) => {
-    context.commit('SET_SEEK_POSITION', position)
+  setTrackDuration: (context, duration) => {
+    context.commit('SET_TRACK_DURATION', duration)
   },
   setTrackError: (context) => {
     context.commit('SET_TRACK_ERROR')
