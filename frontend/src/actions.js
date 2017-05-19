@@ -1,5 +1,6 @@
 import api from '@/api/app'
 import youtubeAPI from '@/api/youtube'
+import providersAPI from '@/api/providers'
 
 export default {
   getAllPlaylists: (context) => {
@@ -44,6 +45,14 @@ export default {
 
   getYoutubeVideoDetails: (context, id) => {
     return youtubeAPI.getDetails(id)
+  },
+
+  bancampSearch: (context, q) => {
+    return providersAPI.bandcamp.search({ q })
+  },
+
+  bancampTrack: (context, id) => {
+    return providersAPI.bandcamp.track({ id })
   },
 
   setTrack: (context, track) => {
