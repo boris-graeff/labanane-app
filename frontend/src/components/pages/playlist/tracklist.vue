@@ -12,12 +12,13 @@
             @drop.native.stop='onDrop(t, index, $event)'
             @dragstart.native='onDragStart(t, index, $event)'
             @click.native='changeTrack(t)'
+            class='track'
             :class='{"selected": t.id == track.id, "error": t.error}'>
-          <span>{{t.name}}</span>
-          <div class='right-part'>
-            <span class='duration'>{{ t.duration | formatDuration }}</span>
-            <button v-if='playlist.canEdit' type='button' @click.prevent='remove(index)'></button>
-          </div>
+              <span>{{t.name}}</span>
+              <div>
+                <span class='duration'>{{ t.duration | formatDuration }}</span>
+                <button v-if='playlist.canEdit' type='button' @click.prevent='remove(index)'></button>
+              </div>
         </track-list-item>
       </list>
     </div>
@@ -124,20 +125,41 @@
         }
       }
 
-      .right-part {
-        display: flex;
-        align-items: center;
+      .track {
+        > div {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          > span {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          > div {
+            display: flex;
+            align-items: center;
+          }
+        }
       }
 
       .duration {
         display: inline-block;
         font-size: 1.4rem;
         padding: 0 6px;
+        min-width: 54px;
+        text-align: right;
       }
     }
 
     @media screen and (max-width: 800px){
-      width: 100%;
+      width: 100% !important;
+      padding-left: $space-big;
+
+      .track-list .track > div > div {
+        display: none;
+      }
     }
   }
 </style>

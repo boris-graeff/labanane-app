@@ -245,6 +245,8 @@
       .track-name {
         flex: initial;
         width: 100%;
+        font-size: 1.6rem;
+        padding-top: $space-small;
       }
 
       .btn-volume-on, .btn-volume-off, .slider.volume-bar {

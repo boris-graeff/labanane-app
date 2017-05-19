@@ -1,7 +1,6 @@
 <template>
   <list-item :class='track.provider'>
     <span class='index' v-if='index'>{{index}}</span>
-    <span class='provider-icon'></span>
     <div>
       <slot></slot>
     </div>
@@ -40,35 +39,35 @@
     }
 
     div {
+      padding-right: 6px;
+      padding-left: 36px;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      padding-right: 6px;
-      width: 100%;
-      height: 100%;
-      line-height: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 6px;
+      transform: translateY(-50%);
+      height: 12px;
+      width: 30px;
+      opacity: 0.7;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
     }
   }
 
-  .provider-icon {
-    display: inline-block;
-    height: 12px;
-    min-width: 30px;
-    opacity: 0.7;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    margin-right: 6px;
-  }
-
-  li.youtube .provider-icon {
+  li.youtube:before {
     background-image: url('~@/assets/icn-you-tube.svg') // you-tube adblock hack
   }
 
-  li.soundcloud .provider-icon {
+  li.soundcloud:before {
     background-image: url('~@/assets/icn-soundcloud.svg')
   }
 
