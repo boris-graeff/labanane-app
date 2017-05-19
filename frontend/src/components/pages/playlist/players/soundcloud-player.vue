@@ -42,14 +42,6 @@
           }
         }
       },
-      'player.seekPosition' () {
-        const {seekPosition} = this.player
-        const {provider} = this.track
-
-        if (provider === 'soundcloud') {
-          this.seekTo(seekPosition)
-        }
-      },
       'player.volume' () {
         const {volume} = this.player
         this.setVolume(volume)
@@ -64,7 +56,7 @@
       }
     },
     methods: {
-      ...mapActions(['setPlay', 'nextTrack', 'setProgression', 'setTrackError']),
+      ...mapActions(['setPlay', 'nextTrack', 'setCurrentTime', 'setTrackDuration', 'setTrackError']),
       initPlayer () {
         SC.initialize({
           client_id: this.constants.SOUNDCLOUD_KEY
@@ -82,9 +74,10 @@
               that.sound = sound
 
               sound.setVolume(that.volume)
+              that.setTrackDuration(sound.options.duration)
 
               sound.on('time', function () {
-                that.setProgression(this.currentTime() / sound.streamInfo.duration * 100)
+                that.setCurrentTime(this.currentTime())
               })
 
               sound.on('finish', function () {
@@ -115,9 +108,9 @@
           this.sound.setVolume(volume / 100)
         }
       },
-      seekTo (percent) {
+      seekTo (time) {
         if (this.sound) {
-          this.sound.seek(percent * this.sound.streamInfo.duration / 100)
+          this.sound.seek(time)
         }
       }
     },

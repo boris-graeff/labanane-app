@@ -46,14 +46,6 @@
         const {volume} = this.player
         this.setVolume(volume)
       },
-      'player.seekPosition' () {
-        const {provider} = this.track
-        const {seekPosition} = this.player
-
-        if (provider === 'youtube') {
-          this.seekTo(seekPosition)
-        }
-      },
       'track.provider' () {
         const {provider} = this.track
         if (provider !== 'youtube') {
@@ -63,7 +55,7 @@
       }
     },
     methods: {
-      ...mapActions(['setPlay', 'nextTrack', 'setYoutubeReady', 'setProgression', 'setTrackError']),
+      ...mapActions(['setPlay', 'nextTrack', 'setYoutubeReady', 'setCurrentTime', 'setTrackDuration', 'setTrackError']),
       loadPlayer () {
         this.ytbPlayer = YtbPlayer('youtube-player', {
           height: '100%',
@@ -95,11 +87,12 @@
         if (event.data === YT.PlayerState.PLAYING) { // Playing
           this.setPlay()
 
+          this.ytbPlayer.getDuration()
+            .then(value => this.setTrackDuration(value * 1000))
+
           this.timer = setInterval(() => {
-            Promise.all([this.ytbPlayer.getCurrentTime(), this.ytbPlayer.getDuration()])
-                .then((values) => {
-                  this.setProgression(values[0] / values[1] * 100)
-                })
+            this.ytbPlayer.getCurrentTime()
+                .then(value => this.setCurrentTime(value * 1000))
           }, 1000)
         }
         else {
@@ -138,12 +131,10 @@
         this.ytbPlayer.setVolume(volume)
       },
 
-      seekTo (percent) {
+      seekTo (time) {
         const allowSeekAhead = true
-        this.ytbPlayer.getDuration()
-            .then(duration => {
-              this.ytbPlayer.seekTo(percent * duration / 100, allowSeekAhead)
-            })
+        this.ytbPlayer.seekTo(time / 1000, allowSeekAhead)
+        this.setCurrentTime(time)
       },
 
       resetTimer () {
@@ -154,7 +145,6 @@
     beforeDestroy () {
       this.resetTimer()
     },
-
     computed: mapState(['constants', 'track', 'player'])
   }
 </script>

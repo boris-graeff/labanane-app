@@ -5,7 +5,8 @@ var TrackSchema = new mongoose.Schema({
   name: String,
   provider: String,
   providerId: String,
-  artwork: String
+  artwork: String,
+  duration: Number
 })
 
 var PlaylistSchema = new mongoose.Schema({

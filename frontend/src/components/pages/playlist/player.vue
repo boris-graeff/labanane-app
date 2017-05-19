@@ -1,8 +1,10 @@
 <template>
   <div class='player'>
     <div class='slider progress-bar'>
-      <input type='range' v-model='progression' :style='{width: progression.toFixed(1) + "%"}' step='0.1' />
+      <input type='range' min='0' :max='track.duration' :value='progression' @input.prevent='seekTo' :style='{width: progression.toFixed(1) + "%"}' />
       <span :style='{width: progression.toFixed(1) + "%"}'></span>
+      <div class='current-time'>{{ player.currentTime | formatDuration }}</div>
+      <div class='duration'>{{ track.duration | formatDuration }}</div>
     </div>
     <div class='content'>
       <div class='track-name'>{{track.name}}</div>
@@ -47,13 +49,8 @@
     },
     computed: {
       ...mapState(['player', 'track']),
-      progression: {
-        get () {
-          return this.player.progression
-        },
-        set (value) {
-          this.setSeekPosition(value)
-        }
+      progression () {
+        return this.player.currentTime / this.track.duration * 100
       },
       volume: {
         get () {
@@ -70,7 +67,6 @@
         prev: 'prevTrack',
         play: 'setPlay',
         pause: 'setPause',
-        setSeekPosition: 'setSeekPosition',
         toggleShuffle: 'toggleShuffle',
         toggleVideoMode: 'toggleVideoMode',
         setVolume: 'setVolume'
@@ -81,12 +77,15 @@
       },
       unmute () {
         this.setVolume(this.lastVolumeValue)
+      },
+      seekTo (event) {
+        this.$emit('seekTo', Number(event.target.value))
       }
     }
   }
 </script>
 
-<style lang='scss' rel='stylesheet/scss' type='text/css'>
+<style scoped lang='scss' rel='stylesheet/scss' type='text/css'>
   @import '~@/styles/constants';
 
   .player {
@@ -166,6 +165,24 @@
     .btn-video-mode-on, .btn-video-mode-off {
       background-position: top 5px center;
     }
+  }
+
+  .progress-bar {
+    position: relative;
+  }
+
+  .current-time, .duration {
+    position: absolute;
+    font-size: 1.2rem;
+    bottom: -6px;
+  }
+
+  .current-time {
+    left: 0;
+  }
+
+  .duration {
+    right: 0;
   }
 
   .btn-next {

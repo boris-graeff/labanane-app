@@ -31,7 +31,7 @@ const setTrack = (state, track) => {
   for (let prop of Object.keys(track)) {
     state.track[prop] = track[prop]
   }
-  state.player.progression = 0
+  state.player.currentTime = 0
   state.player.state = 'stopped'
   state.player.state = 'loading'
 }
@@ -58,8 +58,7 @@ export default new Vuex.Store({
       videoMode: false,
       state: '',
       volume: 100,
-      progression: 0,
-      seekPosition: 0
+      currentTime: 0
     },
     providers: {
       youtube: {
@@ -119,11 +118,11 @@ export default new Vuex.Store({
       const track = findTrackById(state, trackId)
       setTrack(state, track)
     },
-    SET_PROGRESSION (state, progression) {
-      state.player.progression = progression
+    SET_CURRENT_TIME (state, currentTime) {
+      state.player.currentTime = currentTime
     },
-    SET_SEEK_POSITION (state, position) {
-      state.player.seekPosition = position
+    SET_TRACK_DURATION (state, duration) {
+      state.track.duration = duration
     },
     SET_TRACK_ERROR (state) {
       state.player.state = 'stopped'

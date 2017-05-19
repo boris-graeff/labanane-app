@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import home from '@/components/home'
-import playlist from '@/components/playlist'
+import home from '@/components/pages/home'
+import playlist from '@/components/pages/playlist'
 
 Vue.use(VueRouter)
 

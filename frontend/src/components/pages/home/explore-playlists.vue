@@ -5,24 +5,28 @@
       <input type='text' v-model='input'/>
     </label>
     <div>
-      <ul class='list'>
-        <li v-for='p in filteredPlaylists'>
-          <router-link :to="{ name: 'playlist', params: {playlistId: p.id}}">
-            <div>
-              <span>{{ p.name }}</span><span>{{ p.length }}</span>
-            </div>
+      <list class='playlists'>
+        <list-item v-for='(playlist, index) in filteredPlaylists' :key='index'>
+          <router-link :to="{ name: 'playlist', params: {playlistId: playlist.id}}">
+            <span>{{ playlist.name }}</span><span>{{ playlist.length }}</span>
           </router-link>
-        </li>
-      </ul>
+        </list-item>
+      </list>
     </div>
   </div>
 </template>
 
 <script>
+  import list from '@/components/list'
+  import listItem from '@/components/list-item'
   import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'explore-playlists',
+    components: {
+      'list': list,
+      'list-item': listItem
+    },
     data () {
       return {
         input: ''
@@ -84,8 +88,14 @@
       }
     }
 
-    .list {
+    .playlists {
       min-height: 100%;
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
     }
 
     @media screen and (max-width: 800px){

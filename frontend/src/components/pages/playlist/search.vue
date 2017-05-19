@@ -6,15 +6,16 @@
       <input type='text' v-model='input' id='search-input' />
     </div>
     <div class='search-results'>
-      <ul class='tracks list'>
-        <li v-for='track in results'
+      <list>
+        <track-list-item v-for='(track, index) in results'
+            :key='index'
+            :track='track'
             draggable=true
-            @dragstart='onDragStart(track, $event)'
-            :class='{"youtube": track.provider === "youtube", "soundcloud": track.provider === "soundcloud"}'
-            @click='add(track)'>
-          <div><span>{{track.name}}</span></div>
-        </li>
-      </ul>
+            @dragstart.native='onDragStart(track, $event)'
+            @click.native='add(track)'>
+          {{track.name}}
+        </track-list-item>
+      </list>
     </div>
   </div>
 </template>
@@ -24,9 +25,16 @@
   import SC from 'soundcloud'
   import _ from 'lodash'
   import levenshtein from 'levenshtein'
+  import moment from 'moment'
+  import list from '@/components/list'
+  import trackListItem from '@/components/track-list-item'
 
   export default {
     name: 'search',
+    components: {
+      'list': list,
+      'track-list-item': trackListItem
+    },
     data () {
       return {
         input: '',
@@ -44,7 +52,7 @@
       }
     },
     methods: {
-      ...mapActions(['getYoutubeList', 'addTrack']),
+      ...mapActions(['getYoutubeList', 'addTrack', 'getYoutubeVideoDetails']),
       search: _.debounce(function () {
         const that = this
 
@@ -90,7 +98,18 @@
       },
 
       add (track) {
-        this.addTrack(_.cloneDeep(track))
+        if (track.provider === 'youtube') {
+          // Go fetch track duration
+          this.getYoutubeVideoDetails(track.providerId)
+            .then(({data}) => {
+              const duration = data.items[0].contentDetails.duration
+              track.duration = moment.duration(duration).asMilliseconds()
+              this.addTrack(_.cloneDeep(track))
+            })
+        }
+        else {
+          this.addTrack(_.cloneDeep(track))
+        }
       },
 
       onDragStart (track, event) {

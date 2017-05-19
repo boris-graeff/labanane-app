@@ -11,9 +11,9 @@
         </div>
       </template>
     </transition>
-    <player></player>
-    <youtube-player></youtube-player>
-    <soundcloud-player></soundcloud-player>
+    <player @seekTo='value => seekTo(value)'></player>
+    <youtube-player ref='youtubePlayer'></youtube-player>
+    <soundcloud-player ref='soundcloudPlayer'></soundcloud-player>
   </section>
 </template>
 
@@ -21,11 +21,11 @@
   import localStoragePassword from '@/helpers/localStoragePassword'
   import { mapState, mapActions } from 'vuex'
 
-  import tracklist from '@/components/playlist/tracklist.vue'
-  import actionsPanel from '@/components/playlist/actions-panel.vue'
-  import player from '@/components/playlist/player.vue'
-  import youtubePlayer from '@/components/playlist/players/youtube-player.vue'
-  import soundcloudPlayer from '@/components/playlist/players/soundcloud-player.vue'
+  import tracklist from './playlist/tracklist.vue'
+  import actionsPanel from './playlist/actions-panel.vue'
+  import player from './playlist/player.vue'
+  import youtubePlayer from './playlist/players/youtube-player.vue'
+  import soundcloudPlayer from './playlist/players/soundcloud-player.vue'
 
   export default {
     name: 'playlist',
@@ -76,11 +76,21 @@
     },
 
     computed: mapState(['providers', 'player', 'playlist', 'track']),
-    methods: mapActions(['getPlaylist', 'playlistAuth', 'initPlaylist', 'resetVideoMode', 'setTrack'])
+    methods: {
+      ...mapActions(['getPlaylist', 'playlistAuth', 'initPlaylist', 'resetVideoMode', 'setTrack']),
+      seekTo (value) {
+        if (this.track.provider === 'youtube') {
+          this.$refs.youtubePlayer.seekTo(value)
+        }
+        else {
+          this.$refs.soundcloudPlayer.seekTo(value)
+        }
+      }
+    }
   }
 </script>
 
-<style lang='scss' rel='stylesheet/scss' type='text/css'>
+<style scoped lang='scss' rel='stylesheet/scss' type='text/css'>
   @import '~@/styles/constants';
 
   .playlist-page {
