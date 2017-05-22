@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {clone} from 'lodash'
 import constants from './constants'
 import actions from './actions'
 
@@ -28,9 +29,7 @@ const setNextTrack = (state) => {
 }
 
 const setTrack = (state, track) => {
-  for (let prop of Object.keys(track)) {
-    state.track[prop] = track[prop]
-  }
+  state.track = clone(track)
   state.player.currentTime = 0
   state.player.state = 'stopped'
   state.player.state = 'loading'
@@ -51,17 +50,21 @@ export default new Vuex.Store({
       id: '',
       name: '-',
       provider: '',
-      artwork: ''
+      artwork: '',
+      duration: ''
     },
     player: {
+      currentTime: 0,
       shuffle: false,
       videoMode: false,
-      state: '',
       volume: 100,
-      currentTime: 0
+      state: 'stopped'
     },
-    providers: {
+    players: {
       youtube: {
+        ready: false
+      },
+      soundcloud: {
         ready: false
       }
     }
@@ -115,11 +118,8 @@ export default new Vuex.Store({
       state.playlist.password = isAuth ? password : ''
     },
     SET_TRACK (state, trackId) {
-      const track = findTrackById(state, trackId)
-      if (track) setTrack(state, track)
-    },
-    SET_CURRENT_TIME (state, currentTime) {
-      state.player.currentTime = currentTime
+      const track = trackId ? findTrackById(state, trackId) : {}
+      setTrack(state, track)
     },
     SET_TRACK_DURATION (state, duration) {
       state.track.duration = duration
@@ -128,21 +128,6 @@ export default new Vuex.Store({
       state.player.state = 'stopped'
       state.playlist.tracks[getCurrentIndex(state)].error = true
       setNextTrack(state)
-    },
-    SET_PLAY (state) {
-      if (state.playlist.tracks.length) {
-        if (!state.track.id) {
-          const tracks = state.playlist.tracks
-          const index = (state.player.shuffle) ? getRandomIndex(state) : 0
-          setTrack(state, tracks[index])
-        }
-        else {
-          state.player.state = 'playing'
-        }
-      }
-    },
-    SET_PAUSE (state) {
-      state.player.state = 'paused'
     },
     SET_PREVIOUS_TRACK (state) {
       const tracks = state.playlist.tracks
@@ -164,8 +149,14 @@ export default new Vuex.Store({
     SET_NEXT_TRACK (state) {
       setNextTrack(state)
     },
-    SET_YOUTUBE_READY (state) {
-      state.providers.youtube.ready = true
+    SET_PLAYER_READY (state, player) {
+      state.players[player].ready = true
+    },
+    SET_PLAYER_STATE (state, value) {
+      state.player.state = value
+    },
+    SET_PLAYER_CURRENT_TIME (state, value) {
+      state.player.currentTime = value
     }
   }
 })

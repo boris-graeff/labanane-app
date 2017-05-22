@@ -4,16 +4,14 @@
       <img src='/static/labanane-logo.svg' alt="LaBanane logo"/>
     </router-link>
     <transition name='video-mode'>
-      <template v-if='providers.youtube.ready && !loading'>
+      <template v-if='!loading'>
         <div class='content' v-show='!player.videoMode'>
           <actions-panel></actions-panel>
           <tracklist></tracklist>
         </div>
       </template>
     </transition>
-    <player @seekTo='value => seekTo(value)'></player>
-    <youtube-player ref='youtubePlayer'></youtube-player>
-    <soundcloud-player ref='soundcloudPlayer'></soundcloud-player>
+    <sound-manager></sound-manager>
   </section>
 </template>
 
@@ -21,25 +19,21 @@
   import localStoragePassword from '@/helpers/localStoragePassword'
   import { mapState, mapActions } from 'vuex'
 
+  import soundManager from '@/components/sound-manager.vue'
   import tracklist from './playlist/tracklist.vue'
   import actionsPanel from './playlist/actions-panel.vue'
-  import player from './playlist/player.vue'
-  import youtubePlayer from './playlist/players/youtube-player.vue'
-  import soundcloudPlayer from './playlist/players/soundcloud-player.vue'
 
   export default {
     name: 'playlist',
     components: {
       'tracklist': tracklist,
       'actions-panel': actionsPanel,
-      'player': player,
-      'youtube-player': youtubePlayer,
-      'soundcloud-player': soundcloudPlayer
+      'sound-manager': soundManager
     },
 
     data () {
       return {
-        loading: true
+        isDataFetched: false
       }
     },
 
@@ -61,6 +55,8 @@
       this.resetVideoMode()
       this.initPlaylist(id)
 
+      this.setTrack(null)
+
       const auth = password ? this.playlistAuth({id, password}) : Promise.resolve()
       const content = this.getPlaylist({id})
           .then(() => {
@@ -71,11 +67,19 @@
           })
 
       Promise.all([auth, content]).then(() => {
-        this.loading = false
+        this.isDataFetched = true
       })
     },
 
-    computed: mapState(['providers', 'player', 'playlist', 'track']),
+    computed: {
+      ...mapState(['player', 'playlist', 'track', 'players']),
+      arePlayersReady () {
+        return this.players.youtube.ready && this.players.soundcloud.ready
+      },
+      loading () {
+        return !(this.arePlayersReady && this.isDataFetched)
+      }
+    },
     methods: {
       ...mapActions(['getPlaylist', 'playlistAuth', 'initPlaylist', 'resetVideoMode', 'setTrack']),
       seekTo (value) {
