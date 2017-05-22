@@ -94,13 +94,13 @@ export default new Vuex.Store({
       }
     },
     REMOVE_TRACK (state, index) {
-      state.playlist.tracks.splice(index, 1)
       if (state.playlist.tracks.length) {
         setNextTrack(state)
       }
       else {
         state.player.state = 'stopped'
       }
+      state.playlist.tracks.splice(index, 1)
     },
     SET_PLAYLISTS (state, playlists) {
       state.playlists = playlists.sort((a, b) => b.timestamp - a.timestamp)
@@ -116,7 +116,7 @@ export default new Vuex.Store({
     },
     SET_TRACK (state, trackId) {
       const track = findTrackById(state, trackId)
-      setTrack(state, track)
+      if (track) setTrack(state, track)
     },
     SET_CURRENT_TIME (state, currentTime) {
       state.player.currentTime = currentTime

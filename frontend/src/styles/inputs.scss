@@ -24,4 +24,11 @@ input {
     margin-bottom: 3px;
     margin-top: $space-small;
   }
+
+  .error-message {
+    background: rgba($black, 0.2);
+    font-size: 1.4rem;
+    padding: $space-small;
+    margin-top: $space-small;
+  }
 }
