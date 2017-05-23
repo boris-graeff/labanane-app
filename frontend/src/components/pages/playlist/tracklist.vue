@@ -2,14 +2,14 @@
   <div class='tracklist'>
     <h1><span v-show='playlist.tracks.length > 1'>{{ playlist.tracks.length }} tracks</span>{{ playlist.name }}</h1>
     <div @dragover.prevent @drop='onDropEnd'>
-      <list class='track-list'>
+      <list kind='div' class='track-list'>
         <track-list-item v-for='(t, index) in playlist.tracks'
-            :key='track.id'
+            :key='index'
             :track='t'
             :index='index+1'
             :draggable='playlist.canEdit'
             @dragover.native.prevent
-            @drop.native.stop='onDrop(t, index, $event)'
+            @drop.native.stop='onDrop(index, $event)'
             @dragstart.native='onDragStart(t, index, $event)'
             @click.native='changeTrack(t)'
             class='track'
@@ -18,10 +18,10 @@
               <div>
                 <div class='error-message' v-if='t.error'>
                   Track not available.
-                  <span v-if='playlist.canEdit' @click.prevent='remove(index)'>Click here to remove</span>
+                  <span v-if='playlist.canEdit' @click.stop='remove(index)'>Click here to remove</span>
                 </div>
                 <span class='duration'>{{ t.duration | formatDuration }}</span>
-                <button v-if='playlist.canEdit' type='button' @click.prevent='remove(index)'></button>
+                <button v-if='playlist.canEdit' type='button' @click.stop='remove(index)'></button>
               </div>
         </track-list-item>
       </list>
@@ -56,14 +56,14 @@
       remove (index) {
         this.removeTrack(index)
       },
-      onDrop (track, index, event) {
-        const clonedTrack = JSON.parse(event.dataTransfer.getData('track'))
-        clonedTrack.id ? this.moveTrack(clonedTrack, index) : this.addTrack(clonedTrack, index + 1)
+      onDrop (index, event) {
+        const track = JSON.parse(event.dataTransfer.getData('track'))
+        track.id ? this.moveTrack({track, index}) : this.addTrack({track, index: index + 1})
       },
       onDropEnd (event) {
         // todo investigate
         const track = JSON.parse(event.dataTransfer.getData('track'))
-        track.id ? this.moveTrack(track) : this.addTrack(track)
+        track.id ? this.moveTrack({track}) : this.addTrack({track})
       },
       onDragStart (track, index, event) {
         track.index = index

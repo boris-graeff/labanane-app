@@ -80,11 +80,11 @@ export default {
     context.commit('SET_TRACK_ERROR')
     context.commit('SET_NEXT_TRACK')
   },
-  addTrack: (context, track, index) => {
-    context.commit('ADD_TRACK', track, index)
+  addTrack: (context, {track, index}) => {
+    context.commit('ADD_TRACK', {track, index})
   },
-  moveTrack: (context, track, index) => {
-    context.commit('MOVE_TRACK', track, index)
+  moveTrack: (context, {track, index}) => {
+    context.commit('MOVE_TRACK', {track, index})
   },
   removeTrack: (context, index) => {
     context.commit('REMOVE_TRACK', index)

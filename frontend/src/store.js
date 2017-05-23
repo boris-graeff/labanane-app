@@ -23,9 +23,8 @@ const getPreviousIndex = (state) => {
 }
 
 const setNextTrack = (state) => {
-  const tracks = state.playlist.tracks
   const index = (state.player.shuffle) ? getRandomIndex(state) : getNextIndex(state)
-  setTrack(state, tracks[index])
+  setTrack(state, state.playlist.tracks[index])
 }
 
 const setTrack = (state, track) => {
@@ -76,7 +75,7 @@ export default new Vuex.Store({
       state.playlist.tracks.length = 0
       state.playlist.canEdit = false
     },
-    ADD_TRACK (state, track, index) {
+    ADD_TRACK (state, {track, index}) {
       track.id = Date.now()
 
       if (index !== undefined) {
@@ -86,7 +85,7 @@ export default new Vuex.Store({
         state.playlist.tracks.push(track)
       }
     },
-    MOVE_TRACK (state, track, index) {
+    MOVE_TRACK (state, {track, index}) {
       state.playlist.tracks.splice(track.index, 1)
 
       if (index !== undefined) {
@@ -97,18 +96,16 @@ export default new Vuex.Store({
       }
     },
     REMOVE_TRACK (state, index) {
-      if (state.playlist.tracks.length) {
+      const trackToRemove = state.playlist.tracks[index]
+      if (trackToRemove.id === state.track.id) {
         setNextTrack(state)
-      }
-      else {
-        state.player.state = 'stopped'
       }
       state.playlist.tracks.splice(index, 1)
     },
     SET_PLAYLISTS (state, playlists) {
       state.playlists = playlists.sort((a, b) => b.timestamp - a.timestamp)
     },
-    SET_PLAYLIST (state, {id, password, data}) {
+    SET_PLAYLIST (state, {id, data}) {
       state.playlist.id = id
       state.playlist.name = data.name
       state.playlist.tracks = data.tracks
@@ -119,7 +116,7 @@ export default new Vuex.Store({
     },
     SET_TRACK (state, trackId) {
       const track = trackId ? findTrackById(state, trackId) : {}
-      setTrack(state, track)
+      if (track) setTrack(state, track)
     },
     SET_TRACK_DURATION (state, duration) {
       state.track.duration = duration

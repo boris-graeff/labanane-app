@@ -104,11 +104,11 @@
             .then(({data}) => {
               const duration = data.items[0].contentDetails.duration
               track.duration = moment.duration(duration).asMilliseconds()
-              this.addTrack(cloneDeep(track))
+              this.addTrack({track: cloneDeep(track)})
             })
         }
         else {
-          this.addTrack(cloneDeep(track))
+          this.addTrack({track: cloneDeep(track)})
         }
       },
 

@@ -11,7 +11,7 @@
 </script>
 
 <style scoped lang='scss' rel='stylesheet/scss' type='text/css'>
-  ul {
+  .list {
     background: url("~@/assets/tracks-background.svg");
   }
 </style>
