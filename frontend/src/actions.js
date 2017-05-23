@@ -49,12 +49,6 @@ export default {
   setTrack: (context, track) => {
     context.commit('SET_TRACK', track)
   },
-  setPlay: (context) => {
-    context.commit('SET_PLAY')
-  },
-  setPause: (context) => {
-    context.commit('SET_PAUSE')
-  },
   setVolume: (context, volume) => {
     context.commit('SET_VOLUME', volume)
   },
@@ -73,8 +67,8 @@ export default {
   prevTrack: (context) => {
     context.commit('SET_PREVIOUS_TRACK')
   },
-  setYoutubeReady: (context) => {
-    context.commit('SET_YOUTUBE_READY', 'youtube')
+  setPlayerReady: (context, player) => {
+    context.commit('SET_PLAYER_READY', player)
   },
   setCurrentTime: (context, currentTime) => {
     context.commit('SET_CURRENT_TIME', currentTime)
@@ -97,5 +91,11 @@ export default {
   },
   initPlaylist: (context, id) => {
     context.commit('INIT_PLAYLIST', id)
+  },
+  setPlayerState: (context, value) => {
+    context.commit('SET_PLAYER_STATE', value)
+  },
+  setPlayerCurrentTime: (context, value) => {
+    context.commit('SET_PLAYER_CURRENT_TIME', value)
   }
 }

@@ -13,10 +13,10 @@
           <button type='button' class='btn-previous' @click='prev'></button>
         </li>
         <li v-show='player.state !== "playing"'>
-          <button type='button' class='btn-play' @click='play'></button>
+          <button type='button' class='btn-play' @click='$emit("play")'></button>
         </li>
-        <li v-show='player.state === "playing"'>
-          <button type='button' class='btn-pause' @click='pause'></button>
+        <li v-show='player.state  === "playing"'>
+          <button type='button' class='btn-pause' @click='$emit("pause")'></button>
         </li>
         <li>
           <button type='button' class='btn-next' @click='next'></button>
@@ -41,7 +41,7 @@
   import { mapActions, mapState } from 'vuex'
 
   export default {
-    name: 'player',
+    name: 'app-player',
     data () {
       return {
         lastVolumeValue: 100
@@ -65,8 +65,6 @@
       ...mapActions({
         next: 'nextTrack',
         prev: 'prevTrack',
-        play: 'setPlay',
-        pause: 'setPause',
         toggleShuffle: 'toggleShuffle',
         toggleVideoMode: 'toggleVideoMode',
         setVolume: 'setVolume'
@@ -138,6 +136,9 @@
     .track-name {
       flex: 1;
       font-size: 2rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .controls {

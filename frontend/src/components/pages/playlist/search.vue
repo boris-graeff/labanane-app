@@ -23,7 +23,7 @@
 <script>
   import { mapActions } from 'vuex'
   import SC from 'soundcloud'
-  import _ from 'lodash'
+  import {debounce, flatten, cloneDeep} from 'lodash'
   import levenshtein from 'levenshtein'
   import moment from 'moment'
   import list from '@/components/list'
@@ -53,14 +53,14 @@
     },
     methods: {
       ...mapActions(['getYoutubeList', 'addTrack', 'getYoutubeVideoDetails']),
-      search: _.debounce(function () {
+      search: debounce(function () {
         const that = this
 
         // fixme : reject pending promise if necessary
 
         Promise.all([this.soundcloudSearch(), this.youtubeSearch()])
             .then(results => {
-              that.results = _.flatten(results).sort((a, b) => a.leven - b.leven)
+              that.results = flatten(results).sort((a, b) => a.leven - b.leven)
             })
       }, 240),
 
@@ -104,11 +104,11 @@
             .then(({data}) => {
               const duration = data.items[0].contentDetails.duration
               track.duration = moment.duration(duration).asMilliseconds()
-              this.addTrack(_.cloneDeep(track))
+              this.addTrack(cloneDeep(track))
             })
         }
         else {
-          this.addTrack(_.cloneDeep(track))
+          this.addTrack(cloneDeep(track))
         }
       },
 
