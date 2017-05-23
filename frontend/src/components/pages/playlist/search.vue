@@ -52,13 +52,13 @@
       }
     },
     methods: {
-      ...mapActions(['getYoutubeList', 'addTrack', 'getYoutubeVideoDetails']),
+      ...mapActions(['getYoutubeList', 'addTrack', 'getYoutubeVideoDetails', 'bancampSearch']),
       search: _.debounce(function () {
         const that = this
 
         // fixme : reject pending promise if necessary
 
-        Promise.all([this.soundcloudSearch(), this.youtubeSearch()])
+        Promise.all([this.soundcloudSearch(), this.youtubeSearch(), this.bandcampSearch()])
             .then(results => {
               that.results = _.flatten(results).sort((a, b) => a.leven - b.leven)
             })
@@ -95,6 +95,17 @@
                 }
               })
             })
+      },
+
+      bandcampSearch () {
+        const that = this
+        return this.bancampSearch(this.input).then(response => {
+          return response.data.map(track => {
+            return Object.assign(track, {
+              leven: levenshtein(track.name, that.input)
+            })
+          })
+        })
       },
 
       add (track) {

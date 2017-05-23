@@ -14,6 +14,7 @@
     <player @seekTo='value => seekTo(value)'></player>
     <youtube-player ref='youtubePlayer'></youtube-player>
     <soundcloud-player ref='soundcloudPlayer'></soundcloud-player>
+    <bandcamp-player ref='bandcampPlayer'></bandcamp-player>
   </section>
 </template>
 
@@ -26,6 +27,7 @@
   import player from './playlist/player.vue'
   import youtubePlayer from './playlist/players/youtube-player.vue'
   import soundcloudPlayer from './playlist/players/soundcloud-player.vue'
+  import bandcampPlayer from './playlist/players/bandcamp-player.vue'
 
   export default {
     name: 'playlist',
@@ -34,7 +36,8 @@
       'actions-panel': actionsPanel,
       'player': player,
       'youtube-player': youtubePlayer,
-      'soundcloud-player': soundcloudPlayer
+      'soundcloud-player': soundcloudPlayer,
+      'bandcamp-player': bandcampPlayer
     },
 
     data () {
@@ -81,6 +84,9 @@
       seekTo (value) {
         if (this.track.provider === 'youtube') {
           this.$refs.youtubePlayer.seekTo(value)
+        }
+        else if (this.track.provider === 'bandcamp') {
+          this.$refs.bandcampPlayer.seekTo(value)
         }
         else {
           this.$refs.soundcloudPlayer.seekTo(value)

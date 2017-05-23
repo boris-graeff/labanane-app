@@ -71,6 +71,10 @@
     background-image: url('~@/assets/icn-soundcloud.svg')
   }
 
+  li.bandcamp:before {
+    background-image: url('~@/assets/icn-bandcamp.svg')
+  }
+
   .index {
     position: absolute;
     font-size: 10px;

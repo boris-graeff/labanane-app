@@ -5,7 +5,8 @@ var express = require('express'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
-  services = require('./routes/services')
+  services = require('./routes/services'),
+  providers = require('./routes/providers')
 
 require('./cron-tasks')
 
@@ -24,6 +25,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'dist')))
 
 app.use('/services/', services)
+app.use('/providers/', providers)
 
 app.get('*', function(req, res) {
   res.sendFile(path.resolve(__dirname, '..', 'frontend', 'dist', 'index.html'))
