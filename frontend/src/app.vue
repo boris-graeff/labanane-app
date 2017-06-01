@@ -14,6 +14,9 @@
 
 <style lang='scss' rel='stylesheet/scss' type='text/css'>
   @import "~@/styles/base.scss";
+</style>
+
+<style scoped lang='scss' rel='stylesheet/scss' type='text/css'>
 
   .page-enter-active, .page-leave-active {
     transition: opacity 200ms ease-in-out;
