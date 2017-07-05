@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import home from '@/pages/home'
-import playlist from '@/pages/playlist'
+
+const home = () => import(/* webpackChunkName: "home" */ '@/pages/home')
+const playlist = () => import(/* webpackChunkName: "playlist" */ '@/pages/playlist')
 
 Vue.use(VueRouter)
 
