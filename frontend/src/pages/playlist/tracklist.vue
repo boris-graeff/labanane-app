@@ -1,6 +1,12 @@
 <template>
   <div class='tracklist'>
-    <h1><span v-show='playlist.tracks.length > 1'>{{ playlist.tracks.length }} tracks</span>{{ playlist.name }}</h1>
+    <h1>
+      <div class='playlist-infos' v-show='playlist.tracks.length > 1'>
+        <span>{{ playlist.tracks.length }} tracks</span>
+        <span>{{ playlistDuration | formatDuration }}</span>
+      </div>
+      {{ playlist.name }}
+    </h1>
     <div @dragover.prevent @drop='onDropEnd'>
       <list kind='div' class='track-list'>
         <track-list-item v-for='(t, index) in playlist.tracks'
@@ -47,7 +53,12 @@
         this.savePlaylist()
       }
     },
-    computed: mapState(['track', 'playlist']),
+    computed: {
+      ...mapState(['track', 'playlist']),
+      playlistDuration () {
+        return this.playlist.tracks.reduce((total, el) => (el.duration || 0) + total, 0)
+      }
+    },
     methods: {
       ...mapActions(['removeTrack', 'addTrack', 'moveTrack', 'savePlaylist', 'nextTrack']),
 
@@ -79,6 +90,25 @@
 <style scoped lang='scss' rel='stylesheet/scss' type='text/css'>
   @import '~@/styles/constants';
 
+  .playlist-infos {
+    font-weight: normal;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    font-size: 1.6rem;
+    vertical-align: top;
+    border: 1px solid rgba($black, 0.1);
+
+    span {
+      padding: 2px 4px;
+      display: inline-block;
+
+      &:first-child {
+        background: rgba($black, 0.1);
+      }
+    }
+  }
+
   .tracklist {
     position: relative;
     padding-top: $topbar-height;
@@ -93,18 +123,6 @@
       font-weight: 300;
       padding: $space-small 0;
       position: relative;
-
-      span {
-        background: rgba($black, 0.1);
-        font-size: 1.6rem;
-        position: absolute;
-        vertical-align: top;
-        padding: 2px 4px;
-        font-weight: normal;
-        position: absolute;
-        bottom: 100%;
-        left: 0;
-      }
     }
 
     button {
