@@ -14,14 +14,16 @@
             @click.native='changeTrack(t)'
             class='track'
             :class='{"selected": t.id == track.id, "error": t.error}'>
-              <span>{{t.name}}</span>
-              <div>
-                <div class='error-message' v-if='t.error'>
-                  Track not available.
-                  <span v-if='playlist.canEdit' @click.stop='remove(index)'>Click here to remove</span>
+              <div class='track-list-infos'>
+                <span>{{t.name}}</span>
+                <div>
+                  <div class='error-message' v-if='t.error'>
+                    Track not available.
+                    <span v-if='playlist.canEdit' @click.stop='remove(index)'>Click here to remove</span>
+                  </div>
+                  <span class='duration'>{{ t.duration | formatDuration }}</span>
+                  <button v-if='playlist.canEdit' type='button' @click.stop='remove(index)'></button>
                 </div>
-                <span class='duration'>{{ t.duration | formatDuration }}</span>
-                <button v-if='playlist.canEdit' type='button' @click.stop='remove(index)'></button>
               </div>
         </track-list-item>
       </list>
@@ -141,23 +143,6 @@
           font-weight: bold;
           min-width: 224px;
         }
-
-        > div {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          > span {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-
-          > div {
-            display: flex;
-            align-items: center;
-          }
-        }
       }
 
       .duration {
@@ -166,6 +151,23 @@
         padding: 0 6px;
         min-width: 54px;
         text-align: right;
+      }
+    }
+
+    .track-list-infos {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      > span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      > div {
+        display: flex;
+        align-items: center;
       }
     }
 
