@@ -192,10 +192,6 @@
     @media screen and (max-width: 800px){
       width: 100% !important;
       padding-left: $space-big;
-
-      .track-list .track > div > div {
-        display: none;
-      }
     }
   }
 </style>
